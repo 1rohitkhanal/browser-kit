@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Minifier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/global.css">
+  <link rel="stylesheet" href="../../assets/css/tool.css">
+  <style>
+    .action-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .action-btn {
+      flex: 1;
+      min-width: 140px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 44px;
+      padding: 0 18px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background .15s, color .15s;
+    }
+
+    .action-btn:hover {
+      background: var(--bg3);
+    }
+
+    .panel {
+      display: grid;
+      gap: 20px;
+    }
+
+    .panel textarea {
+      width: 100%;
+      min-height: 220px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--card-bg);
+      color: var(--text);
+      resize: vertical;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .panel .panel-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text2);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-bottom: 10px;
+    }
+
+    .options-box {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .option-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .option-row label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text2);
+      margin-bottom: 6px;
+    }
+
+    .option-row select,
+    .option-row input {
+      width: 100%;
+      height: 42px;
+      padding: 0 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg2);
+      color: var(--text);
+      font-size: 14px;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .option-row select:focus,
+    .option-row input:focus {
+      border-color: var(--text3);
+    }
+
+    .result-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+    }
+
+    .result-tag {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      color: var(--text2);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .summary-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .summary-box p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--text2);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 840px) {
+      .tool-wrap { grid-template-columns: 1fr; }
+      .tool-side { order: 3; }
+      .option-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .action-row { flex-direction: column; }
+      .action-btn { width: 100%; }
+      .panel textarea { min-height: 180px; }
+    }
+  </style>
+</head>
+<body>
+  <nav id="navbar"></nav>
+
+  <main class="tool-wrap">
+    <section class="tool-main">
+      <div class="tool-header">
+        <p class="tool-breadcrumb"><a href="../../index.html">Home</a> / Dev Tools / Code Minifier</p>
+        <h1 class="tool-title">Code Minifier</h1>
+        <p class="tool-desc">Minify HTML, CSS, and JavaScript quickly with a responsive tool that matches the site theme and layout.</p>
+      </div>
+
+      <div class="tool-box">
+        <div class="panel">
+          <div>
+            <div class="panel-title">Source Code</div>
+            <textarea id="inputCode" placeholder="Paste your HTML, CSS, or JavaScript here..." oninput="updateResult()"></textarea>
+          </div>
+
+          <div class="action-row">
+            <button class="action-btn active" id="minifyBtn" onclick="setMode('minify')">Minify</button>
+            <button class="action-btn" id="beautifyBtn" onclick="setMode('beautify')">Beautify</button>
+            <button class="action-btn" onclick="copyResult()">Copy Output</button>
+          </div>
+
+          <div class="options-box">
+            <div class="option-row">
+              <label for="languageSelect">Code Type</label>
+              <select id="languageSelect" onchange="updateResult()">
+                <option value="html">HTML</option>
+                <option value="css">CSS</option>
+                <option value="js">JavaScript</option>
+              </select>
+            </div>
+            <div class="option-row">
+              <label for="compactToggle">Output Style</label>
+              <select id="compactToggle" onchange="updateResult()">
+                <option value="compact">Compact</option>
+                <option value="readable">Readable</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <div class="panel-title">Output</div>
+            <textarea id="outputCode" readonly placeholder="Minified or beautified code appears here..."></textarea>
+            <div class="result-info">
+              <span class="result-tag" id="modeLabel">Mode: Minify</span>
+              <span class="result-tag" id="sizeLabel">Size: 0 chars</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="summary-box">
+          <h3 class="result-title">How it works</h3>
+          <p>Choose the language and output style, then paste your code. Use Minify to compress and remove whitespace, or Beautify to format compact code back into a readable structure. The tool keeps the same theme and responsive layout as other dev tools.</p>
+        </div>
+      </div>
+    </section>
+
+    <aside class="tool-side">
+      <div class="tool-box">
+        <h3>Usage Tips</h3>
+        <p>Minify HTML, CSS, or JS for smaller bundles. Beautify code when you need to read or debug compressed sources.</p>
+      </div>
+
+      <div class="tool-box related-section">
+        <h3 class="related-title">Related Dev Tools</h3>
+        <div class="related-grid">
+          <a class="related-card" href="json-formatter.html"><span class="rc-emoji">🧾</span><span class="rc-name">JSON Formatter</span></a>
+          <a class="related-card" href="jwt-decoder.html"><span class="rc-emoji">🔐</span><span class="rc-name">JWT Decoder</span></a>
+          <a class="related-card" href="base64.html"><span class="rc-emoji">🧪</span><span class="rc-name">Base64 Encoder</span></a>
+          <a class="related-card" href="url-encoder.html"><span class="rc-emoji">🔗</span><span class="rc-name">URL Encoder</span></a>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <footer id="footer"></footer>
+
+  <script src="../../assets/js/navbar.js"></script>
+  <script src="../../assets/js/theme.js"></script>
+  <script>
+    let mode = 'minify';
+
+    function setMode(selected) {
+      mode = selected;
+      document.getElementById('minifyBtn').classList.toggle('active', mode === 'minify');
+      document.getElementById('beautifyBtn').classList.toggle('active', mode === 'beautify');
+      document.getElementById('modeLabel').textContent = `Mode: ${mode === 'minify' ? 'Minify' : 'Beautify'}`;
+      updateResult();
+    }
+
+    function updateResult() {
+      const code = document.getElementById('inputCode').value;
+      const language = document.getElementById('languageSelect').value;
+      const style = document.getElementById('compactToggle').value;
+      const output = document.getElementById('outputCode');
+      let result = '';
+
+      if (!code.trim()) {
+        output.value = '';
+        document.getElementById('sizeLabel').textContent = 'Size: 0 chars';
+        return;
+      }
+
+      try {
+        if (mode === 'minify') {
+          result = minifyCode(code, language);
+        } else {
+          result = beautifyCode(code, language, style);
+        }
+      } catch (error) {
+        result = 'Error: invalid code or unsupported language.';
+      }
+
+      output.value = result;
+      document.getElementById('sizeLabel').textContent = `Size: ${result.length} chars`;
+    }
+
+    function minifyCode(code, language) {
+      if (language === 'html') {
+        return code.replace(/>\s+</g, '><').replace(/\s{2,}/g, ' ').trim();
+      }
+      if (language === 'css') {
+        return code.replace(/\/\*[^*]*\*+([^/*][^*]*\*+)*\//g, '').replace(/\s+/g, ' ').replace(/\s*([{};:,])\s*/g, '$1').trim();
+      }
+      if (language === 'js') {
+        return code.replace(/\/\/.*$/gm, '').replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ').replace(/\s*([{};:,=()+\-*/<>])\s*/g, '$1').trim();
+      }
+      return code;
+    }
+
+    function beautifyCode(code, language, style) {
+      if (language === 'html') {
+        return code.replace(/>\s+</g, '><').replace(/</g, '\n<').replace(/\n\s+/g, '\n').trim();
+      }
+      if (language === 'css') {
+        return code.replace(/\s*([{};:,])\s*/g, '$1\n').replace(/\n+/g, '\n').replace(/\n\s*/g, '\n').trim();
+      }
+      if (language === 'js') {
+        return code.replace(/\s*([{};:,()=+\-*/<>])\s*/g, '$1').replace(/([{};:,()])/g, '$1\n').replace(/\n+/g, '\n').trim();
+      }
+      return code;
+    }
+
+    function copyResult() {
+      const output = document.getElementById('outputCode').value;
+      if (!output) return;
+      navigator.clipboard.writeText(output).then(() => {
+        alert('Output copied to clipboard!');
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('navbar').innerHTML = renderNavbar();
+      document.getElementById('footer').innerHTML = renderFooter();
+      initNavbar();
+      setMode('minify');
+    });
+  </script>
+</body>
+</html>
