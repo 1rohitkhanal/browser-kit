@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouTube Thumbnail Downloader — Free HD Thumbnail Download | ToolSite</title>
+<meta name="description" content="Download YouTube video thumbnails in HD, Full HD, and all available resolutions. Free online tool — just paste the YouTube URL.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0f0f0f;--surface:#1a1a1a;--surface2:#242424;--border:#333;--accent:#ff0000;--accent2:#ff6b6b;--text:#f0f0f0;--muted:#888;--success:#22c55e}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:1px solid var(--border);background:var(--surface)}
+  .logo{font-size:1.4rem;font-weight:800;color:#ff0000;text-decoration:none}.logo span{color:#aaa}
+  nav a{color:var(--muted);text-decoration:none;font-size:0.85rem}nav a:hover{color:var(--text)}
+  .ad-banner{background:var(--surface);border:1px dashed var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.75rem;margin:1rem auto}
+  .ad-top{width:100%;max-width:728px;height:90px}.ad-bottom{width:100%;max-width:728px;height:90px}.ad-side{width:300px;height:250px;flex-shrink:0}
+  .container{max-width:900px;margin:0 auto;padding:2rem}
+  .tool-header{text-align:center;margin-bottom:2.5rem}
+  .tool-header h1{font-size:2.2rem;font-weight:800;color:var(--text);margin-bottom:0.5rem}
+  .tool-header h1 span{color:#ff0000}
+  .tool-header p{color:var(--muted);font-size:1rem}
+  .main-layout{display:flex;gap:2rem}.tool-area{flex:1}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem}
+
+  .url-input-wrap{display:flex;gap:0.75rem;margin-bottom:1rem}
+  .url-input{flex:1;background:var(--surface2);border:2px solid var(--border);border-radius:12px;padding:0.9rem 1.2rem;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.95rem;outline:none;transition:border-color 0.2s}
+  .url-input:focus{border-color:#ff0000}
+  .fetch-btn{padding:0.9rem 1.5rem;background:#ff0000;color:white;border:none;border-radius:12px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.9rem;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+  .fetch-btn:hover{background:#cc0000;transform:scale(1.02)}
+
+  .preview-area{display:none;text-align:center}
+  .preview-img{max-width:100%;border-radius:12px;border:2px solid var(--border);margin-bottom:1.5rem}
+  .video-title{font-size:1rem;font-weight:700;margin-bottom:0.5rem;text-align:left}
+  .video-id{font-size:0.8rem;color:var(--muted);text-align:left;margin-bottom:1.5rem;font-family:monospace}
+
+  .res-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.75rem}
+  .res-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:1rem;display:flex;align-items:center;justify-content:space-between;gap:0.5rem;flex-wrap:wrap}
+  .res-info .res-name{font-weight:700;font-size:0.9rem}
+  .res-info .res-size{font-size:0.75rem;color:var(--muted);margin-top:2px}
+  .dl-btn{background:#ff0000;color:white;border:none;border-radius:8px;padding:0.5rem 1rem;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;text-decoration:none;display:inline-block;transition:background 0.2s}
+  .dl-btn:hover{background:#cc0000}
+  .dl-btn.unavail{background:var(--border);color:var(--muted);cursor:not-allowed}
+
+  .error-msg{background:rgba(255,0,0,0.1);border:1px solid rgba(255,0,0,0.3);border-radius:10px;padding:1rem;color:#ff6b6b;font-size:0.9rem;display:none}
+  .how-to{background:var(--surface2);border-radius:10px;padding:1rem;margin-top:1rem}
+  .how-to h3{font-size:0.85rem;font-weight:700;margin-bottom:0.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+  .how-to ol{padding-left:1.2rem;font-size:0.85rem;color:var(--muted);line-height:1.8}
+  .how-to ol li{margin-bottom:0.2rem}
+
+  .related{margin-top:2rem}.related h2{font-size:0.8rem;font-weight:700;margin-bottom:1rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+  .related-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.75rem}
+  .related-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1rem;text-decoration:none;color:var(--text);transition:all 0.2s;display:flex;align-items:center;gap:0.6rem;font-size:0.88rem}
+  .related-card:hover{border-color:#ff0000;transform:translateY(-2px)}
+  footer{border-top:1px solid var(--border);background:var(--surface);padding:1.5rem 2rem;margin-top:3rem;text-align:center;color:var(--muted);font-size:0.8rem}
+  footer a{color:var(--muted);text-decoration:none;margin:0 0.5rem}footer a:hover{color:var(--text)}
+  @media(max-width:700px){.main-layout{flex-direction:column}.ad-side{width:100%;height:100px}.res-grid{grid-template-columns:1fr}.related-grid{grid-template-columns:1fr}.url-input-wrap{flex-direction:column}}
+</style>
+</head>
+<body>
+<nav><a class="logo" href="../index.html">Tool<span>Site</span></a><a href="../index.html">← All Tools</a></nav>
+
+<div class="container">
+  <div style="display:flex;justify-content:center"><div class="ad-banner ad-top">Advertisement (728×90)</div></div>
+
+  <div class="tool-header">
+    <h1>▶️ <span>YouTube</span> Thumbnail Downloader</h1>
+    <p>Download any YouTube video thumbnail in all available resolutions — HD, Full HD, and more.</p>
+  </div>
+
+  <div class="main-layout">
+    <div class="tool-area">
+      <div class="card">
+        <div class="url-input-wrap">
+          <input class="url-input" id="ytUrl" placeholder="Paste YouTube URL — e.g. https://www.youtube.com/watch?v=dQw4w9WgXcQ" type="url">
+          <button class="fetch-btn" onclick="fetchThumbnail()">Get Thumbnail</button>
+        </div>
+        <div class="error-msg" id="errorMsg">❌ Could not find a valid YouTube video ID. Please check the URL and try again.</div>
+
+        <div class="preview-area" id="previewArea">
+          <div class="video-title" id="videoTitle"></div>
+          <div class="video-id" id="videoIdLabel"></div>
+          <img class="preview-img" id="previewImg" src="" alt="YouTube thumbnail preview">
+          <div style="font-size:0.85rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;text-align:left;margin-bottom:0.75rem">Available Resolutions</div>
+          <div class="res-grid" id="resGrid"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="how-to">
+          <h3>How to use</h3>
+          <ol>
+            <li>Go to any YouTube video</li>
+            <li>Copy the URL from your browser's address bar</li>
+            <li>Paste it in the box above</li>
+            <li>Click "Get Thumbnail" to load all sizes</li>
+            <li>Click "Download" on your preferred resolution</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="ad-banner ad-side">Ad (300×250)</div>
+  </div>
+
+  <div style="display:flex;justify-content:center"><div class="ad-banner ad-bottom">Advertisement (728×90)</div></div>
+
+  <div class="related">
+    <h2>Related Social Media Tools</h2>
+    <div class="related-grid">
+      <a class="related-card" href="instagram-dp-viewer.html">📸 Instagram DP Viewer</a>
+      <a class="related-card" href="hashtag-generator.html">#️⃣ Hashtag Generator</a>
+      <a class="related-card" href="bio-generator.html">✍️ Bio Generator</a>
+      <a class="related-card" href="fancy-font-generator.html">𝓕 Fancy Font Generator</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div style="margin-bottom:0.5rem"><a href="../index.html">Home</a> | <a href="../index.html">All Tools</a> | <a href="#">About</a> | <a href="#">Privacy Policy</a></div>
+  © 2025 ToolSite — No login required. No data stored on servers.
+</footer>
+
+<script>
+const RESOLUTIONS = [
+  { key: 'maxresdefault', name: 'Maximum Resolution', size: '1280×720', hd: true },
+  { key: 'sddefault', name: 'Standard Definition', size: '640×480', hd: false },
+  { key: 'hqdefault', name: 'High Quality', size: '480×360', hd: false },
+  { key: 'mqdefault', name: 'Medium Quality', size: '320×180', hd: false },
+  { key: 'default', name: 'Default', size: '120×90', hd: false },
+];
+
+function extractVideoId(url) {
+  const patterns = [
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/,
+    /^([a-zA-Z0-9_-]{11})$/
+  ];
+  for (const p of patterns) {
+    const m = url.match(p);
+    if (m) return m[1];
+  }
+  return null;
+}
+
+function fetchThumbnail() {
+  const url = document.getElementById('ytUrl').value.trim();
+  const errorMsg = document.getElementById('errorMsg');
+  const previewArea = document.getElementById('previewArea');
+  errorMsg.style.display = 'none';
+  previewArea.style.display = 'none';
+
+  const videoId = extractVideoId(url);
+  if (!videoId) { errorMsg.style.display = 'block'; return; }
+
+  document.getElementById('videoTitle').textContent = 'Video ID: ' + videoId;
+  document.getElementById('videoIdLabel').textContent = 'youtube.com/watch?v=' + videoId;
+
+  const thumbUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+  const img = document.getElementById('previewImg');
+  img.src = thumbUrl;
+  img.onerror = () => { errorMsg.textContent = '❌ Could not load thumbnail. The video may be private or the ID is invalid.'; errorMsg.style.display = 'block'; return; };
+
+  const grid = document.getElementById('resGrid');
+  grid.innerHTML = RESOLUTIONS.map(r => `
+    <div class="res-card">
+      <div class="res-info">
+        <div class="res-name">${r.name} ${r.hd ? '⭐' : ''}</div>
+        <div class="res-size">${r.size} pixels</div>
+      </div>
+      <a class="dl-btn" href="https://img.youtube.com/vi/${videoId}/${r.key}.jpg" download="thumbnail_${videoId}_${r.key}.jpg" target="_blank">Download</a>
+    </div>
+  `).join('');
+
+  previewArea.style.display = 'block';
+}
+
+document.getElementById('ytUrl').addEventListener('keydown', e => { if (e.key === 'Enter') fetchThumbnail(); });
+</script>
+</body>
+</html>
