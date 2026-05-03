@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Page Numbers to PDF Online Free | Fix-Kit</title>
+  <meta name="description" content="Insert page numbers into any PDF online. Choose position, format and starting number. Free, no login, browser-based."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/global.css"/>
+  <link rel="stylesheet" href="../assets/css/tool.css"/>
+  <script>(function(){ const s=localStorage.getItem('fk-theme')||'light'; document.documentElement.setAttribute('data-theme',s); })();</script>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="logo">Fix<span>-</span>Kit</a>
+    <div class="nav-right">
+      <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">
+        <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="ad-banner" style="margin-top:20px;"><div class="ad-banner-inner">Advertisement</div></div>
+<div class="tool-wrap">
+  <div class="tool-main">
+    <div class="tool-header">
+      <div class="tool-breadcrumb"><a href="../index.html">Home</a> › <a href="../index.html#pdf">PDF Tools</a> › Add Page Numbers</div>
+      <h1 class="tool-title">Add Page Numbers to PDF</h1>
+      <p class="tool-desc">Insert page numbers into any PDF. Choose the position, number format, font size and starting number.</p>
+    </div>
+    <div class="tool-box">
+      <h3>Upload PDF</h3>
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" accept=".pdf"/>
+        <div class="dz-icon">🔢</div>
+        <div class="dz-label">Drop a PDF here or click to upload</div>
+        <div class="dz-hint">Max 100MB</div>
+      </div>
+      <div class="file-list" id="fileList"></div>
+    </div>
+    <div class="tool-box" id="optionsBox" style="display:none;">
+      <h3>Page Number Options</h3>
+      <div class="options-grid">
+        <div class="opt-group">
+          <label>Position</label>
+          <select id="position">
+            <option value="bottom-center">Bottom Center</option>
+            <option value="bottom-left">Bottom Left</option>
+            <option value="bottom-right">Bottom Right</option>
+            <option value="top-center">Top Center</option>
+            <option value="top-left">Top Left</option>
+            <option value="top-right">Top Right</option>
+          </select>
+        </div>
+        <div class="opt-group">
+          <label>Format</label>
+          <select id="format">
+            <option value="n">1, 2, 3…</option>
+            <option value="page-n">Page 1, Page 2…</option>
+            <option value="n-of-total">1 of 10, 2 of 10…</option>
+            <option value="page-n-of-total">Page 1 of 10…</option>
+          </select>
+        </div>
+        <div class="opt-group">
+          <label>Starting Number</label>
+          <input type="number" id="startNum" value="1" min="1"/>
+        </div>
+        <div class="opt-group">
+          <label>Font Size (pt)</label>
+          <input type="number" id="fontSize" value="11" min="6" max="24"/>
+        </div>
+        <div class="opt-group">
+          <label>Margin from Edge (pt)</label>
+          <input type="number" id="margin" value="20" min="5" max="100"/>
+        </div>
+        <div class="opt-group">
+          <label>Skip First Page</label>
+          <select id="skipFirst">
+            <option value="no">No</option>
+            <option value="yes">Yes (cover page)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div id="statusMsg" class="status-msg"></div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;">
+      <button class="btn-primary" id="applyBtn" disabled><span>🔢</span> Add Page Numbers</button>
+      <button class="btn-secondary" id="clearBtn">Clear</button>
+    </div>
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-bar-bg"><div class="progress-bar" id="progressBar"></div></div>
+      <div class="progress-label" id="progressLabel">Processing…</div>
+    </div>
+    <div class="result-box" id="resultBox">
+      <div class="result-header"><span class="result-title">Numbered PDF Ready</span></div>
+      <div class="result-content">
+        <div class="result-file">
+          <span class="rf-icon">📄</span>
+          <div class="rf-info">
+            <div class="rf-name" id="resultName">numbered.pdf</div>
+            <div class="rf-size" id="resultSize"></div>
+          </div>
+          <button class="btn-primary" id="downloadBtn">⬇ Download</button>
+        </div>
+      </div>
+    </div>
+    <div class="related-section">
+      <div class="related-title">Related PDF Tools</div>
+      <div class="related-grid">
+        <a href="watermark.html" class="related-card"><span class="rc-emoji">💧</span><span class="rc-name">Add Watermark</span></a>
+        <a href="merge.html" class="related-card"><span class="rc-emoji">🔗</span><span class="rc-name">Merge PDF</span></a>
+        <a href="rotate.html" class="related-card"><span class="rc-emoji">🔄</span><span class="rc-name">Rotate PDF</span></a>
+        <a href="protect.html" class="related-card"><span class="rc-emoji">🔒</span><span class="rc-name">Protect PDF</span></a>
+      </div>
+    </div>
+  </div>
+  <div class="tool-side">
+    <div class="ad-side">Advertisement</div>
+    <div class="tool-box" style="margin-bottom:0;">
+      <h3>How to Use</h3>
+      <ol style="padding-left:18px;font-size:13px;color:var(--text2);line-height:2;">
+        <li>Upload your PDF</li>
+        <li>Choose position &amp; format</li>
+        <li>Set starting number</li>
+        <li>Click <strong>Add Page Numbers</strong></li>
+        <li>Download the result</li>
+      </ol>
+    </div>
+  </div>
+</div>
+<div class="ad-banner"><div class="ad-banner-inner">Advertisement</div></div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Fix<span>-</span>Kit</div>
+    <div class="footer-links"><a href="../index.html">Home</a><a href="#">About</a><a href="#">Privacy Policy</a><a href="#">Contact</a></div>
+    <p class="footer-copy">© 2025 FIX-KIT · No login required · No data stored on servers · 100% free forever</p>
+  </div>
+</footer>
+<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script>
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    const h=document.documentElement; const next=h.getAttribute('data-theme')==='light'?'dark':'light';
+    h.setAttribute('data-theme',next); localStorage.setItem('fk-theme',next);
+  });
+
+  let pdfFile=null;
+  function formatBytes(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(1)+' MB';}
+  function showStatus(msg,type){const s=document.getElementById('statusMsg');s.textContent=msg;s.className='status-msg show '+type;}
+
+  function setFile(f) {
+    pdfFile=f;
+    document.getElementById('fileList').innerHTML=`
+      <div class="file-item"><span class="fi-icon">📄</span><span class="fi-name">${f.name}</span><span class="fi-size">${formatBytes(f.size)}</span><button class="fi-remove" id="removeBtn">✕</button></div>`;
+    document.getElementById('removeBtn').addEventListener('click',()=>{ pdfFile=null; document.getElementById('fileList').innerHTML=''; document.getElementById('optionsBox').style.display='none'; document.getElementById('applyBtn').disabled=true; });
+    document.getElementById('optionsBox').style.display='block';
+    document.getElementById('applyBtn').disabled=false;
+  }
+
+  const dz=document.getElementById('dropZone'),fi=document.getElementById('fileInput');
+  dz.addEventListener('click',()=>fi.click()); fi.addEventListener('change',()=>{if(fi.files[0])setFile(fi.files[0]);});
+  dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('drag-over');}); dz.addEventListener('dragleave',()=>dz.classList.remove('drag-over'));
+  dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('drag-over');if(e.dataTransfer.files[0])setFile(e.dataTransfer.files[0]);});
+  document.getElementById('clearBtn').addEventListener('click',()=>{ pdfFile=null; document.getElementById('fileList').innerHTML=''; document.getElementById('optionsBox').style.display='none'; document.getElementById('applyBtn').disabled=true; document.getElementById('resultBox').classList.remove('show'); document.getElementById('statusMsg').className='status-msg'; });
+
+  document.getElementById('applyBtn').addEventListener('click', async ()=>{
+    if(!pdfFile) return;
+    const position=document.getElementById('position').value;
+    const fmt=document.getElementById('format').value;
+    const startNum=parseInt(document.getElementById('startNum').value)||1;
+    const fontSize=parseInt(document.getElementById('fontSize').value)||11;
+    const margin=parseInt(document.getElementById('margin').value)||20;
+    const skipFirst=document.getElementById('skipFirst').value==='yes';
+
+    document.getElementById('applyBtn').disabled=true;
+    document.getElementById('progressWrap').classList.add('show');
+    document.getElementById('resultBox').classList.remove('show');
+    document.getElementById('statusMsg').className='status-msg';
+    const pb=document.getElementById('progressBar'), pl=document.getElementById('progressLabel');
+
+    try {
+      const {PDFDocument, rgb, StandardFonts} = PDFLib;
+      pb.style.width='20%'; pl.textContent='Loading PDF…';
+      const bytes=await pdfFile.arrayBuffer();
+      const pdf=await PDFDocument.load(bytes);
+      const font=await pdf.embedFont(StandardFonts.Helvetica);
+      const total=pdf.getPageCount();
+
+      for (let i=0; i<total; i++) {
+        if (skipFirst && i===0) continue;
+        pb.style.width=Math.round(20+(i/total)*70)+'%';
+        pl.textContent=`Adding number to page ${i+1}/${total}…`;
+        const page=pdf.getPage(i);
+        const {width, height}=page.getSize();
+        const pageNum=startNum+i-(skipFirst?1:0);
+
+        let label;
+        if(fmt==='n') label=String(pageNum);
+        else if(fmt==='page-n') label='Page '+pageNum;
+        else if(fmt==='n-of-total') label=pageNum+' of '+total;
+        else label='Page '+pageNum+' of '+total;
+
+        const tw=font.widthOfTextAtSize(label, fontSize);
+        let x,y;
+        const [hPos,vPos]=position.split('-');
+        if(hPos==='bottom') y=margin; else y=height-margin-fontSize;
+        if(vPos==='center') x=width/2-tw/2; else if(vPos==='left') x=margin; else x=width-tw-margin;
+
+        page.drawText(label, {x, y, size:fontSize, font, color:rgb(0.3,0.3,0.3)});
+      }
+
+      pb.style.width='95%'; pl.textContent='Saving…';
+      const newBytes=await pdf.save(); pb.style.width='100%';
+      const blob=new Blob([newBytes],{type:'application/pdf'});
+      const url=URL.createObjectURL(blob);
+      const fname=pdfFile.name.replace('.pdf','')+'_numbered.pdf';
+      document.getElementById('resultName').textContent=fname;
+      document.getElementById('resultSize').textContent=formatBytes(blob.size)+' · '+total+' pages';
+      document.getElementById('downloadBtn').onclick=()=>{ const a=document.createElement('a');a.href=url;a.download=fname;a.click(); };
+      document.getElementById('resultBox').classList.add('show');
+      showStatus('✅ Page numbers added!', 'success');
+    } catch(e) { showStatus('❌ Error: '+e.message, 'error'); }
+    finally { document.getElementById('progressWrap').classList.remove('show'); pb.style.width='0%'; document.getElementById('applyBtn').disabled=false; }
+  });
+</script>
+</body>
+</html>

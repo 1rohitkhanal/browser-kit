@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meme Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/global.css">
+  <link rel="stylesheet" href="assets/css/tool.css">
+  <style>
+    .meme-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow-elevated, 0 16px 40px rgba(0,0,0,0.04));
+    }
+
+    .card h2 {
+      margin: 0 0 18px;
+      font-size: 20px;
+      color: var(--text);
+    }
+
+    .form-group {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      color: var(--text2);
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group button {
+      width: 100%;
+      height: 48px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      font-size: 14px;
+      padding: 0 16px;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    .form-group input[type="file"] {
+      padding: 12px 14px;
+      cursor: pointer;
+    }
+
+    .form-group button {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: transparent;
+      cursor: pointer;
+      transition: transform .15s ease, opacity .15s ease;
+    }
+
+    .form-group button:hover {
+      transform: translateY(-1px);
+      opacity: .92;
+    }
+
+    .meme-preview {
+      position: relative;
+      min-height: 420px;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      display: grid;
+      place-items: center;
+    }
+
+    .meme-preview img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    .meme-text {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      color: var(--bg);
+      text-align: center;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: .06em;
+      line-height: 1.1;
+      text-shadow: 0 2px 10px rgba(0,0,0,.45);
+      padding: 0 14px;
+      word-break: break-word;
+    }
+
+    .meme-text.top {
+      top: 18px;
+      font-size: clamp(18px, 3vw, 30px);
+    }
+
+    .meme-text.bottom {
+      bottom: 18px;
+      font-size: clamp(18px, 3vw, 30px);
+    }
+
+    .preview-footer {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .preview-footer span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text2);
+      font-size: 13px;
+    }
+
+    .help-card {
+      margin-top: 18px;
+      border-radius: 20px;
+      padding: 22px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+    }
+
+    .help-card h3 {
+      margin: 0 0 12px;
+      font-size: 16px;
+      color: var(--text);
+    }
+
+    .help-card p {
+      margin: 0;
+      color: var(--text2);
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    @media (max-width: 980px) {
+      .meme-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .meme-grid {
+        gap: 18px;
+      }
+
+      .card {
+        padding: 20px;
+      }
+
+      .meme-preview {
+        min-height: 320px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="navbar"></nav>
+
+  <main class="tool-wrap">
+    <section class="tool-main">
+      <div class="tool-header">
+        <p class="tool-breadcrumb"><a href="index.html">Home</a> / Design / Meme Generator</p>
+        <h1 class="tool-title">Meme Generator</h1>
+        <p class="tool-desc">Create a polished meme preview from any image with top/bottom text, theme-aware styling, and a responsive interface.</p>
+      </div>
+
+      <div class="meme-grid">
+        <div class="card">
+          <h2>Settings</h2>
+          <div class="form-group">
+            <label for="imageInput">Choose Image</label>
+            <input id="imageInput" type="file" accept="image/*" onchange="loadImage(event)">
+          </div>
+          <div class="form-group">
+            <label for="topText">Top Text</label>
+            <input id="topText" type="text" placeholder="Enter top text" value="When the code runs" oninput="renderMeme()">
+          </div>
+          <div class="form-group">
+            <label for="bottomText">Bottom Text</label>
+            <input id="bottomText" type="text" placeholder="Enter bottom text" value="and the bug is gone" oninput="renderMeme()">
+          </div>
+          <div class="form-group">
+            <label for="fontSize">Font Size</label>
+            <select id="fontSize" onchange="renderMeme()">
+              <option value="20">20px</option>
+              <option value="24" selected>24px</option>
+              <option value="28">28px</option>
+              <option value="32">32px</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <button onclick="downloadMeme()">Download Meme</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="meme-preview" id="previewContainer">
+            <img id="memeImage" src="https://images.unsplash.com/photo-1517816743773-6e0fd518b4a6?auto=format&fit=crop&w=900&q=80" alt="Meme preview">
+            <div class="meme-text top" id="memeTop">When the code runs</div>
+            <div class="meme-text bottom" id="memeBottom">and the bug is gone</div>
+          </div>
+
+          <div class="preview-footer">
+            <span>Tip: Upload your own image or use the sample preview.</span>
+            <span>Works great on desktop and mobile screens.</span>
+          </div>
+
+          <div class="help-card">
+            <h3>How it works</h3>
+            <p>Upload an image, add top and bottom caption text, and download a meme-ready image. This interface is designed to feel clean, professional, and responsive across devices.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer"></footer>
+
+  <script src="assets/js/navbar.js"></script>
+  <script src="assets/js/theme.js"></script>
+  <script>
+    const memeImage = document.getElementById('memeImage');
+    const memeTop = document.getElementById('memeTop');
+    const memeBottom = document.getElementById('memeBottom');
+    const topText = document.getElementById('topText');
+    const bottomText = document.getElementById('bottomText');
+    const fontSize = document.getElementById('fontSize');
+
+    function renderMeme() {
+      memeTop.textContent = topText.value.trim() || 'Top text';
+      memeBottom.textContent = bottomText.value.trim() || 'Bottom text';
+      const size = Number(fontSize.value);
+      memeTop.style.fontSize = `${size}px`;
+      memeBottom.style.fontSize = `${size}px`;
+    }
+
+    function loadImage(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        memeImage.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function downloadMeme() {
+      const canvas = document.createElement('canvas');
+      const image = new Image();
+      image.crossOrigin = 'anonymous';
+      image.src = memeImage.src;
+      image.onload = () => {
+        canvas.width = image.width;
+        canvas.height = image.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        const textSize = Number(fontSize.value);
+        ctx.fillStyle = 'white';
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = textSize / 10;
+        ctx.textAlign = 'center';
+        ctx.font = `bold ${textSize}px Inter, sans-serif`;
+        ctx.textBaseline = 'top';
+        ctx.fillText(topText.value.toUpperCase() || 'TOP TEXT', canvas.width / 2, 20);
+        ctx.strokeText(topText.value.toUpperCase() || 'TOP TEXT', canvas.width / 2, 20);
+        ctx.textBaseline = 'bottom';
+        ctx.fillText(bottomText.value.toUpperCase() || 'BOTTOM TEXT', canvas.width / 2, canvas.height - 20);
+        ctx.strokeText(bottomText.value.toUpperCase() || 'BOTTOM TEXT', canvas.width / 2, canvas.height - 20);
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/png');
+        link.download = 'meme.png';
+        link.click();
+      };
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('navbar').innerHTML = renderNavbar();
+      document.getElementById('footer').innerHTML = renderFooter();
+      initNavbar();
+      renderMeme();
+    });
+  </script>
+</body>
+</html>

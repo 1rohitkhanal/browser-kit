@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Name Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/global.css">
+  <link rel="stylesheet" href="assets/css/tool.css">
+  <style>
+    .generator-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow-elevated, 0 18px 40px rgba(0,0,0,.05));
+    }
+
+    .card h2 {
+      margin: 0 0 16px;
+      font-size: 20px;
+      color: var(--text);
+    }
+
+    .form-group {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text2);
+    }
+
+    .form-group select,
+    .form-group input {
+      width: 100%;
+      height: 46px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      padding: 0 16px;
+      font-size: 14px;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    .control-row {
+      display: grid;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .button-primary,
+    .button-secondary {
+      width: 100%;
+      height: 52px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: transform .15s ease, opacity .15s ease;
+    }
+
+    .button-primary {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .button-secondary {
+      background: var(--bg3);
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .button-primary:hover,
+    .button-secondary:hover {
+      transform: translateY(-1px);
+      opacity: .95;
+    }
+
+    .output-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .output-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 16px;
+      border-radius: 18px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+    }
+
+    .output-text {
+      color: var(--text);
+      font-size: 15px;
+      word-break: break-word;
+    }
+
+    .output-copy {
+      min-width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 12px;
+      background: var(--accent);
+      color: var(--bg);
+      cursor: pointer;
+    }
+
+    .sidebar .card {
+      padding: 22px;
+    }
+
+    .sidebar h3 {
+      margin-top: 0;
+      font-size: 18px;
+    }
+
+    .sidebar p {
+      margin: 0;
+      color: var(--text2);
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    @media (max-width: 980px) {
+      .generator-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        order: 3;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .card {
+        padding: 20px;
+      }
+
+      .form-group select,
+      .form-group input {
+        height: 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="navbar"></nav>
+
+  <main class="tool-wrap">
+    <section class="tool-main">
+      <div class="tool-header">
+        <p class="tool-breadcrumb"><a href="index.html">Home</a> / Design / Name Generator</p>
+        <h1 class="tool-title">Name Generator</h1>
+        <p class="tool-desc">Create smart, readable name ideas with one click. Choose the style, quantity, and copy results instantly.</p>
+      </div>
+
+      <div class="generator-grid">
+        <div class="card">
+          <h2>Generate Names</h2>
+
+          <div class="form-group">
+            <label for="nameStyle">Name Style</label>
+            <select id="nameStyle" onchange="renderNames()">
+              <option value="modern">Modern</option>
+              <option value="creative">Creative</option>
+              <option value="startup">Startup</option>
+              <option value="vintage">Vintage</option>
+              <option value="fantasy">Fantasy</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input id="quantity" type="number" min="3" max="12" value="6" onchange="renderNames()">
+          </div>
+
+          <div class="form-group">
+            <label for="keyword">Optional Keyword</label>
+            <input id="keyword" type="text" placeholder="Add a keyword like ‘studio’" oninput="renderNames()">
+          </div>
+
+          <div class="control-row">
+            <button class="button-primary" onclick="renderNames()">Generate</button>
+            <button class="button-secondary" onclick="copyAllNames()">Copy All</button>
+          </div>
+
+          <div class="output-list" id="outputList"></div>
+        </div>
+
+        <aside class="sidebar">
+          <div class="card">
+            <h3>Guidance</h3>
+            <p>Pick the name style that matches your project. Use a keyword to keep names relevant, then copy or regenerate until you find the right fit.</p>
+          </div>
+
+          <div class="card" style="margin-top: 20px;">
+            <h3>Tips</h3>
+            <p>Modern names work best for tech and creative brands. Vintage and fantasy styles are great for art, books, and hobbies.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer"></footer>
+
+  <script src="assets/js/navbar.js"></script>
+  <script src="assets/js/theme.js"></script>
+  <script>
+    const styleOptions = {
+      modern: ['Nexa', 'Pulse', 'Luma', 'Verve', 'Flux', 'Nova'],
+      creative: ['Pixelloom', 'Inkspire', 'Cloudtail', 'Sparkdeck', 'Musebound', 'IdeaWave'],
+      startup: ['Launchly', 'ScaleHub', 'VentureArc', 'FoundryX', 'PivotCo', 'Growthio'],
+      vintage: ['Maple & Co', 'Cedar Works', 'Brass Finch', 'Vintage Grove', 'Everbrook', 'Mariner Lane'],
+      fantasy: ['Moonspire', 'Starhaven', 'Eldergrove', 'RuneForge', 'Dragonleaf', 'Aetherwind']
+    };
+
+    function createName(style, keyword) {
+      const base = styleOptions[style] || styleOptions.modern;
+      const seed = base[Math.floor(Math.random() * base.length)];
+      const cleanKeyword = keyword.trim();
+      if (!cleanKeyword) return seed;
+      return `${seed} ${cleanKeyword.charAt(0).toUpperCase() + cleanKeyword.slice(1)}`;
+    }
+
+    function renderNames() {
+      const style = document.getElementById('nameStyle').value;
+      let count = parseInt(document.getElementById('quantity').value, 10) || 6;
+      if (count < 3) count = 3;
+      if (count > 12) count = 12;
+      const keyword = document.getElementById('keyword').value;
+      const container = document.getElementById('outputList');
+      container.innerHTML = '';
+
+      const used = new Set();
+      while (container.children.length < count) {
+        const name = createName(style, keyword);
+        if (used.has(name)) continue;
+        used.add(name);
+
+        const item = document.createElement('div');
+        item.className = 'output-item';
+
+        const text = document.createElement('div');
+        text.className = 'output-text';
+        text.textContent = name;
+
+        const button = document.createElement('button');
+        button.className = 'output-copy';
+        button.textContent = 'Copy';
+        button.onclick = () => copyText(name);
+
+        item.append(text, button);
+        container.appendChild(item);
+      }
+    }
+
+    function copyText(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Copied: ' + text);
+      });
+    }
+
+    function copyAllNames() {
+      const names = Array.from(document.querySelectorAll('.output-text')).map(el => el.textContent).join('\n');
+      if (!names) return;
+      navigator.clipboard.writeText(names).then(() => {
+        alert('All names copied to clipboard!');
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('navbar').innerHTML = renderNavbar();
+      document.getElementById('footer').innerHTML = renderFooter();
+      initNavbar();
+      renderNames();
+    });
+  </script>
+</body>
+</html>

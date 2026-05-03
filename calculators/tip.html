@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tip Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/tool.css">
+  <style>
+    .tool-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .input-group label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text2);
+    }
+
+    .input-group input {
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--card-bg);
+      color: var(--text);
+      font-size: 14px;
+      transition: border-color 0.2s;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .tip-presets {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .preset-btn {
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg2);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .preset-btn:hover {
+      background: var(--bg3);
+    }
+
+    .preset-btn.active {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .result-card {
+      background: var(--bg2);
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .result-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .result-value {
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .result-unit {
+      font-size: 14px;
+      color: var(--text2);
+    }
+
+    .breakdown {
+      background: var(--bg2);
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    .breakdown h3 {
+      margin: 0 0 16px 0;
+      font-size: 16px;
+      color: var(--text);
+    }
+
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+
+    .breakdown-row:last-child {
+      border-bottom: none;
+    }
+
+    .breakdown-label {
+      color: var(--text2);
+    }
+
+    .breakdown-value {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .split-info {
+      background: var(--bg2);
+      padding: 16px;
+      border-radius: 8px;
+      margin-top: 20px;
+      border-left: 4px solid var(--accent);
+    }
+
+    .split-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      font-size: 14px;
+      color: var(--text2);
+    }
+
+    .split-row strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .copy-btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 16px;
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: opacity 0.2s;
+    }
+
+    .copy-btn:hover {
+      opacity: 0.8;
+    }
+
+    @media (max-width: 768px) {
+      .tool-section {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .result-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .result-value {
+        font-size: 28px;
+      }
+
+      .tip-presets {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .result-value {
+        font-size: 24px;
+      }
+
+      .tip-presets {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+      }
+
+      .preset-btn {
+        padding: 10px;
+        font-size: 13px;
+      }
+
+      .breakdown-row {
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .split-row {
+        flex-direction: column;
+        gap: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="navbar"></nav>
+
+  <main>
+    <div class="tool-container">
+      <div class="tool-header">
+        <h1>Tip Calculator</h1>
+        <p>Calculate tips, split bills, and see cost per person instantly</p>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-section">
+          <div class="input-group">
+            <label for="billAmount">Bill Amount ($)</label>
+            <input type="number" id="billAmount" placeholder="100" min="0" step="0.01" oninput="calculate()">
+          </div>
+          <div class="input-group">
+            <label for="customTip">Custom Tip (%)</label>
+            <input type="number" id="customTip" placeholder="Enter percentage" min="0" step="0.1" oninput="setCustomTip()">
+          </div>
+        </div>
+
+        <div>
+          <h3 style="margin: 0 0 12px 0; font-size: 14px; color: var(--text2);">Quick Tip Presets</h3>
+          <div class="tip-presets">
+            <button class="preset-btn" onclick="setTipPercentage(10)">10%</button>
+            <button class="preset-btn" onclick="setTipPercentage(15)">15%</button>
+            <button class="preset-btn active" onclick="setTipPercentage(18)">18%</button>
+            <button class="preset-btn" onclick="setTipPercentage(20)">20%</button>
+            <button class="preset-btn" onclick="setTipPercentage(25)">25%</button>
+            <button class="preset-btn" onclick="setTipPercentage(30)">30%</button>
+          </div>
+        </div>
+
+        <div class="tool-section">
+          <div class="input-group">
+            <label for="peopleCount">Number of People (for split)</label>
+            <input type="number" id="peopleCount" placeholder="1" min="1" step="1" oninput="calculate()">
+          </div>
+        </div>
+
+        <div id="results" style="display: none;">
+          <div class="result-grid">
+            <div class="result-card">
+              <div class="result-label">Tip Amount</div>
+              <div class="result-value" id="tipAmount">$0</div>
+              <div class="result-unit">at <span id="tipPercent">18</span>%</div>
+            </div>
+            <div class="result-card">
+              <div class="result-label">Total Amount</div>
+              <div class="result-value" id="totalAmount">$0</div>
+              <div class="result-unit">Bill + Tip</div>
+            </div>
+            <div class="result-card">
+              <div class="result-label">Per Person</div>
+              <div class="result-value" id="perPerson">$0</div>
+              <div class="result-unit">with tip</div>
+            </div>
+          </div>
+
+          <div class="breakdown">
+            <h3>Breakdown</h3>
+            <div class="breakdown-row">
+              <span class="breakdown-label">Bill Amount</span>
+              <span class="breakdown-value" id="breakBill">$0</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-label">Tip Percentage</span>
+              <span class="breakdown-value" id="breakPercent">18%</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-label">Tip Amount</span>
+              <span class="breakdown-value" id="breakTip">$0</span>
+            </div>
+            <div class="breakdown-row" style="border-top: 2px solid var(--border); padding-top: 12px;">
+              <span class="breakdown-label">Total (Bill + Tip)</span>
+              <span class="breakdown-value" id="breakTotal">$0</span>
+            </div>
+          </div>
+
+          <div class="split-info" id="splitInfo" style="display: none;">
+            <h3 style="margin: 0 0 12px 0; font-size: 14px; color: var(--text);">Split Calculation</h3>
+            <div class="split-row">
+              <span>Number of People:</span>
+              <strong id="splitPeople">1</strong>
+            </div>
+            <div class="split-row">
+              <span>Bill per Person:</span>
+              <strong>$<span id="billPerPerson">0.00</span></strong>
+            </div>
+            <div class="split-row">
+              <span>Tip per Person:</span>
+              <strong>$<span id="tipPerPerson">0.00</span></strong>
+            </div>
+            <div class="split-row" style="border-top: 1px solid var(--border); padding-top: 8px; margin-top: 8px;">
+              <span>Total per Person:</span>
+              <strong style="color: var(--accent); font-size: 16px;">$<span id="totalPerPerson">0.00</span></strong>
+            </div>
+          </div>
+
+          <button class="copy-btn" onclick="copySummary()">📋 Copy Summary</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="footer"></footer>
+
+  <script src="../assets/js/navbar.js"></script>
+  <script src="../assets/js/theme.js"></script>
+  <script>
+    let currentTipPercent = 18;
+
+    function setTipPercentage(percent) {
+      currentTipPercent = percent;
+      document.getElementById('customTip').value = '';
+      
+      const buttons = document.querySelectorAll('.preset-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      calculate();
+    }
+
+    function setCustomTip() {
+      const customValue = parseFloat(document.getElementById('customTip').value);
+      if (customValue >= 0 && !isNaN(customValue)) {
+        currentTipPercent = customValue;
+        
+        const buttons = document.querySelectorAll('.preset-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+      }
+      calculate();
+    }
+
+    function calculate() {
+      const billAmount = parseFloat(document.getElementById('billAmount').value);
+      const peopleCount = parseInt(document.getElementById('peopleCount').value) || 1;
+      const resultsDiv = document.getElementById('results');
+
+      if (!billAmount || billAmount < 0) {
+        resultsDiv.style.display = 'none';
+        return;
+      }
+
+      const tipAmount = (billAmount * currentTipPercent) / 100;
+      const totalAmount = billAmount + tipAmount;
+      const perPerson = totalAmount / peopleCount;
+      const billPerPerson = billAmount / peopleCount;
+      const tipPerPerson = tipAmount / peopleCount;
+
+      // Update result cards
+      document.getElementById('tipAmount').textContent = '$' + tipAmount.toFixed(2);
+      document.getElementById('totalAmount').textContent = '$' + totalAmount.toFixed(2);
+      document.getElementById('perPerson').textContent = '$' + perPerson.toFixed(2);
+      document.getElementById('tipPercent').textContent = currentTipPercent.toFixed(1);
+
+      // Update breakdown
+      document.getElementById('breakBill').textContent = '$' + billAmount.toFixed(2);
+      document.getElementById('breakPercent').textContent = currentTipPercent.toFixed(1) + '%';
+      document.getElementById('breakTip').textContent = '$' + tipAmount.toFixed(2);
+      document.getElementById('breakTotal').textContent = '$' + totalAmount.toFixed(2);
+
+      // Update split section
+      const splitInfo = document.getElementById('splitInfo');
+      if (peopleCount > 1) {
+        document.getElementById('splitPeople').textContent = peopleCount;
+        document.getElementById('billPerPerson').textContent = billPerPerson.toFixed(2);
+        document.getElementById('tipPerPerson').textContent = tipPerPerson.toFixed(2);
+        document.getElementById('totalPerPerson').textContent = perPerson.toFixed(2);
+        splitInfo.style.display = 'block';
+      } else {
+        splitInfo.style.display = 'none';
+      }
+
+      resultsDiv.style.display = 'block';
+    }
+
+    function copySummary() {
+      const bill = document.getElementById('breakBill').textContent;
+      const tipPercent = document.getElementById('breakPercent').textContent;
+      const tip = document.getElementById('breakTip').textContent;
+      const total = document.getElementById('breakTotal').textContent;
+      const perPerson = document.getElementById('perPerson').textContent;
+
+      let summary = `Bill: ${bill}\nTip (${tipPercent}): ${tip}\nTotal: ${total}\nPer Person: ${perPerson}`;
+
+      if (document.getElementById('splitInfo').style.display === 'block') {
+        const people = document.getElementById('splitPeople').textContent;
+        summary += `\n\nSplit between ${people} people:\nPer Person: ${perPerson}`;
+      }
+
+      navigator.clipboard.writeText(summary).then(() => {
+        alert('Summary copied to clipboard!');
+      });
+    }
+
+    // Render navbar and footer on load
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('navbar').innerHTML = renderNavbar();
+      document.getElementById('footer').innerHTML = renderFooter();
+      initNavbar();
+    });
+  </script>
+</body>
+</html>

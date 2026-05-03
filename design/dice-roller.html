@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dice Roller</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/global.css">
+  <link rel="stylesheet" href="../../assets/css/tool.css">
+  <style>
+    .control-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 1fr 1fr;
+      margin-top: 18px;
+    }
+
+    .control-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .control-card label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text2);
+    }
+
+    .control-card input,
+    .control-card select,
+    .control-card button {
+      width: 100%;
+      height: 46px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      padding: 0 14px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .control-card button {
+      background: var(--accent);
+      border-color: transparent;
+      color: var(--bg);
+      cursor: pointer;
+      transition: transform .15s ease, opacity .15s ease;
+    }
+
+    .control-card button:hover {
+      transform: translateY(-1px);
+      opacity: .95;
+    }
+
+    .result-panel {
+      margin-top: 20px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .result-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      display: grid;
+      gap: 16px;
+      text-align: center;
+    }
+
+    .result-card h2 {
+      margin: 0;
+      font-size: 52px;
+      letter-spacing: -1px;
+      color: var(--accent);
+    }
+
+    .result-card p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--text);
+    }
+
+    .history-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .history-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .history-item span:first-child {
+      color: var(--text2);
+    }
+
+    @media (max-width: 840px) {
+      .tool-wrap { grid-template-columns: 1fr; }
+      .tool-side { order: 3; }
+      .control-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .result-card h2 { font-size: 42px; }
+    }
+  </style>
+</head>
+<body>
+  <nav id="navbar"></nav>
+
+  <main class="tool-wrap">
+    <section class="tool-main">
+      <div class="tool-header">
+        <p class="tool-breadcrumb"><a href="../../index.html">Home</a> / Dev Tools / Dice Roller</p>
+        <h1 class="tool-title">Dice Roller</h1>
+        <p class="tool-desc">Roll virtual dice with custom counts and sides. View the latest roll and history in a responsive theme-aware interface.</p>
+      </div>
+
+      <div class="tool-box">
+        <div class="control-grid">
+          <div class="control-card">
+            <label for="diceCount">Dice Count</label>
+            <input id="diceCount" type="number" min="1" max="20" value="2" onchange="updateSettings()">
+          </div>
+          <div class="control-card">
+            <label for="diceSides">Sides per Die</label>
+            <select id="diceSides" onchange="updateSettings()">
+              <option value="4">D4</option>
+              <option value="6" selected>D6</option>
+              <option value="8">D8</option>
+              <option value="10">D10</option>
+              <option value="12">D12</option>
+              <option value="20">D20</option>
+            </select>
+          </div>
+          <div class="control-card">
+            <label for="modifier">Modifier</label>
+            <input id="modifier" type="number" value="0" onchange="updateSettings()">
+          </div>
+          <div class="control-card">
+            <label>&nbsp;</label>
+            <button onclick="rollDice()">Roll Dice</button>
+          </div>
+        </div>
+
+        <div class="result-panel">
+          <div class="result-card">
+            <p>Last Roll</p>
+            <h2 id="resultValue">0</h2>
+            <p id="resultBreakdown">No rolls yet. Set your dice and click Roll to see the result.</p>
+          </div>
+
+          <div class="result-card">
+            <strong>Roll History</strong>
+            <div class="history-list" id="historyList">
+              <div class="history-item"><span>No history yet</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="tool-side">
+      <div class="tool-box">
+        <h3>Using the Dice Roller</h3>
+        <p>Choose how many dice to throw and which dice type to use. Add a modifier if you want to adjust the final total.</p>
+      </div>
+
+      <div class="tool-box related-section">
+        <h3 class="related-title">Related Dev Tools</h3>
+        <div class="related-grid">
+          <a class="related-card" href="random-number.html"><span class="rc-emoji">🎲</span><span class="rc-name">Random Number</span></a>
+          <a class="related-card" href="base64.html"><span class="rc-emoji">🧪</span><span class="rc-name">Base64 Encoder</span></a>
+          <a class="related-card" href="url-encoder.html"><span class="rc-emoji">🔗</span><span class="rc-name">URL Encoder</span></a>
+          <a class="related-card" href="json-formatter.html"><span class="rc-emoji">🧾</span><span class="rc-name">JSON Formatter</span></a>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <footer id="footer"></footer>
+
+  <script src="../../assets/js/navbar.js"></script>
+  <script src="../../assets/js/theme.js"></script>
+  <script>
+    const diceCount = document.getElementById('diceCount');
+    const diceSides = document.getElementById('diceSides');
+    const modifier = document.getElementById('modifier');
+    const resultValue = document.getElementById('resultValue');
+    const resultBreakdown = document.getElementById('resultBreakdown');
+    const historyList = document.getElementById('historyList');
+
+    function updateSettings() {
+      diceCount.value = Math.max(1, Math.min(20, Number(diceCount.value) || 1));
+      modifier.value = Number(modifier.value) || 0;
+    }
+
+    function rollDice() {
+      const count = Number(diceCount.value);
+      const sides = Number(diceSides.value);
+      const mod = Number(modifier.value);
+      const rolls = Array.from({ length: count }, () => Math.floor(Math.random() * sides) + 1);
+      const total = rolls.reduce((sum, value) => sum + value, 0) + mod;
+      resultValue.textContent = total;
+      resultBreakdown.textContent = `Rolls: ${rolls.join(' + ')} ${mod !== 0 ? `+ ${mod}` : ''}`;
+      addHistory(total, rolls, mod);
+    }
+
+    function addHistory(total, rolls, mod) {
+      const item = document.createElement('div');
+      item.className = 'history-item';
+      item.innerHTML = `<span>${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span><strong>${total}</strong>`;
+      historyList.prepend(item);
+      if (historyList.children.length > 6) historyList.removeChild(historyList.lastChild);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('navbar').innerHTML = renderNavbar();
+      document.getElementById('footer').innerHTML = renderFooter();
+      initNavbar();
+      updateSettings();
+    });
+  </script>
+</body>
+</html>

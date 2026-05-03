@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Compress PDF Online — Free Tool | Fix-Kit</title>
+  <meta name="description" content="Reduce PDF file size online for free. No upload to servers — everything runs in your browser. No login required."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/global.css"/>
+  <link rel="stylesheet" href="../assets/css/tool.css"/>
+  <script>(function(){ const s=localStorage.getItem('fk-theme')||'light'; document.documentElement.setAttribute('data-theme',s); })();</script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="logo">Fix<span>-</span>Kit</a>
+    <div class="nav-right">
+      <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">
+        <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="ad-banner" style="margin-top:20px;"><div class="ad-banner-inner">Advertisement</div></div>
+
+<div class="tool-wrap">
+  <div class="tool-main">
+    <div class="tool-header">
+      <div class="tool-breadcrumb"><a href="../index.html">Home</a> › <a href="../index.html#pdf">PDF Tools</a> › Compress PDF</div>
+      <h1 class="tool-title">Compress PDF</h1>
+      <p class="tool-desc">Reduce your PDF file size by removing metadata and optimising the structure. Works entirely in your browser — nothing leaves your device.</p>
+    </div>
+
+    <div class="tool-box">
+      <h3>Upload PDF</h3>
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" accept=".pdf"/>
+        <div class="dz-icon">📦</div>
+        <div class="dz-label">Drop a PDF here or click to upload</div>
+        <div class="dz-hint">Max 200MB · Processed entirely client-side</div>
+      </div>
+      <div class="file-list" id="fileList"></div>
+    </div>
+
+    <div class="tool-box" id="optionsBox" style="display:none;">
+      <h3>Compression Level</h3>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;">
+          <input type="radio" name="level" value="light" checked/> Light — Remove metadata only (safest, minimal size reduction)
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;">
+          <input type="radio" name="level" value="medium"/> Medium — Remove metadata + object streams optimisation
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;">
+          <input type="radio" name="level" value="strong"/> Strong — Full optimisation (may affect quality)
+        </label>
+      </div>
+      <p style="font-size:12px;color:var(--text3);margin-top:12px;">
+        ℹ️ Note: Client-side compression works by stripping metadata and optimising the PDF object structure. Large size reductions are only possible when the PDF contains unoptimised data or excess metadata.
+      </p>
+    </div>
+
+    <div id="statusMsg" class="status-msg"></div>
+
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;">
+      <button class="btn-primary" id="compressBtn" disabled><span>📦</span> Compress PDF</button>
+      <button class="btn-secondary" id="clearBtn">Clear</button>
+    </div>
+
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-bar-bg"><div class="progress-bar" id="progressBar"></div></div>
+      <div class="progress-label" id="progressLabel">Processing…</div>
+    </div>
+
+    <div class="result-box" id="resultBox">
+      <div class="result-header"><span class="result-title">Compressed PDF Ready</span></div>
+      <div class="result-content">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+          <div style="background:var(--bg3);border-radius:8px;padding:14px;text-align:center;">
+            <div style="font-size:12px;color:var(--text3);margin-bottom:4px;">Original Size</div>
+            <div style="font-size:18px;font-weight:600;" id="origSize">—</div>
+          </div>
+          <div style="background:var(--bg3);border-radius:8px;padding:14px;text-align:center;">
+            <div style="font-size:12px;color:var(--text3);margin-bottom:4px;">Compressed Size</div>
+            <div style="font-size:18px;font-weight:600;" id="newSize">—</div>
+          </div>
+        </div>
+        <div style="text-align:center;font-size:14px;color:var(--text2);margin-bottom:14px;" id="savingInfo"></div>
+        <div class="result-file">
+          <span class="rf-icon">📄</span>
+          <div class="rf-info">
+            <div class="rf-name" id="resultName">compressed.pdf</div>
+            <div class="rf-size" id="resultSize"></div>
+          </div>
+          <button class="btn-primary" id="downloadBtn">⬇ Download</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="related-section">
+      <div class="related-title">Related PDF Tools</div>
+      <div class="related-grid">
+        <a href="merge.html" class="related-card"><span class="rc-emoji">🔗</span><span class="rc-name">Merge PDF</span></a>
+        <a href="split.html" class="related-card"><span class="rc-emoji">✂️</span><span class="rc-name">Split PDF</span></a>
+        <a href="protect.html" class="related-card"><span class="rc-emoji">🔒</span><span class="rc-name">Protect PDF</span></a>
+        <a href="watermark.html" class="related-card"><span class="rc-emoji">💧</span><span class="rc-name">Add Watermark</span></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="tool-side">
+    <div class="ad-side">Advertisement</div>
+    <div class="tool-box" style="margin-bottom:0;">
+      <h3>How to Use</h3>
+      <ol style="padding-left:18px;font-size:13px;color:var(--text2);line-height:2;">
+        <li>Upload your PDF file</li>
+        <li>Select compression level</li>
+        <li>Click <strong>Compress PDF</strong></li>
+        <li>Download the smaller file</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="ad-banner"><div class="ad-banner-inner">Advertisement</div></div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Fix<span>-</span>Kit</div>
+    <div class="footer-links">
+      <a href="../index.html">Home</a><a href="#">About</a><a href="#">Privacy Policy</a><a href="#">Contact</a>
+    </div>
+    <p class="footer-copy">© 2025 FIX-KIT · No login required · No data stored on servers · 100% free forever</p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script>
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    const h = document.documentElement;
+    const next = h.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    h.setAttribute('data-theme', next); localStorage.setItem('fk-theme', next);
+  });
+
+  let pdfFile = null;
+  function formatBytes(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+    return (b/1048576).toFixed(1) + ' MB';
+  }
+  function showStatus(msg, type) { const s=document.getElementById('statusMsg'); s.textContent=msg; s.className='status-msg show '+type; }
+
+  function setFile(f) {
+    pdfFile = f;
+    document.getElementById('fileList').innerHTML = `
+      <div class="file-item">
+        <span class="fi-icon">📄</span>
+        <span class="fi-name">${f.name}</span>
+        <span class="fi-size">${formatBytes(f.size)}</span>
+        <button class="fi-remove" id="removeBtn">✕</button>
+      </div>`;
+    document.getElementById('removeBtn').addEventListener('click', () => {
+      pdfFile = null; document.getElementById('fileList').innerHTML = '';
+      document.getElementById('optionsBox').style.display = 'none';
+      document.getElementById('compressBtn').disabled = true;
+    });
+    document.getElementById('optionsBox').style.display = 'block';
+    document.getElementById('compressBtn').disabled = false;
+  }
+
+  const dropZone = document.getElementById('dropZone');
+  const fileInput = document.getElementById('fileInput');
+  dropZone.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', () => { if (fileInput.files[0]) setFile(fileInput.files[0]); });
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('drag-over'); if (e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]); });
+
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    pdfFile = null; document.getElementById('fileList').innerHTML = '';
+    document.getElementById('optionsBox').style.display = 'none';
+    document.getElementById('compressBtn').disabled = true;
+    document.getElementById('resultBox').classList.remove('show');
+    document.getElementById('statusMsg').className = 'status-msg';
+  });
+
+  document.getElementById('compressBtn').addEventListener('click', async () => {
+    if (!pdfFile) return;
+    const level = document.querySelector('input[name="level"]:checked').value;
+    document.getElementById('compressBtn').disabled = true;
+    document.getElementById('progressWrap').classList.add('show');
+    document.getElementById('resultBox').classList.remove('show');
+    document.getElementById('statusMsg').className = 'status-msg';
+
+    const pb = document.getElementById('progressBar');
+    const pl = document.getElementById('progressLabel');
+
+    try {
+      pb.style.width = '20%'; pl.textContent = 'Loading PDF…';
+      const { PDFDocument } = PDFLib;
+      const bytes = await pdfFile.arrayBuffer();
+      pb.style.width = '40%'; pl.textContent = 'Parsing structure…';
+      
+      const opts = { updateMetadata: false };
+      if (level === 'light') {
+        opts.useObjectStreams = false;
+      } else if (level === 'medium') {
+        opts.useObjectStreams = true;
+      } else {
+        opts.useObjectStreams = true;
+        opts.addDefaultPage = false;
+      }
+
+      const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
+      pb.style.width = '60%'; pl.textContent = 'Stripping metadata…';
+
+      // Remove metadata
+      pdf.setTitle('');
+      pdf.setAuthor('');
+      pdf.setSubject('');
+      pdf.setKeywords([]);
+      pdf.setProducer('');
+      pdf.setCreator('');
+
+      pb.style.width = '80%'; pl.textContent = 'Saving…';
+      const newBytes = await pdf.save(opts);
+      pb.style.width = '100%';
+
+      const origSize = pdfFile.size;
+      const newSize  = newBytes.byteLength;
+      const saving   = ((origSize - newSize) / origSize * 100).toFixed(1);
+
+      document.getElementById('origSize').textContent = formatBytes(origSize);
+      document.getElementById('newSize').textContent  = formatBytes(newSize);
+      document.getElementById('savingInfo').textContent = newSize < origSize
+        ? `✅ Reduced by ${formatBytes(origSize - newSize)} (${saving}% saved)`
+        : `ℹ️ This PDF is already optimised — no further reduction possible.`;
+
+      const blob = new Blob([newBytes], {type:'application/pdf'});
+      const url  = URL.createObjectURL(blob);
+      const fname = pdfFile.name.replace('.pdf', '') + '_compressed.pdf';
+      document.getElementById('resultName').textContent = fname;
+      document.getElementById('resultSize').textContent = formatBytes(blob.size);
+      document.getElementById('downloadBtn').onclick = () => {
+        const a = document.createElement('a'); a.href = url; a.download = fname; a.click();
+      };
+      document.getElementById('resultBox').classList.add('show');
+      showStatus('✅ Compression complete!', 'success');
+    } catch(e) { showStatus('❌ Error: ' + e.message, 'error'); }
+    finally {
+      document.getElementById('progressWrap').classList.remove('show');
+      pb.style.width = '0%';
+      document.getElementById('compressBtn').disabled = false;
+    }
+  });
+</script>
+</body>
+</html>

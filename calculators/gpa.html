@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GPA Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/tool.css">
+  <style>
+    .scale-selector {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .scale-btn {
+      flex: 1;
+      min-width: 100px;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg2);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .scale-btn.active {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+    }
+
+    .scale-btn:hover:not(.active) {
+      background: var(--bg3);
+    }
+
+    .course-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .course-item {
+      background: var(--card-bg);
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr auto;
+      gap: 12px;
+      align-items: end;
+    }
+
+    .course-input {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .course-input label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .course-input input,
+    .course-input select {
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg2);
+      color: var(--text);
+      font-size: 13px;
+      transition: border-color 0.2s;
+    }
+
+    .course-input input:focus,
+    .course-input select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .remove-btn {
+      padding: 8px 12px;
+      background: #ffebee;
+      color: #d32f2f;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .remove-btn:hover {
+      background: #d32f2f;
+      color: white;
+    }
+
+    [data-theme="dark"] .remove-btn {
+      background: #b71c1c;
+      color: #ef5350;
+    }
+
+    [data-theme="dark"] .remove-btn:hover {
+      background: #d32f2f;
+      color: white;
+    }
+
+    .add-course-btn {
+      padding: 12px 20px;
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: opacity 0.2s;
+      margin-bottom: 20px;
+    }
+
+    .add-course-btn:hover {
+      opacity: 0.8;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .result-card {
+      background: var(--bg2);
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .result-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .result-value {
+      font-size: 36px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .gpa-grade {
+      font-size: 14px;
+      color: var(--text2);
+      margin-top: 4px;
+    }
+
+    .summary {
+      background: var(--bg2);
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    .summary h3 {
+      margin: 0 0 16px 0;
+      font-size: 16px;
+      color: var(--text);
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      font-size: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .summary-row:last-child {
+      border-bottom: none;
+    }
+
+    .summary-label {
+      color: var(--text2);
+    }
+
+    .summary-value {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text3);
+    }
+
+    .empty-state p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    @media (max-width: 1024px) {
+      .course-item {
+        grid-template-columns: 1fr 1fr 1fr 1fr auto;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .scale-selector {
+        gap: 6px;
+      }
+
+      .scale-btn {
+        min-width: 90px;
+        font-size: 13px;
+        padding: 8px;
+      }
+
+      .course-item {
+        grid-template-columns: 1fr 1fr 1fr auto;
+      }
+
+      .course-input:nth-child(4) {
+        display: none;
+      }
+
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .result-value {
+        font-size: 32px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .scale-selector {
+        flex-direction: column;
+      }
+
+      .scale-btn {
+        min-width: unset;
+        width: 100%;
+      }
+
+      .course-item {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .course-input {
+        gap: 4px;
+      }
+
+      .course-input input,
+      .course-input select {
+        font-size: 14px;
+      }
+
+      .remove-btn {
+        width: 100%;
+      }
+
+      .result-value {
+        font-size: 28px;
+      }
+
+      .course-input label {
+        font-size: 11px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="navbar"></nav>
+
+  <main>
+    <div class="tool-container">
+      <div class="tool-header">
+        <h1>GPA Calculator</h1>
+        <p>Calculate your cumulative GPA based on grades and credit hours</p>
+      </div>
+
+      <div class="tool-card">
+        <div>
+          <h3 style="margin: 0 0 12px 0; font-size: 14px; color: var(--text2);">GPA Scale</h3>
+          <div class="scale-selector">
+            <button class="scale-btn active" onclick="setScale(4.0)">4.0 Scale</button>
+            <button class="scale-btn" onclick="setScale(5.0)">5.0 Scale</button>
+            <button class="scale-btn" onclick="setScale(100)">Percentage</button>
+          </div>
+        </div>
+
+        <div id="courseList" class="course-list">
+          <div class="empty-state">
+            <p>👇 Add your first course to get started</p>
+          </div>
+        </div>
+
+        <button class="add-course-btn" onclick="addCourse()">+ Add Course</button>
+
+        <div id="results" style="display: none;">
+          <div class="result-grid">
+            <div class="result-card">
+              <div class="result-label">Cumulative GPA</div>
+              <div class="result-value" id="cumulativeGPA">0.00</div>
+              <div class="gpa-grade" id="gradeEquivalent">-</div>
+            </div>
+            <div class="result-card">
+              <div class="result-label">Total Credits</div>
+              <div class="result-value" id="totalCredits">0</div>
+              <div class="gpa-grade">Credit Hours</div>
+            </div>
+          </div>
+
+          <div class="summary">
+            <h3>Course Summary</h3>
+            <div class="summary-row">
+              <span class="summary-label">Courses Completed</span>
+              <span class="summary-value" id="coursesCount">0</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">Quality Points</span>
+              <span class="summary-value" id="qualityPoints">0</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">Average Grade</span>
+              <span class="summary-value" id="averageGrade">-</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">Letter Grade (4.0)</span>
+              <span class="summary-value" id="letterGrade">-</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="footer"></footer>
+
+  <script src="../assets/js/navbar.js"></script>
+  <script src="../assets/js/theme.js"></script>
+  <script>
+    let gpaScale = 4.0;
+    let courses = [];
+    let courseId = 0;
+
+    function setScale(scale) {
+      gpaScale = scale;
+      const buttons = document.querySelectorAll('.scale-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      calculate();
+    }
+
+    function addCourse() {
+      courses.push({
+        id: courseId++,
+        name: '',
+        grade: 4.0,
+        credits: 3
+      });
+      renderCourses();
+    }
+
+    function removeCourse(id) {
+      courses = courses.filter(c => c.id !== id);
+      renderCourses();
+    }
+
+    function updateCourse(id, field, value) {
+      const course = courses.find(c => c.id === id);
+      if (course) {
+        if (field === 'grade' || field === 'credits') {
+          course[field] = parseFloat(value) || 0;
+        } else {
+          course[field] = value;
+        }
+        calculate();
+      }
+    }
+
+    function renderCourses() {
+      const courseList = document.getElementById('courseList');
+      if (courses.length === 0) {
+        courseList.innerHTML = '<div class="empty-state"><p>👇 Add your first course to get started</p></div>';
+        document.getElementById('results').style.display = 'none';
+        return;
+      }
+
+      courseList.innerHTML = courses.map(course => `
+        <div class="course-item">
+          <div class="course-input">
+            <label>Course Name</label>
+            <input type="text" value="${course.name}" placeholder="e.g., Mathematics" 
+              onchange="updateCourse(${course.id}, 'name', this.value)">
+          </div>
+          <div class="course-input">
+            <label>Grade (${gpaScale === 100 ? '%' : gpaScale})</label>
+            <input type="number" value="${course.grade}" min="0" max="${gpaScale}" step="0.1"
+              onchange="updateCourse(${course.id}, 'grade', this.value)">
+          </div>
+          <div class="course-input">
+            <label>Credits</label>
+            <select onchange="updateCourse(${course.id}, 'credits', this.value)">
+              <option value="1" ${course.credits === 1 ? 'selected' : ''}>1</option>
+              <option value="2" ${course.credits === 2 ? 'selected' : ''}>2</option>
+              <option value="3" ${course.credits === 3 ? 'selected' : ''}>3</option>
+              <option value="4" ${course.credits === 4 ? 'selected' : ''}>4</option>
+              <option value="5" ${course.credits === 5 ? 'selected' : ''}>5</option>
+              <option value="6" ${course.credits === 6 ? 'selected' : ''}>6</option>
+            </select>
+          </div>
+          <div class="course-input">
+            <label>Points</label>
+            <input type="text" value="${(course.grade * course.credits).toFixed(2)}" disabled style="background: var(--bg3); cursor: not-allowed;">
+          </div>
+          <button class="remove-btn" onclick="removeCourse(${course.id})">Remove</button>
+        </div>
+      `).join('');
+    }
+
+    function calculate() {
+      if (courses.length === 0) {
+        document.getElementById('results').style.display = 'none';
+        return;
+      }
+
+      let totalQualityPoints = 0;
+      let totalCredits = 0;
+      let validCourses = 0;
+
+      courses.forEach(course => {
+        if (course.name && course.grade >= 0 && course.credits > 0) {
+          totalQualityPoints += course.grade * course.credits;
+          totalCredits += course.credits;
+          validCourses++;
+        }
+      });
+
+      if (validCourses === 0 || totalCredits === 0) {
+        document.getElementById('results').style.display = 'none';
+        return;
+      }
+
+      const cumulativeGPA = totalQualityPoints / totalCredits;
+      const averageGrade = totalQualityPoints / validCourses;
+
+      // Convert to 4.0 scale for letter grade if needed
+      let gpaOn4Scale = cumulativeGPA;
+      if (gpaScale === 5.0) {
+        gpaOn4Scale = (cumulativeGPA / 5.0) * 4.0;
+      } else if (gpaScale === 100) {
+        gpaOn4Scale = (cumulativeGPA / 100) * 4.0;
+      }
+
+      const letterGrade = getLetterGrade(gpaOn4Scale);
+
+      // Update results
+      document.getElementById('cumulativeGPA').textContent = cumulativeGPA.toFixed(2);
+      document.getElementById('gradeEquivalent').textContent = letterGrade;
+      document.getElementById('totalCredits').textContent = totalCredits;
+      document.getElementById('coursesCount').textContent = validCourses;
+      document.getElementById('qualityPoints').textContent = totalQualityPoints.toFixed(2);
+      document.getElementById('averageGrade').textContent = averageGrade.toFixed(2);
+      document.getElementById('letterGrade').textContent = letterGrade;
+
+      document.getElementById('results').style.display = 'block';
+    }
+
+    function getLetterGrade(gpa) {
+      if (gpa >= 3.9) return 'A+';
+      if (gpa >= 3.7) return 'A';
+      if (gpa >= 3.3) return 'A-';
+      if (gpa >= 3.0) return 'B+';
+      if (gpa >= 2.7) return 'B';
+      if (gpa >= 2.3) return 'B-';
+      if (gpa >= 2.0) return 'C+';
+      if (gpa >= 1.7) return 'C';
+      if (gpa >= 1.0) return 'C-';
+      if (gpa >= 0.7) return 'D+';
+      if (gpa >= 0.0) return 'D';
+      return 'F';
+    }
+
+    // Render navbar and footer on load
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('navbar').innerHTML = renderNavbar();
+      document.getElementById('footer').innerHTML = renderFooter();
+      initNavbar();
+      addCourse();
+    });
+  </script>
+</body>
+</html>

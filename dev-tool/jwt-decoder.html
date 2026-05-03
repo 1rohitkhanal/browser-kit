@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JWT Decoder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/tool.css">
+  <style>
+    .page-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform .15s ease, background .15s ease;
+    }
+
+    .back-button:hover {
+      background: var(--bg3);
+      transform: translateY(-1px);
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .panel {
+      display: grid;
+      gap: 20px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 26px;
+    }
+
+    .panel label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      font-weight: 700;
+      color: var(--text2);
+    }
+
+    textarea,
+    input {
+      width: 100%;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      padding: 16px;
+      font-size: 15px;
+      line-height: 1.7;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      min-height: 160px;
+      resize: vertical;
+    }
+
+    .button-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .action-btn {
+      border-radius: 14px;
+      border: 1px solid transparent;
+      padding: 14px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform .15s ease, opacity .15s ease;
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .action-btn.secondary {
+      background: var(--bg3);
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .action-btn:hover {
+      transform: translateY(-1px);
+      opacity: .95;
+    }
+
+    .info-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .info-card h3 {
+      margin: 0;
+      font-size: 18px;
+      color: var(--text);
+    }
+
+    .info-card p {
+      margin: 0;
+      color: var(--text2);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .status-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .tag {
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--bg3);
+      color: var(--text2);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .payload-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      overflow: auto;
+    }
+
+    .payload-card pre {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: var(--text);
+    }
+
+    @media (max-width: 980px) {
+      .tool-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .button-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="navbar"></nav>
+
+  <main class="tool-wrap">
+    <section class="tool-main">
+      <div class="page-header">
+        <div>
+          <a class="back-button" href="../index.html">← Back</a>
+          <p class="tool-breadcrumb"><a href="../index.html">Home</a> / Dev Tools / JWT Decoder</p>
+          <h1 class="tool-title">JWT Decoder</h1>
+          <p class="tool-desc">Decode and inspect JSON Web Tokens quickly. This responsive tool shows header and payload data in a readable format.</p>
+        </div>
+      </div>
+
+      <div class="tool-grid">
+        <div class="panel">
+          <div>
+            <label for="jwtInput">JWT Token</label>
+            <textarea id="jwtInput" placeholder="Paste your JWT token here..." oninput="decodeJWT()"></textarea>
+          </div>
+
+          <div class="button-row">
+            <button class="action-btn" onclick="decodeJWT()">Decode</button>
+            <button class="action-btn secondary" onclick="clearInput()">Clear</button>
+            <button class="action-btn secondary" onclick="copyPayload()">Copy Payload</button>
+          </div>
+
+          <div>
+            <label>Decoded Output</label>
+            <div class="payload-card" id="decodedOutput"><pre>Paste a JWT and click Decode to see header and payload details.</pre></div>
+            <div class="status-row">
+              <span class="tag" id="statusLabel">Status: Ready</span>
+              <span class="tag" id="segmentLabel">Segments: 0</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="tool-side">
+          <div class="info-card">
+            <h3>How it works</h3>
+            <p>A JWT contains three parts: header, payload, and signature. This tool decodes the first two parts so you can inspect the token contents without verifying the signature.</p>
+          </div>
+
+          <div class="info-card">
+            <h3>Security note</h3>
+            <p>Never paste sensitive tokens on untrusted pages. This tool only decodes values locally in your browser and does not transmit data to any server.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer"></footer>
+
+  <script src="../assets/js/navbar.js"></script>
+  <script src="../assets/js/theme.js"></script>
+  <script>
+    const jwtInput = document.getElementById('jwtInput');
+    const decodedOutput = document.getElementById('decodedOutput');
+    const statusLabel = document.getElementById('statusLabel');
+    const segmentLabel = document.getElementById('segmentLabel');
+
+    function updateStatus(message) {
+      statusLabel.textContent = `Status: ${message}`;
+    }
+
+    function updateSegments(count) {
+      segmentLabel.textContent = `Segments: ${count}`;
+    }
+
+    function safeDecode(str) {
+      try {
+        const decoded = atob(str.replace(/-/g, '+').replace(/_/g, '/'));
+        return decodeURIComponent(escape(decoded));
+      } catch (err) {
+        return null;
+      }
+    }
+
+    function decodeJWT() {
+      const value = jwtInput.value.trim();
+      if (!value) {
+        decodedOutput.innerHTML = '<pre>Paste a JWT and click Decode to see header and payload details.</pre>';
+        updateStatus('Ready');
+        updateSegments(0);
+        return;
+      }
+
+      const parts = value.split('.');
+      updateSegments(parts.length);
+
+      if (parts.length !== 3) {
+        decodedOutput.innerHTML = '<pre>Invalid JWT format. A JWT must contain three dot-separated segments.</pre>';
+        updateStatus('Invalid token');
+        return;
+      }
+
+      const header = safeDecode(parts[0]);
+      const payload = safeDecode(parts[1]);
+      const signature = parts[2];
+
+      if (!header || !payload) {
+        decodedOutput.innerHTML = '<pre>Unable to decode header or payload. Make sure the token is valid Base64URL.</pre>';
+        updateStatus('Invalid token');
+        return;
+      }
+
+      try {
+        const parsedHeader = JSON.parse(header);
+        const parsedPayload = JSON.parse(payload);
+        decodedOutput.innerHTML = `<pre>${JSON.stringify({ header: parsedHeader, payload: parsedPayload, signature }, null, 2)}</pre>`;
+        updateStatus('Decoded');
+      } catch (err) {
+        decodedOutput.innerHTML = '<pre>Decoded content is not valid JSON.</pre>';
+        updateStatus('Invalid JSON');
+      }
+    }
+
+    function clearInput() {
+      jwtInput.value = '';
+      decodeJWT();
+    }
+
+    function copyPayload() {
+      const text = decodedOutput.textContent;
+      if (!text || text.includes('Unable to decode') || text.includes('Invalid')) return;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Decoded payload copied to clipboard!');
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('navbar').innerHTML = renderNavbar();
+      document.getElementById('footer').innerHTML = renderFooter();
+      initNavbar();
+    });
+  </script>
+</body>
+</html>

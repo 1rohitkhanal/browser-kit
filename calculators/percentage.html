@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Percentage Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/tool.css">
+  <style>
+    .calculation-modes {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .mode-btn {
+      flex: 1;
+      min-width: 120px;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg2);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .mode-btn.active {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+    }
+
+    .mode-btn:hover:not(.active) {
+      background: var(--bg3);
+    }
+
+    .tool-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .input-group label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text2);
+    }
+
+    .input-group input {
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--card-bg);
+      color: var(--text);
+      font-size: 14px;
+      transition: border-color 0.2s;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .result-card {
+      background: var(--bg2);
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .result-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .result-value {
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .result-unit {
+      font-size: 14px;
+      color: var(--text2);
+    }
+
+    .breakdown {
+      background: var(--bg2);
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    .breakdown h3 {
+      margin: 0 0 16px 0;
+      font-size: 16px;
+      color: var(--text);
+    }
+
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+
+    .breakdown-row:last-child {
+      border-bottom: none;
+    }
+
+    .breakdown-label {
+      color: var(--text2);
+    }
+
+    .breakdown-value {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .formula-box {
+      background: var(--bg2);
+      padding: 16px;
+      border-radius: 8px;
+      margin-top: 20px;
+      border-left: 4px solid var(--accent);
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.8;
+    }
+
+    .formula-title {
+      color: var(--text);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .percentage-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .percentage-item {
+      background: var(--bg2);
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .percentage-label {
+      font-size: 11px;
+      color: var(--text3);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .percentage-value {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    @media (max-width: 768px) {
+      .calculation-modes {
+        gap: 6px;
+      }
+
+      .mode-btn {
+        min-width: 100px;
+        font-size: 13px;
+        padding: 8px;
+      }
+
+      .tool-section {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .result-value {
+        font-size: 28px;
+      }
+
+      .percentage-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .calculation-modes {
+        flex-direction: column;
+      }
+
+      .mode-btn {
+        min-width: unset;
+        width: 100%;
+      }
+
+      .tool-section {
+        grid-template-columns: 1fr;
+      }
+
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .result-value {
+        font-size: 24px;
+      }
+
+      .percentage-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .breakdown-row {
+        flex-direction: column;
+        gap: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="navbar"></nav>
+
+  <main>
+    <div class="tool-container">
+      <div class="tool-header">
+        <h1>Percentage Calculator</h1>
+        <p>Calculate percentages, percentage change, and more with ease</p>
+      </div>
+
+      <div class="tool-card">
+        <div>
+          <h3 style="margin: 0 0 12px 0; font-size: 14px; color: var(--text2);">Calculation Type</h3>
+          <div class="calculation-modes">
+            <button class="mode-btn active" onclick="setMode('percentage')">What is X% of Y</button>
+            <button class="mode-btn" onclick="setMode('value')">X is what % of Y</button>
+            <button class="mode-btn" onclick="setMode('change')">Percentage Change</button>
+          </div>
+        </div>
+
+        <div id="modePercentage" class="tool-section">
+          <div class="input-group">
+            <label for="value1">Percentage (%)</label>
+            <input type="number" id="value1" placeholder="25" step="0.01" oninput="calculate()">
+          </div>
+          <div class="input-group">
+            <label for="value2">Of Value</label>
+            <input type="number" id="value2" placeholder="200" step="0.01" oninput="calculate()">
+          </div>
+        </div>
+
+        <div id="modeValue" class="tool-section" style="display: none;">
+          <div class="input-group">
+            <label for="value3">Value</label>
+            <input type="number" id="value3" placeholder="50" step="0.01" oninput="calculate()">
+          </div>
+          <div class="input-group">
+            <label for="value4">Out of Total</label>
+            <input type="number" id="value4" placeholder="200" step="0.01" oninput="calculate()">
+          </div>
+        </div>
+
+        <div id="modeChange" class="tool-section" style="display: none;">
+          <div class="input-group">
+            <label for="value5">Original Value</label>
+            <input type="number" id="value5" placeholder="100" step="0.01" oninput="calculate()">
+          </div>
+          <div class="input-group">
+            <label for="value6">New Value</label>
+            <input type="number" id="value6" placeholder="150" step="0.01" oninput="calculate()">
+          </div>
+        </div>
+
+        <div id="results" style="display: none;">
+          <div class="result-grid">
+            <div class="result-card">
+              <div class="result-label" id="resultLabel1">Result</div>
+              <div class="result-value" id="resultValue1">0</div>
+              <div class="result-unit" id="resultUnit1"></div>
+            </div>
+            <div class="result-card">
+              <div class="result-label" id="resultLabel2">Secondary Result</div>
+              <div class="result-value" id="resultValue2">0</div>
+              <div class="result-unit" id="resultUnit2"></div>
+            </div>
+          </div>
+
+          <div class="breakdown">
+            <h3>Calculation Details</h3>
+            <div id="breakdownContent"></div>
+          </div>
+
+          <div class="formula-box">
+            <div class="formula-title">📐 Formula Used:</div>
+            <div id="formulaText"></div>
+          </div>
+
+          <div id="percentageGridContainer" style="display: none;">
+            <h3 style="margin: 20px 0 16px 0; font-size: 16px; color: var(--text);">Quick Reference Grid</h3>
+            <div class="percentage-grid" id="percentageGrid"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="footer"></footer>
+
+  <script src="../assets/js/navbar.js"></script>
+  <script src="../assets/js/theme.js"></script>
+  <script>
+    let currentMode = 'percentage';
+
+    function setMode(mode) {
+      currentMode = mode;
+      const buttons = document.querySelectorAll('.mode-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      document.getElementById('modePercentage').style.display = 'none';
+      document.getElementById('modeValue').style.display = 'none';
+      document.getElementById('modeChange').style.display = 'none';
+
+      if (mode === 'percentage') {
+        document.getElementById('modePercentage').style.display = 'grid';
+      } else if (mode === 'value') {
+        document.getElementById('modeValue').style.display = 'grid';
+      } else if (mode === 'change') {
+        document.getElementById('modeChange').style.display = 'grid';
+      }
+
+      document.getElementById('results').style.display = 'none';
+    }
+
+    function calculate() {
+      const resultsDiv = document.getElementById('results');
+      let isValid = false;
+      let label1, label2, result1, result2, unit1, unit2;
+      let breakdownHTML = '';
+      let formulaHTML = '';
+      let showGrid = false;
+      let gridData = [];
+
+      if (currentMode === 'percentage') {
+        const percentage = parseFloat(document.getElementById('value1').value);
+        const ofValue = parseFloat(document.getElementById('value2').value);
+
+        if (percentage >= 0 && ofValue >= 0 && !isNaN(percentage) && !isNaN(ofValue)) {
+          isValid = true;
+          const result = (percentage / 100) * ofValue;
+          const remaining = ofValue - result;
+
+          label1 = 'Result';
+          label2 = 'Remaining';
+          result1 = result.toFixed(2);
+          result2 = remaining.toFixed(2);
+          unit1 = '';
+          unit2 = '';
+
+          breakdownHTML = `
+            <div class="breakdown-row">
+              <span class="breakdown-label">Percentage</span>
+              <span class="breakdown-value">${percentage.toFixed(2)}%</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-label">Of Value</span>
+              <span class="breakdown-value">${ofValue.toFixed(2)}</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-label">${percentage}% of ${ofValue}</span>
+              <span class="breakdown-value">${result.toFixed(2)}</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-label">Remaining (${100 - percentage}%)</span>
+              <span class="breakdown-value">${remaining.toFixed(2)}</span>
+            </div>
+          `;
+
+          formulaHTML = `(${percentage} ÷ 100) × ${ofValue} = <strong>${result.toFixed(2)}</strong>`;
+
+          showGrid = true;
+          gridData = [
+            { label: '25%', value: ((25 / 100) * ofValue).toFixed(2) },
+            { label: '50%', value: ((50 / 100) * ofValue).toFixed(2) },
+            { label: '75%', value: ((75 / 100) * ofValue).toFixed(2) },
+            { label: '10%', value: ((10 / 100) * ofValue).toFixed(2) },
+            { label: '20%', value: ((20 / 100) * ofValue).toFixed(2) },
+            { label: '33%', value: ((33 / 100) * ofValue).toFixed(2) }
+          ];
+        }
+      } else if (currentMode === 'value') {
+        const value = parseFloat(document.getElementById('value3').value);
+        const total = parseFloat(document.getElementById('value4').value);
+
+        if (value >= 0 && total > 0 && !isNaN(value) && !isNaN(total)) {
+          isValid = true;
+          const percentage = (value / total) * 100;
+          const remaining = 100 - percentage;
+
+          label1 = 'Percentage';
+          label2 = 'Remaining %';
+          result1 = percentage.toFixed(2);
+          result2 = remaining.toFixed(2);
+          unit1 = '%';
+          unit2 = '%';
+
+          breakdownHTML = `
+            <div class="breakdown-row">
+              <span class="breakdown-label">Value</span>
+              <span class="breakdown-value">${value.toFixed(2)}</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-label">Total</span>
+              <span class="breakdown-value">${total.toFixed(2)}</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-label">Percentage</span>
+              <span class="breakdown-value">${percentage.toFixed(2)}%</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-label">Remaining</span>
+              <span class="breakdown-value">${remaining.toFixed(2)}%</span>
+            </div>
+          `;
+
+          formulaHTML = `(${value} ÷ ${total}) × 100 = <strong>${percentage.toFixed(2)}%</strong>`;
+        }
+      } else if (currentMode === 'change') {
+        const original = parseFloat(document.getElementById('value5').value);
+        const newValue = parseFloat(document.getElementById('value6').value);
+
+        if (original > 0 && !isNaN(original) && !isNaN(newValue)) {
+          isValid = true;
+          const difference = newValue - original;
+          const percentageChange = (difference / original) * 100;
+          const isIncrease = percentageChange >= 0;
+
+          label1 = 'Percentage Change';
+          label2 = 'Absolute Change';
+          result1 = percentageChange.toFixed(2);
+          result2 = difference.toFixed(2);
+          unit1 = '%';
+          unit2 = '';
+
+          breakdownHTML = `
+            <div class="breakdown-row">
+              <span class="breakdown-label">Original Value</span>
+              <span class="breakdown-value">${original.toFixed(2)}</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-label">New Value</span>
+              <span class="breakdown-value">${newValue.toFixed(2)}</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-label">Difference</span>
+              <span class="breakdown-value">${difference.toFixed(2)} (${isIncrease ? 'Increase' : 'Decrease'})</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-label">Percentage Change</span>
+              <span class="breakdown-value">${percentageChange.toFixed(2)}%</span>
+            </div>
+          `;
+
+          formulaHTML = `((${newValue} - ${original}) ÷ ${original}) × 100 = <strong>${percentageChange.toFixed(2)}%</strong>`;
+        }
+      }
+
+      if (isValid) {
+        document.getElementById('resultLabel1').textContent = label1;
+        document.getElementById('resultLabel2').textContent = label2;
+        document.getElementById('resultValue1').textContent = result1;
+        document.getElementById('resultValue2').textContent = result2;
+        document.getElementById('resultUnit1').textContent = unit1;
+        document.getElementById('resultUnit2').textContent = unit2;
+        document.getElementById('breakdownContent').innerHTML = breakdownHTML;
+        document.getElementById('formulaText').innerHTML = formulaHTML;
+
+        if (showGrid) {
+          document.getElementById('percentageGridContainer').style.display = 'block';
+          document.getElementById('percentageGrid').innerHTML = gridData.map(item => `
+            <div class="percentage-item">
+              <div class="percentage-label">${item.label}</div>
+              <div class="percentage-value">${item.value}</div>
+            </div>
+          `).join('');
+        } else {
+          document.getElementById('percentageGridContainer').style.display = 'none';
+        }
+
+        resultsDiv.style.display = 'block';
+      } else {
+        resultsDiv.style.display = 'none';
+      }
+    }
+
+    // Render navbar and footer on load
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('navbar').innerHTML = renderNavbar();
+      document.getElementById('footer').innerHTML = renderFooter();
+      initNavbar();
+    });
+  </script>
+</body>
+</html>

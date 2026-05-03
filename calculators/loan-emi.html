@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loan EMI Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/tool.css">
+  <style>
+    .tenure-toggle {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .tenure-btn {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg2);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .tenure-btn.active {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+    }
+
+    .tenure-btn:hover:not(.active) {
+      background: var(--bg3);
+    }
+
+    .tool-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .input-group label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text2);
+    }
+
+    .input-group input {
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--card-bg);
+      color: var(--text);
+      font-size: 14px;
+      transition: border-color 0.2s;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .result-card {
+      background: var(--bg2);
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .result-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .result-value {
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .result-unit {
+      font-size: 14px;
+      color: var(--text2);
+    }
+
+    .breakdown {
+      background: var(--bg2);
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    .breakdown h3 {
+      margin: 0 0 16px 0;
+      font-size: 16px;
+      color: var(--text);
+    }
+
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+
+    .breakdown-row:last-child {
+      border-bottom: none;
+    }
+
+    .breakdown-label {
+      color: var(--text2);
+    }
+
+    .breakdown-value {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .schedule-table {
+      background: var(--bg2);
+      border-radius: 8px;
+      margin-top: 20px;
+      overflow-x: auto;
+    }
+
+    .schedule-header {
+      display: grid;
+      grid-template-columns: 60px 1fr 1fr 1fr 1fr;
+      gap: 12px;
+      padding: 16px;
+      background: var(--bg3);
+      border-bottom: 2px solid var(--border);
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .schedule-row {
+      display: grid;
+      grid-template-columns: 60px 1fr 1fr 1fr 1fr;
+      gap: 12px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      align-items: center;
+    }
+
+    .schedule-row:last-child {
+      border-bottom: none;
+    }
+
+    .schedule-row:hover {
+      background: var(--bg3);
+    }
+
+    .schedule-row strong {
+      color: var(--text);
+    }
+
+    .schedule-row span {
+      color: var(--text2);
+    }
+
+    .info-box {
+      background: var(--bg2);
+      padding: 16px;
+      border-radius: 8px;
+      margin-top: 20px;
+      border-left: 4px solid var(--accent);
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 1024px) {
+      .tool-section {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .result-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .schedule-header,
+      .schedule-row {
+        grid-template-columns: 50px 1fr 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .tenure-toggle {
+        gap: 6px;
+      }
+
+      .tenure-btn {
+        font-size: 13px;
+        padding: 8px;
+      }
+
+      .tool-section {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .result-value {
+        font-size: 28px;
+      }
+
+      .schedule-header,
+      .schedule-row {
+        grid-template-columns: 40px 1fr 1fr 1fr;
+        gap: 8px;
+        padding: 10px 12px;
+      }
+
+      .schedule-header {
+        font-size: 11px;
+      }
+
+      .schedule-row {
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .tenure-toggle {
+        flex-direction: column;
+      }
+
+      .tenure-btn {
+        width: 100%;
+      }
+
+      .tool-section {
+        grid-template-columns: 1fr;
+      }
+
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .result-value {
+        font-size: 24px;
+      }
+
+      .schedule-header,
+      .schedule-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+
+      .schedule-header::before,
+      .schedule-row::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--text3);
+        font-size: 11px;
+        text-transform: uppercase;
+      }
+
+      .schedule-header {
+        display: none;
+      }
+
+      .schedule-row {
+        display: flex;
+        flex-direction: column;
+        padding: 12px;
+        border: 1px solid var(--border);
+        margin-bottom: 8px;
+        border-radius: 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="navbar"></nav>
+
+  <main>
+    <div class="tool-container">
+      <div class="tool-header">
+        <h1>Loan EMI Calculator</h1>
+        <p>Calculate your monthly EMI, interest, and loan repayment schedule</p>
+      </div>
+
+      <div class="tool-card">
+        <div>
+          <h3 style="margin: 0 0 12px 0; font-size: 14px; color: var(--text2);">Tenure Unit</h3>
+          <div class="tenure-toggle">
+            <button class="tenure-btn active" onclick="setTenureUnit('months')">Months</button>
+            <button class="tenure-btn" onclick="setTenureUnit('years')">Years</button>
+          </div>
+        </div>
+
+        <div class="tool-section">
+          <div class="input-group">
+            <label for="principal">Loan Amount ($)</label>
+            <input type="number" id="principal" placeholder="100000" min="0" step="1000" oninput="calculate()">
+          </div>
+          <div class="input-group">
+            <label for="rate">Annual Interest Rate (%)</label>
+            <input type="number" id="rate" placeholder="7.5" min="0" step="0.1" oninput="calculate()">
+          </div>
+          <div class="input-group">
+            <label for="tenure" id="tenureLabel">Tenure (Months)</label>
+            <input type="number" id="tenure" placeholder="60" min="1" oninput="calculate()">
+          </div>
+        </div>
+
+        <div id="results" style="display: none;">
+          <div class="result-grid">
+            <div class="result-card">
+              <div class="result-label">Monthly EMI</div>
+              <div class="result-value" id="emiAmount">$0</div>
+              <div class="result-unit">Per Month</div>
+            </div>
+            <div class="result-card">
+              <div class="result-label">Total Interest</div>
+              <div class="result-value" id="totalInterest">$0</div>
+              <div class="result-unit">Over Tenure</div>
+            </div>
+            <div class="result-card">
+              <div class="result-label">Total Amount Payable</div>
+              <div class="result-value" id="totalAmount">$0</div>
+              <div class="result-unit">Principal + Interest</div>
+            </div>
+          </div>
+
+          <div class="breakdown">
+            <h3>Loan Summary</h3>
+            <div class="breakdown-row">
+              <span class="breakdown-label">Principal Loan Amount</span>
+              <span class="breakdown-value" id="breakPrincipal">$0</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-label">Annual Interest Rate</span>
+              <span class="breakdown-value" id="breakRate">0%</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-label">Monthly Interest Rate</span>
+              <span class="breakdown-value" id="breakMonthlyRate">0%</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-label">Loan Tenure</span>
+              <span class="breakdown-value" id="breakTenure">0 months</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-label">Monthly EMI</span>
+              <span class="breakdown-value" id="breakEMI">$0</span>
+            </div>
+            <div class="breakdown-row" style="border-top: 2px solid var(--border); padding-top: 12px;">
+              <span class="breakdown-label">Total Interest Payable</span>
+              <span class="breakdown-value" id="breakInterest">$0</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-label">Total Amount Payable</span>
+              <span class="breakdown-value" id="breakTotal">$0</span>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px;">
+            <h3 style="margin: 0 0 16px 0; font-size: 16px; color: var(--text);">Amortization Schedule (First 12 Months)</h3>
+            <div class="schedule-table">
+              <div class="schedule-header">
+                <div>Month</div>
+                <div>EMI</div>
+                <div>Principal</div>
+                <div>Interest</div>
+                <div>Balance</div>
+              </div>
+              <div id="scheduleBody"></div>
+            </div>
+          </div>
+
+          <div class="info-box">
+            <strong>📊 EMI Information:</strong><br>
+            EMI (Equated Monthly Installment) is the fixed amount you need to pay each month. The first payments contain more interest, while later payments contain more principal. This is a standard amortizing loan schedule.
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="footer"></footer>
+
+  <script src="../assets/js/navbar.js"></script>
+  <script src="../assets/js/theme.js"></script>
+  <script>
+    let tenureUnit = 'months';
+
+    function setTenureUnit(unit) {
+      tenureUnit = unit;
+      const buttons = document.querySelectorAll('.tenure-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const label = document.getElementById('tenureLabel');
+      const input = document.getElementById('tenure');
+      
+      if (unit === 'months') {
+        label.textContent = 'Tenure (Months)';
+        input.placeholder = '60';
+      } else {
+        label.textContent = 'Tenure (Years)';
+        input.placeholder = '5';
+      }
+
+      input.value = '';
+      document.getElementById('results').style.display = 'none';
+    }
+
+    function calculateEMI(principal, monthlyRate, months) {
+      if (monthlyRate === 0) {
+        return principal / months;
+      }
+      const emi = (principal * monthlyRate * Math.pow(1 + monthlyRate, months)) / 
+                  (Math.pow(1 + monthlyRate, months) - 1);
+      return emi;
+    }
+
+    function calculate() {
+      const principal = parseFloat(document.getElementById('principal').value);
+      const rate = parseFloat(document.getElementById('rate').value);
+      let tenure = parseFloat(document.getElementById('tenure').value);
+      const resultsDiv = document.getElementById('results');
+
+      if (!principal || !rate || !tenure || principal <= 0 || rate < 0 || tenure <= 0) {
+        resultsDiv.style.display = 'none';
+        return;
+      }
+
+      // Convert tenure to months if needed
+      const months = tenureUnit === 'years' ? tenure * 12 : tenure;
+      const monthlyRate = rate / 100 / 12;
+
+      // Calculate EMI
+      const emi = calculateEMI(principal, monthlyRate, months);
+      const totalAmount = emi * months;
+      const totalInterest = totalAmount - principal;
+
+      // Update result cards
+      document.getElementById('emiAmount').textContent = '$' + emi.toFixed(2);
+      document.getElementById('totalInterest').textContent = '$' + totalInterest.toFixed(2);
+      document.getElementById('totalAmount').textContent = '$' + totalAmount.toFixed(2);
+
+      // Update breakdown
+      document.getElementById('breakPrincipal').textContent = '$' + principal.toFixed(2);
+      document.getElementById('breakRate').textContent = rate.toFixed(2) + '%';
+      document.getElementById('breakMonthlyRate').textContent = (monthlyRate * 100).toFixed(3) + '%';
+      document.getElementById('breakTenure').textContent = months + ' months' + (tenureUnit === 'years' ? ` (${tenure} years)` : '');
+      document.getElementById('breakEMI').textContent = '$' + emi.toFixed(2);
+      document.getElementById('breakInterest').textContent = '$' + totalInterest.toFixed(2);
+      document.getElementById('breakTotal').textContent = '$' + totalAmount.toFixed(2);
+
+      // Generate amortization schedule (first 12 months or total if less)
+      let remainingBalance = principal;
+      let scheduleHTML = '';
+      const scheduleMonths = Math.min(12, months);
+
+      for (let m = 1; m <= scheduleMonths; m++) {
+        const interestPayment = remainingBalance * monthlyRate;
+        const principalPayment = emi - interestPayment;
+        remainingBalance -= principalPayment;
+
+        const isLast = m === scheduleMonths;
+        scheduleHTML += `
+          <div class="schedule-row" ${isLast ? "style='border-top: 2px solid var(--border); margin-top: 8px;'" : ''}>
+            <strong>${m}</strong>
+            <span>$${emi.toFixed(2)}</span>
+            <span>$${principalPayment.toFixed(2)}</span>
+            <span>$${interestPayment.toFixed(2)}</span>
+            <strong>$${Math.max(0, remainingBalance).toFixed(2)}</strong>
+          </div>
+        `;
+      }
+
+      if (months > 12) {
+        scheduleHTML += `
+          <div class="schedule-row" style="background: var(--bg3); text-align: center; padding: 16px; color: var(--text3);">
+            <strong>...</strong>
+            <span colspan="4">Schedule continues for ${months - 12} more months</span>
+          </div>
+        `;
+      }
+
+      document.getElementById('scheduleBody').innerHTML = scheduleHTML;
+      resultsDiv.style.display = 'block';
+    }
+
+    // Render navbar and footer on load
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('navbar').innerHTML = renderNavbar();
+      document.getElementById('footer').innerHTML = renderFooter();
+      initNavbar();
+    });
+  </script>
+</body>
+</html>

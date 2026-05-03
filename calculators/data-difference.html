@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Difference Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/tool.css">
+  <style>
+    .tool-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .input-group label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text2);
+    }
+
+    .input-group input,
+    .input-group select {
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--card-bg);
+      color: var(--text);
+      font-size: 14px;
+      transition: border-color 0.2s;
+    }
+
+    .input-group input:focus,
+    .input-group select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .input-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 12px;
+    }
+
+    .result-card {
+      background: var(--bg2);
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .result-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .result-value {
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .result-unit {
+      font-size: 14px;
+      color: var(--text2);
+    }
+
+    .breakdown {
+      background: var(--bg2);
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+
+    .breakdown-row:last-child {
+      border-bottom: none;
+    }
+
+    .breakdown-label {
+      color: var(--text2);
+    }
+
+    .breakdown-value {
+      font-weight: 600;
+      color: var(--text);
+      font-family: 'Courier New', monospace;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .conversion-box {
+      background: var(--card-bg);
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .conversion-label {
+      font-size: 12px;
+      color: var(--text3);
+      margin-bottom: 6px;
+    }
+
+    .conversion-value {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--accent);
+      word-break: break-all;
+    }
+
+    .info-box {
+      background: var(--bg2);
+      padding: 16px;
+      border-radius: 8px;
+      border-left: 4px solid var(--accent);
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 640px) {
+      .tool-section,
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="navbar"></nav>
+
+  <main>
+    <div class="tool-container">
+      <div class="tool-header">
+        <h1>Data Difference Calculator</h1>
+        <p>Calculate the difference between two data values and convert between units</p>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-section">
+          <div class="input-group">
+            <label>First Data Value</label>
+            <div class="input-row">
+              <input type="number" id="value1" placeholder="100" min="0" oninput="calculate()">
+              <select id="unit1" onchange="calculate()">
+                <option value="B">Bytes (B)</option>
+                <option value="KB">Kilobytes (KB)</option>
+                <option value="MB">Megabytes (MB)</option>
+                <option value="GB">Gigabytes (GB)</option>
+                <option value="TB">Terabytes (TB)</option>
+                <option value="PB">Petabytes (PB)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label>Second Data Value</label>
+            <div class="input-row">
+              <input type="number" id="value2" placeholder="50" min="0" oninput="calculate()">
+              <select id="unit2" onchange="calculate()">
+                <option value="B">Bytes (B)</option>
+                <option value="KB">Kilobytes (KB)</option>
+                <option value="MB" selected>Megabytes (MB)</option>
+                <option value="GB">Gigabytes (GB)</option>
+                <option value="TB">Terabytes (TB)</option>
+                <option value="PB">Petabytes (PB)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div id="results" style="display: none;">
+          <div class="result-grid">
+            <div class="result-card">
+              <div class="result-label">Difference</div>
+              <div class="result-value" id="diffValue">0</div>
+              <div class="result-unit" id="diffUnit">Bytes</div>
+            </div>
+            <div class="result-card">
+              <div class="result-label">Percentage Difference</div>
+              <div class="result-value" id="percentDiff">0%</div>
+              <div class="result-unit">of larger value</div>
+            </div>
+            <div class="result-card">
+              <div class="result-label">Ratio</div>
+              <div class="result-value" id="ratio">1:1</div>
+              <div class="result-unit">larger to smaller</div>
+            </div>
+          </div>
+
+          <div class="breakdown">
+            <h3 style="margin: 0 0 16px 0; font-size: 16px;">Calculation Details</h3>
+            <div class="breakdown-row">
+              <span class="breakdown-label">First Value (in Bytes)</span>
+              <span class="breakdown-value" id="byte1">0</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-label">Second Value (in Bytes)</span>
+              <span class="breakdown-value" id="byte2">0</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-label">Larger Value</span>
+              <span class="breakdown-value" id="larger">0</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-label">Smaller Value</span>
+              <span class="breakdown-value" id="smaller">0</span>
+            </div>
+            <div class="breakdown-row" style="border-top: 2px solid var(--border); padding-top: 12px;">
+              <span class="breakdown-label">Absolute Difference</span>
+              <span class="breakdown-value" id="absDiff">0</span>
+            </div>
+          </div>
+
+          <div class="result-grid" style="margin-top: 20px;">
+            <div class="conversion-box">
+              <div class="conversion-label">Bytes</div>
+              <div class="conversion-value" id="convBytes">0</div>
+            </div>
+            <div class="conversion-box">
+              <div class="conversion-label">KB</div>
+              <div class="conversion-value" id="convKB">0</div>
+            </div>
+            <div class="conversion-box">
+              <div class="conversion-label">MB</div>
+              <div class="conversion-value" id="convMB">0</div>
+            </div>
+            <div class="conversion-box">
+              <div class="conversion-label">GB</div>
+              <div class="conversion-value" id="convGB">0</div>
+            </div>
+            <div class="conversion-box">
+              <div class="conversion-label">TB</div>
+              <div class="conversion-value" id="convTB">0</div>
+            </div>
+            <div class="conversion-box">
+              <div class="conversion-label">PB</div>
+              <div class="conversion-value" id="convPB">0</div>
+            </div>
+          </div>
+
+          <div class="info-box">
+            <strong>📊 Information:</strong><br>
+            This calculator compares two data values and shows their difference in multiple formats. Useful for analyzing storage capacity differences, bandwidth comparisons, or any data-related calculations.
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="footer"></footer>
+
+  <script src="../assets/js/navbar.js"></script>
+  <script src="../assets/js/theme.js"></script>
+  <script>
+    const UNITS = {
+      'B': 1,
+      'KB': 1024,
+      'MB': 1024 * 1024,
+      'GB': 1024 * 1024 * 1024,
+      'TB': 1024 * 1024 * 1024 * 1024,
+      'PB': 1024 * 1024 * 1024 * 1024 * 1024
+    };
+
+    function convertToBytes(value, unit) {
+      return value * UNITS[unit];
+    }
+
+    function convertFromBytes(bytes, unit) {
+      return bytes / UNITS[unit];
+    }
+
+    function calculate() {
+      const value1 = parseFloat(document.getElementById('value1').value);
+      const unit1 = document.getElementById('unit1').value;
+      const value2 = parseFloat(document.getElementById('value2').value);
+      const unit2 = document.getElementById('unit2').value;
+      const resultsDiv = document.getElementById('results');
+
+      if (!value1 || !value2 || value1 < 0 || value2 < 0) {
+        resultsDiv.style.display = 'none';
+        return;
+      }
+
+      // Convert both to bytes
+      const bytes1 = convertToBytes(value1, unit1);
+      const bytes2 = convertToBytes(value2, unit2);
+      const difference = Math.abs(bytes1 - bytes2);
+      const larger = Math.max(bytes1, bytes2);
+      const smaller = Math.min(bytes1, bytes2);
+
+      // Calculate percentage difference
+      const percentDifference = larger !== 0 ? (difference / larger * 100) : 0;
+
+      // Calculate ratio
+      const ratio = smaller !== 0 ? (larger / smaller).toFixed(2) : 1;
+
+      // Determine best unit for display
+      let displayValue, displayUnit;
+      if (difference >= UNITS['PB']) {
+        displayValue = convertFromBytes(difference, 'PB').toFixed(4);
+        displayUnit = 'PB';
+      } else if (difference >= UNITS['TB']) {
+        displayValue = convertFromBytes(difference, 'TB').toFixed(4);
+        displayUnit = 'TB';
+      } else if (difference >= UNITS['GB']) {
+        displayValue = convertFromBytes(difference, 'GB').toFixed(4);
+        displayUnit = 'GB';
+      } else if (difference >= UNITS['MB']) {
+        displayValue = convertFromBytes(difference, 'MB').toFixed(4);
+        displayUnit = 'MB';
+      } else if (difference >= UNITS['KB']) {
+        displayValue = convertFromBytes(difference, 'KB').toFixed(2);
+        displayUnit = 'KB';
+      } else {
+        displayValue = difference.toFixed(0);
+        displayUnit = 'Bytes';
+      }
+
+      // Update results
+      document.getElementById('diffValue').textContent = displayValue;
+      document.getElementById('diffUnit').textContent = displayUnit;
+      document.getElementById('percentDiff').textContent = percentDifference.toFixed(2) + '%';
+      document.getElementById('ratio').textContent = `1:${ratio}`;
+
+      // Update breakdown
+      document.getElementById('byte1').textContent = bytes1.toLocaleString('en-US', { maximumFractionDigits: 0 });
+      document.getElementById('byte2').textContent = bytes2.toLocaleString('en-US', { maximumFractionDigits: 0 });
+      document.getElementById('larger').textContent = larger.toLocaleString('en-US', { maximumFractionDigits: 0 });
+      document.getElementById('smaller').textContent = smaller.toLocaleString('en-US', { maximumFractionDigits: 0 });
+      document.getElementById('absDiff').textContent = difference.toLocaleString('en-US', { maximumFractionDigits: 0 });
+
+      // Update conversions
+      document.getElementById('convBytes').textContent = difference.toLocaleString('en-US', { maximumFractionDigits: 0 });
+      document.getElementById('convKB').textContent = convertFromBytes(difference, 'KB').toFixed(2);
+      document.getElementById('convMB').textContent = convertFromBytes(difference, 'MB').toFixed(2);
+      document.getElementById('convGB').textContent = convertFromBytes(difference, 'GB').toFixed(4);
+      document.getElementById('convTB').textContent = convertFromBytes(difference, 'TB').toFixed(4);
+      document.getElementById('convPB').textContent = convertFromBytes(difference, 'PB').toFixed(6);
+
+      resultsDiv.style.display = 'block';
+    }
+
+    // Render navbar and footer on load
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('navbar').innerHTML = renderNavbar();
+      document.getElementById('footer').innerHTML = renderFooter();
+      initNavbar();
+    });
+  </script>
+</body>
+</html>

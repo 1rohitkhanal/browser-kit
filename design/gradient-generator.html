@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gradient Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/tool.css">
+  <style>
+    .gradient-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .panel-card,
+    .preview-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow-elevated, 0 16px 40px rgba(0, 0, 0, .04));
+    }
+
+    .control-group {
+      display: grid;
+      gap: 16px;
+    }
+
+    .control-item {
+      display: grid;
+      gap: 10px;
+    }
+
+    .control-item label {
+      color: var(--text2);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .control-item input[type="text"],
+    .control-item input[type="number"],
+    .control-item select,
+    .control-item input[type="color"] {
+      width: 100%;
+      height: 46px;
+      padding: 0 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    .control-item input[type="color"] {
+      padding: 0;
+      height: 52px;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .action-btn {
+      flex: 1;
+      min-width: 140px;
+      height: 46px;
+      border: none;
+      border-radius: 14px;
+      background: var(--accent);
+      color: var(--bg);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform .15s ease, opacity .15s ease;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-1px);
+      opacity: .92;
+    }
+
+    .preview-card {
+      display: grid;
+      gap: 18px;
+    }
+
+    .preview-panel {
+      min-height: 320px;
+      border-radius: 22px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background: var(--bg);
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .preview-panel::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.03));
+    }
+
+    .preview-text {
+      position: relative;
+      z-index: 1;
+      color: var(--bg);
+      text-align: center;
+      max-width: 100%;
+      font-size: 16px;
+      line-height: 1.7;
+      padding: 24px;
+      backdrop-filter: blur(4px);
+      background: rgba(0,0,0,.15);
+      border-radius: 18px;
+    }
+
+    .code-block {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--text);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .help-card {
+      margin-top: 18px;
+      padding: 20px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: var(--bg2);
+    }
+
+    .help-card h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+      color: var(--text);
+    }
+
+    .help-card p {
+      margin: 0;
+      color: var(--text2);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 980px) {
+      .gradient-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .gradient-grid { gap: 16px; }
+      .panel-card,
+      .preview-card,
+      .help-card { padding: 18px; }
+      .preview-panel { min-height: 260px; }
+    }
+  </style>
+</head>
+<body>
+  <nav id="navbar"></nav>
+
+  <main class="tool-wrap">
+    <section class="tool-main">
+      <div class="tool-header">
+        <p class="tool-breadcrumb"><a href="../index.html">Home</a> / Design / Gradient Generator</p>
+        <h1 class="tool-title">Gradient Generator</h1>
+        <p class="tool-desc">Generate clean CSS gradients with live preview, code output, and simple controls for direction, color stops, and gradient type.</p>
+      </div>
+
+      <div class="gradient-grid">
+        <div class="panel-card">
+          <div class="control-group">
+            <div class="control-item">
+              <label for="gradientType">Gradient Type</label>
+              <select id="gradientType" onchange="updateGradient()">
+                <option value="linear">Linear</option>
+                <option value="radial">Radial</option>
+              </select>
+            </div>
+
+            <div class="control-item">
+              <label for="angle">Angle / Position</label>
+              <input id="angle" type="text" value="135deg" oninput="updateGradient()" placeholder="135deg or at center center">
+            </div>
+
+            <div class="control-item">
+              <label for="startColor">Start Color</label>
+              <input id="startColor" type="color" value="#7657ff" onchange="updateGradient()">
+            </div>
+
+            <div class="control-item">
+              <label for="endColor">End Color</label>
+              <input id="endColor" type="color" value="#34d399" onchange="updateGradient()">
+            </div>
+
+            <div class="control-item">
+              <label for="colorStops">Color Stops</label>
+              <input id="colorStops" type="number" min="2" max="5" value="2" onchange="updateGradient()">
+            </div>
+          </div>
+
+          <div class="action-row">
+            <button class="action-btn" onclick="copyCSSToClipboard()">Copy CSS</button>
+            <button class="action-btn" onclick="resetGradient()">Reset</button>
+          </div>
+        </div>
+
+        <div class="preview-card">
+          <div class="preview-panel" id="previewPanel">
+            <div class="preview-text">Live gradient preview</div>
+          </div>
+
+          <div class="code-block" id="cssCode"></div>
+
+          <div class="help-card">
+            <h3>Pro tip</h3>
+            <p>Use the gradient code directly in your stylesheet or inline component styles. Radial gradients are great for subtle background highlights and hero sections.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer"></footer>
+
+  <script src="../assets/js/navbar.js"></script>
+  <script src="../assets/js/theme.js"></script>
+  <script>
+    const previewPanel = document.getElementById('previewPanel');
+    const cssCode = document.getElementById('cssCode');
+    const gradientType = document.getElementById('gradientType');
+    const angleInput = document.getElementById('angle');
+    const startColor = document.getElementById('startColor');
+    const endColor = document.getElementById('endColor');
+    const colorStops = document.getElementById('colorStops');
+
+    function hexToRgb(hex) {
+      const cleaned = hex.replace('#', '');
+      const normalized = cleaned.length === 3 ? cleaned.split('').map(ch => ch + ch).join('') : cleaned;
+      return {
+        r: parseInt(normalized.slice(0, 2), 16),
+        g: parseInt(normalized.slice(2, 4), 16),
+        b: parseInt(normalized.slice(4, 6), 16)
+      };
+    }
+
+    function mixColors(a, b, ratio) {
+      return {
+        r: Math.round(a.r + (b.r - a.r) * ratio),
+        g: Math.round(a.g + (b.g - a.g) * ratio),
+        b: Math.round(a.b + (b.b - a.b) * ratio)
+      };
+    }
+
+    function rgbToHex({ r, g, b }) {
+      const toHex = value => value.toString(16).padStart(2, '0');
+      return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+    }
+
+    function buildGradient() {
+      const type = gradientType.value;
+      const position = angleInput.value.trim() || '135deg';
+      const start = startColor.value;
+      const end = endColor.value;
+      const stops = Math.max(2, Math.min(5, Number(colorStops.value) || 2));
+      const startRgb = hexToRgb(start);
+      const endRgb = hexToRgb(end);
+      const stopValues = [];
+
+      for (let i = 0; i < stops; i += 1) {
+        const positionPercent = Math.round((i / (stops - 1)) * 100);
+        const color = i === 0 ? startRgb : i === stops - 1 ? endRgb : mixColors(startRgb, endRgb, i / (stops - 1));
+        stopValues.push(`${rgbToHex(color)} ${positionPercent}%`);
+      }
+
+      if (type === 'linear') {
+        return `linear-gradient(${position}, ${stopValues.join(', ')})`;
+      }
+      return `radial-gradient(circle at ${position}, ${stopValues.join(', ')})`;
+    }
+
+    function updateGradient() {
+      const gradient = buildGradient();
+      previewPanel.style.background = gradient;
+      cssCode.textContent = `background: ${gradient};\nbackground: -webkit-${gradient};`;
+    }
+
+    function copyCSSToClipboard() {
+      navigator.clipboard.writeText(cssCode.textContent).then(() => {
+        alert('Gradient CSS copied to clipboard');
+      });
+    }
+
+    function resetGradient() {
+      gradientType.value = 'linear';
+      angleInput.value = '135deg';
+      startColor.value = '#7657ff';
+      endColor.value = '#34d399';
+      colorStops.value = 2;
+      updateGradient();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('navbar').innerHTML = renderNavbar();
+      document.getElementById('footer').innerHTML = renderFooter();
+      initNavbar();
+      updateGradient();
+    });
+  </script>
+</body>
+</html>

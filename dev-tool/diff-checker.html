@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diff Checker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/global.css">
+  <link rel="stylesheet" href="../../assets/css/tool.css">
+  <style>
+    .diff-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 1fr 1fr;
+      margin-top: 18px;
+    }
+
+    .diff-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .diff-card label {
+      font-size: 13px;
+      color: var(--text2);
+      font-weight: 600;
+    }
+
+    .diff-card textarea,
+    .diff-card input,
+    .diff-card button {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      padding: 14px;
+      outline: none;
+    }
+
+    .diff-card textarea {
+      min-height: 180px;
+      resize: vertical;
+    }
+
+    .diff-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .diff-actions button {
+      flex: 1;
+      min-width: 120px;
+      height: 44px;
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform .15s ease, opacity .15s ease;
+    }
+
+    .diff-actions button:hover {
+      transform: translateY(-1px);
+      opacity: .95;
+    }
+
+    .output-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      margin-top: 18px;
+    }
+
+    .output-card pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.7;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .output-card .tag {
+      display: inline-flex;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: var(--bg3);
+      color: var(--text2);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    @media (max-width: 840px) {
+      .tool-wrap { grid-template-columns: 1fr; }
+      .tool-side { order: 3; }
+      .diff-grid { grid-template-columns: 1fr; }
+      .diff-actions { flex-direction: column; }
+    }
+
+    @media (max-width: 640px) {
+      .diff-card textarea { min-height: 150px; }
+      .output-card { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <nav id="navbar"></nav>
+
+  <main class="tool-wrap">
+    <section class="tool-main">
+      <div class="tool-header">
+        <p class="tool-breadcrumb"><a href="../../index.html">Home</a> / Dev Tools / Diff Checker</p>
+        <h1 class="tool-title">Diff Checker</h1>
+        <p class="tool-desc">Compare two text blocks and highlight added, removed, and unchanged lines in a responsive interface.</p>
+      </div>
+
+      <div class="tool-box">
+        <div class="diff-grid">
+          <div class="diff-card">
+            <label for="textA">Original Text</label>
+            <textarea id="textA" placeholder="Paste original text here..."></textarea>
+          </div>
+          <div class="diff-card">
+            <label for="textB">Changed Text</label>
+            <textarea id="textB" placeholder="Paste new text here..."></textarea>
+          </div>
+        </div>
+
+        <div class="diff-card">
+          <label for="ignoreWhitespace"><input id="ignoreWhitespace" type="checkbox" onchange="updateDiff()" /> Ignore whitespace changes</label>
+          <div class="diff-actions">
+            <button onclick="updateDiff()">Show Diff</button>
+            <button onclick="copyDiff()">Copy Diff</button>
+          </div>
+        </div>
+
+        <div class="output-card">
+          <div class="tag">Result</div>
+          <pre id="diffResult">Enter text and click Show Diff to compare.</pre>
+        </div>
+      </div>
+    </section>
+
+    <aside class="tool-side">
+      <div class="tool-box">
+        <h3>Tips</h3>
+        <p>Paste the old version and the new version of your text. The result will show line differences with plus/minus markers and unchanged lines preserved.</p>
+      </div>
+
+      <div class="tool-box related-section">
+        <h3 class="related-title">Related Dev Tools</h3>
+        <div class="related-grid">
+          <a class="related-card" href="code-minifier.html"><span class="rc-emoji">🧾</span><span class="rc-name">Code Minifier</span></a>
+          <a class="related-card" href="json-formatter.html"><span class="rc-emoji">🧩</span><span class="rc-name">JSON Formatter</span></a>
+          <a class="related-card" href="regex-tester.html"><span class="rc-emoji">🔍</span><span class="rc-name">Regex Tester</span></a>
+          <a class="related-card" href="url-encoder.html"><span class="rc-emoji">🔗</span><span class="rc-name">URL Encoder</span></a>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <footer id="footer"></footer>
+
+  <script src="../../assets/js/navbar.js"></script>
+  <script src="../../assets/js/theme.js"></script>
+  <script>
+    const textA = document.getElementById('textA');
+    const textB = document.getElementById('textB');
+    const ignoreWhitespace = document.getElementById('ignoreWhitespace');
+    const diffResult = document.getElementById('diffResult');
+
+    function normalizeLines(text) {
+      return text.replace(/\r\n/g, '\n').trim().split('\n');
+    }
+
+    function compareLines(a, b) {
+      const results = [];
+      const maxLength = Math.max(a.length, b.length);
+      for (let i = 0; i < maxLength; i++) {
+        const lineA = a[i] || '';
+        const lineB = b[i] || '';
+        if (lineA === lineB) {
+          results.push({ type: 'same', text: lineA });
+        } else if (!lineB) {
+          results.push({ type: 'removed', text: lineA });
+        } else if (!lineA) {
+          results.push({ type: 'added', text: lineB });
+        } else {
+          results.push({ type: 'removed', text: lineA });
+          results.push({ type: 'added', text: lineB });
+        }
+      }
+      return results;
+    }
+
+    function updateDiff() {
+      const aLines = normalizeLines(textA.value);
+      const bLines = normalizeLines(textB.value);
+      const diff = compareLines(aLines, bLines);
+      diffResult.textContent = diff.map(segment => {
+        if (segment.type === 'same') return ` ${segment.text}`;
+        if (segment.type === 'added') return `+ ${segment.text}`;
+        if (segment.type === 'removed') return `- ${segment.text}`;
+        return segment.text;
+      }).join('\n');
+    }
+
+    function copyDiff() {
+      const text = diffResult.textContent;
+      if (!text) return;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Diff copied to clipboard!');
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('navbar').innerHTML = renderNavbar();
+      document.getElementById('footer').innerHTML = renderFooter();
+      initNavbar();
+    });
+  </script>
+</body>
+</html>

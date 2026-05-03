@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Base64 Encoder / Decoder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/tool.css">
+  <style>
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      color: var(--text);
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform .15s ease, background .15s ease;
+    }
+
+    .back-button:hover {
+      transform: translateY(-1px);
+      background: var(--bg3);
+    }
+
+    .tool-box {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .content-panel {
+      display: grid;
+      gap: 22px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 26px;
+    }
+
+    .panel-title {
+      display: block;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      color: var(--text2);
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 180px;
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 15px;
+      line-height: 1.7;
+      resize: vertical;
+    }
+
+    .action-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .action-btn {
+      border-radius: 14px;
+      border: 1px solid transparent;
+      padding: 14px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform .15s ease, opacity .15s ease;
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .action-btn.secondary {
+      background: var(--bg3);
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .action-btn:hover {
+      transform: translateY(-1px);
+      opacity: .95;
+    }
+
+    .info-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .info-card h3 {
+      margin: 0;
+      font-size: 18px;
+      color: var(--text);
+    }
+
+    .info-card p {
+      margin: 0;
+      color: var(--text2);
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .result-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .tag {
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--bg3);
+      color: var(--text2);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 980px) {
+      .tool-box {
+        grid-template-columns: 1fr;
+      }
+
+      .tool-side {
+        order: 3;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .action-row {
+        grid-template-columns: 1fr;
+      }
+
+      .info-card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="navbar"></nav>
+
+  <main class="tool-wrap">
+    <section class="tool-main">
+      <div class="page-header">
+        <div>
+          <a class="back-button" href="../index.html">← Back</a>
+          <p class="tool-breadcrumb"><a href="../index.html">Home</a> / Dev Tools / Base64</p>
+          <h1 class="tool-title">Base64 Encoder / Decoder</h1>
+          <p class="tool-desc">Quickly encode plain text to Base64 or decode Base64 into readable text. The layout is responsive and ready for any screen.</p>
+        </div>
+      </div>
+
+      <div class="tool-box">
+        <div class="content-panel">
+          <div>
+            <span class="panel-title">Input</span>
+            <textarea id="inputText" placeholder="Type plain text or Base64 here..." oninput="updateOutput()"></textarea>
+          </div>
+
+          <div class="action-row">
+            <button class="action-btn" id="encodeBtn" onclick="setMode('encode')">Encode</button>
+            <button class="action-btn secondary" id="decodeBtn" onclick="setMode('decode')">Decode</button>
+            <button class="action-btn secondary" onclick="copyOutput()">Copy Output</button>
+          </div>
+
+          <div>
+            <span class="panel-title">Output</span>
+            <textarea id="outputText" readonly placeholder="Results appear here..."></textarea>
+            <div class="result-tags">
+              <span class="tag" id="modeLabel">Mode: Encode</span>
+              <span class="tag" id="lengthLabel">Length: 0</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="tool-side">
+          <div class="info-card">
+            <h3>How to use</h3>
+            <p>Enter text in the input field. Choose Encode to convert text into Base64, or Decode to convert Base64 back to plain text. Copy your result with one click.</p>
+          </div>
+
+          <div class="info-card">
+            <h3>Best practices</h3>
+            <p>Use this tool for small snippets, tokens, or quick testing. If decoding fails, verify that the Base64 input is complete and valid.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer"></footer>
+
+  <script src="../assets/js/navbar.js"></script>
+  <script src="../assets/js/theme.js"></script>
+  <script>
+    let mode = 'encode';
+
+    function setMode(selected) {
+      mode = selected;
+      const encodeBtn = document.getElementById('encodeBtn');
+      const decodeBtn = document.getElementById('decodeBtn');
+      encodeBtn.style.background = mode === 'encode' ? 'var(--accent)' : 'var(--bg3)';
+      encodeBtn.style.color = mode === 'encode' ? 'var(--bg)' : 'var(--text)';
+      decodeBtn.style.background = mode === 'decode' ? 'var(--accent)' : 'var(--bg3)';
+      decodeBtn.style.color = mode === 'decode' ? 'var(--bg)' : 'var(--text)';
+      document.getElementById('modeLabel').textContent = `Mode: ${mode === 'encode' ? 'Encode' : 'Decode'}`;
+      updateOutput();
+    }
+
+    function updateOutput() {
+      const input = document.getElementById('inputText').value;
+      const output = document.getElementById('outputText');
+      let result = '';
+      if (!input) {
+        output.value = '';
+        document.getElementById('lengthLabel').textContent = 'Length: 0';
+        return;
+      }
+
+      if (mode === 'encode') {
+        try {
+          result = btoa(unescape(encodeURIComponent(input)));
+        } catch (error) {
+          result = 'Error: unable to encode text';
+        }
+      } else {
+        try {
+          result = decodeURIComponent(escape(atob(input)));
+        } catch (error) {
+          result = 'Error: invalid Base64 input';
+        }
+      }
+
+      output.value = result;
+      document.getElementById('lengthLabel').textContent = `Length: ${result.length}`;
+    }
+
+    function copyOutput() {
+      const output = document.getElementById('outputText').value;
+      if (!output) return;
+      navigator.clipboard.writeText(output).then(() => {
+        alert('Output copied to clipboard!');
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('navbar').innerHTML = renderNavbar();
+      document.getElementById('footer').innerHTML = renderFooter();
+      initNavbar();
+      setMode('encode');
+    });
+  </script>
+</body>
+</html>

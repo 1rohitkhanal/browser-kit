@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scientific Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/tool.css">
+  <style>
+    .calc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .angle-toggle {
+      display: flex;
+      gap: 8px;
+    }
+
+    .toggle-btn {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg2);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .toggle-btn.active {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+    }
+
+    .display-area {
+      background: var(--bg2);
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+
+    .display-input {
+      font-size: 12px;
+      color: var(--text3);
+      margin-bottom: 8px;
+      min-height: 18px;
+    }
+
+    .display-output {
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--accent);
+      word-break: break-all;
+      min-height: 40px;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .calculator-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card-bg);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s;
+      word-break: break-word;
+    }
+
+    .btn:hover {
+      background: var(--bg2);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn.operator {
+      background: var(--bg2);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .btn.operator:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .btn.equals {
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: 600;
+      grid-column: span 2;
+    }
+
+    .btn.equals:hover {
+      opacity: 0.9;
+    }
+
+    .btn.clear {
+      background: #ffebee;
+      color: #d32f2f;
+    }
+
+    .btn.clear:hover {
+      background: #d32f2f;
+      color: white;
+    }
+
+    [data-theme="dark"] .btn.clear {
+      background: #b71c1c;
+      color: #ef5350;
+    }
+
+    [data-theme="dark"] .btn.clear:hover {
+      background: #d32f2f;
+      color: white;
+    }
+
+    .btn.function {
+      background: var(--bg2);
+      font-size: 12px;
+    }
+
+    .btn.function:hover {
+      background: var(--bg3);
+    }
+
+    .history-container {
+      background: var(--bg2);
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-top: 20px;
+    }
+
+    .history-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 12px 0;
+    }
+
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .history-item {
+      padding: 8px 12px;
+      background: var(--card-bg);
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--text2);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .history-item:hover {
+      background: var(--bg3);
+      color: var(--text);
+    }
+
+    .history-value {
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .clear-history-btn {
+      width: 100%;
+      padding: 8px;
+      margin-top: 8px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text3);
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.2s;
+    }
+
+    .clear-history-btn:hover {
+      background: var(--border);
+      color: var(--text2);
+    }
+
+    .empty-history {
+      text-align: center;
+      padding: 20px;
+      color: var(--text3);
+      font-size: 13px;
+    }
+
+    @media (max-width: 768px) {
+      .calc-header {
+        gap: 8px;
+      }
+
+      .angle-toggle {
+        gap: 6px;
+      }
+
+      .toggle-btn {
+        padding: 6px 10px;
+        font-size: 11px;
+      }
+
+      .calculator-grid {
+        gap: 6px;
+      }
+
+      .btn {
+        padding: 10px;
+        font-size: 12px;
+      }
+
+      .display-output {
+        font-size: 28px;
+      }
+
+      .history-container {
+        margin-top: 16px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .display-output {
+        font-size: 24px;
+      }
+
+      .calculator-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+      }
+
+      .btn {
+        padding: 8px;
+        font-size: 11px;
+      }
+
+      .btn.equals {
+        grid-column: span 1;
+      }
+
+      .btn.operator {
+        grid-column: span 1;
+      }
+
+      .history-container {
+        margin-top: 12px;
+      }
+
+      .history-item {
+        font-size: 11px;
+        padding: 6px 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="navbar"></nav>
+
+  <main>
+    <div class="tool-container">
+      <div class="tool-header">
+        <h1>Scientific Calculator</h1>
+        <p>Advanced calculations with trigonometric, logarithmic, and mathematical functions</p>
+      </div>
+
+      <div class="tool-card">
+        <div class="calc-header">
+          <div>
+            <h3 style="margin: 0 0 8px 0; font-size: 12px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px;">Angle Mode</h3>
+            <div class="angle-toggle">
+              <button class="toggle-btn active" onclick="setAngleMode('deg')">Degrees</button>
+              <button class="toggle-btn" onclick="setAngleMode('rad')">Radians</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="display-area">
+          <div class="display-input" id="displayInput"></div>
+          <div class="display-output" id="displayOutput">0</div>
+        </div>
+
+        <div class="calculator-grid" id="calcGrid"></div>
+
+        <div class="history-container">
+          <h3 class="history-title">History</h3>
+          <div class="history-list" id="historyList">
+            <div class="empty-history">No calculations yet</div>
+          </div>
+          <button class="clear-history-btn" onclick="clearHistory()">Clear History</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="footer"></footer>
+
+  <script src="../assets/js/navbar.js"></script>
+  <script src="../assets/js/theme.js"></script>
+  <script>
+    let angleMode = 'deg';
+    let display = '0';
+    let calculation = '';
+    let history = JSON.parse(localStorage.getItem('calcHistory')) || [];
+
+    const buttons = [
+      // Row 1
+      { label: 'sin', func: 'sin' },
+      { label: 'cos', func: 'cos' },
+      { label: 'tan', func: 'tan' },
+      { label: 'C', func: 'clear', type: 'clear' },
+      // Row 2
+      { label: 'log', func: 'log' },
+      { label: 'ln', func: 'ln' },
+      { label: '√', func: 'sqrt' },
+      { label: 'π', value: 'pi' },
+      // Row 3
+      { label: 'x²', func: 'square' },
+      { label: 'x³', func: 'cube' },
+      { label: 'xʸ', func: 'power' },
+      { label: 'e', value: 'e' },
+      // Row 4
+      { label: '(', value: '(' },
+      { label: ')', value: ')' },
+      { label: '÷', value: '/' },
+      { label: '←', func: 'backspace' },
+      // Row 5
+      { label: '7', value: '7' },
+      { label: '8', value: '8' },
+      { label: '9', value: '9' },
+      { label: '×', value: '*' },
+      // Row 6
+      { label: '4', value: '4' },
+      { label: '5', value: '5' },
+      { label: '6', value: '6' },
+      { label: '−', value: '-' },
+      // Row 7
+      { label: '1', value: '1' },
+      { label: '2', value: '2' },
+      { label: '3', value: '3' },
+      { label: '+', value: '+' },
+      // Row 8
+      { label: '0', value: '0', width: 2 },
+      { label: '.', value: '.' },
+      { label: '=', func: 'equals', type: 'equals' }
+    ];
+
+    function setAngleMode(mode) {
+      angleMode = mode;
+      const buttons = document.querySelectorAll('.angle-toggle .toggle-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    function updateDisplay() {
+      const input = document.getElementById('displayInput');
+      const output = document.getElementById('displayOutput');
+      input.textContent = calculation || '';
+      output.textContent = display;
+    }
+
+    function appendValue(value) {
+      if (value === 'pi') {
+        display = Math.PI.toString();
+        calculation += 'π';
+      } else if (value === 'e') {
+        display = Math.E.toString();
+        calculation += 'e';
+      } else {
+        if (display === '0' && value !== '.') {
+          display = value;
+        } else {
+          display += value;
+        }
+        calculation += value;
+      }
+      updateDisplay();
+    }
+
+    function applyFunction(func) {
+      let result;
+      const num = parseFloat(display);
+
+      if (isNaN(num)) {
+        alert('Invalid number');
+        return;
+      }
+
+      switch (func) {
+        case 'sin':
+          const sinInput = angleMode === 'deg' ? num * Math.PI / 180 : num;
+          result = Math.sin(sinInput);
+          calculation += `sin(${display})`;
+          break;
+        case 'cos':
+          const cosInput = angleMode === 'deg' ? num * Math.PI / 180 : num;
+          result = Math.cos(cosInput);
+          calculation += `cos(${display})`;
+          break;
+        case 'tan':
+          const tanInput = angleMode === 'deg' ? num * Math.PI / 180 : num;
+          result = Math.tan(tanInput);
+          calculation += `tan(${display})`;
+          break;
+        case 'log':
+          result = Math.log10(num);
+          calculation += `log(${display})`;
+          break;
+        case 'ln':
+          result = Math.log(num);
+          calculation += `ln(${display})`;
+          break;
+        case 'sqrt':
+          result = Math.sqrt(num);
+          calculation += `√${display}`;
+          break;
+        case 'square':
+          result = num * num;
+          calculation += `${display}²`;
+          break;
+        case 'cube':
+          result = num * num * num;
+          calculation += `${display}³`;
+          break;
+        case 'power':
+          const base = num;
+          const exp = prompt('Enter exponent:');
+          if (exp === null) return;
+          result = Math.pow(base, parseFloat(exp));
+          calculation += `${base}^${exp}`;
+          break;
+        case 'clear':
+          display = '0';
+          calculation = '';
+          updateDisplay();
+          return;
+        case 'backspace':
+          display = display.slice(0, -1) || '0';
+          calculation = calculation.slice(0, -1);
+          updateDisplay();
+          return;
+        case 'equals':
+          try {
+            const calcString = calculation
+              .replace(/π/g, Math.PI)
+              .replace(/e/g, Math.E)
+              .replace(/×/g, '*')
+              .replace(/−/g, '-')
+              .replace(/÷/g, '/');
+            result = eval(calcString);
+            addToHistory(calculation, result);
+            calculation = '';
+          } catch (e) {
+            alert('Invalid calculation');
+            return;
+          }
+          break;
+        default:
+          return;
+      }
+
+      if (result !== undefined) {
+        display = result.toString().substring(0, 16);
+        updateDisplay();
+      }
+    }
+
+    function addToHistory(calc, result) {
+      const item = { calc, result: parseFloat(result).toFixed(6) };
+      history.unshift(item);
+      if (history.length > 10) history.pop();
+      localStorage.setItem('calcHistory', JSON.stringify(history));
+      renderHistory();
+    }
+
+    function renderHistory() {
+      const historyList = document.getElementById('historyList');
+      if (history.length === 0) {
+        historyList.innerHTML = '<div class="empty-history">No calculations yet</div>';
+        return;
+      }
+
+      historyList.innerHTML = history.map((item, idx) => `
+        <div class="history-item" onclick="useFromHistory(${idx})">
+          <span>${item.calc}</span>
+          <span class="history-value">${item.result}</span>
+        </div>
+      `).join('');
+    }
+
+    function useFromHistory(idx) {
+      display = history[idx].result;
+      calculation = '';
+      updateDisplay();
+    }
+
+    function clearHistory() {
+      history = [];
+      localStorage.setItem('calcHistory', JSON.stringify(history));
+      renderHistory();
+    }
+
+    function renderCalculator() {
+      const grid = document.getElementById('calcGrid');
+      grid.innerHTML = buttons.map(btn => {
+        const width = btn.width ? `grid-column: span ${btn.width}` : '';
+        const type = btn.type ? `${btn.type}` : '';
+        const funcType = btn.func ? 'function' : '';
+        
+        if (btn.func) {
+          return `<button class="btn ${type} ${funcType}" style="${width}" onclick="applyFunction('${btn.func}')">${btn.label}</button>`;
+        } else {
+          return `<button class="btn ${funcType}" style="${width}" onclick="appendValue('${btn.value}')">${btn.label}</button>`;
+        }
+      }).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('navbar').innerHTML = renderNavbar();
+      document.getElementById('footer').innerHTML = renderFooter();
+      initNavbar();
+      renderCalculator();
+      renderHistory();
+      updateDisplay();
+    });
+
+    // Keyboard support
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        applyFunction('equals');
+      } else if (e.key === 'Backspace') {
+        e.preventDefault();
+        applyFunction('backspace');
+      } else if (e.key === 'Escape') {
+        applyFunction('clear');
+      } else if (['+', '-', '*', '/'].includes(e.key)) {
+        appendValue(e.key === '*' ? '*' : e.key === '/' ? '/' : e.key);
+      } else if (!isNaN(e.key) || e.key === '.') {
+        appendValue(e.key);
+      } else if (e.key === '(') {
+        appendValue('(');
+      } else if (e.key === ')') {
+        appendValue(')');
+      }
+    });
+  </script>
+</body>
+</html>

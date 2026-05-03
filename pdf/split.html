@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Split PDF Online — Free Tool | Fix-Kit</title>
+  <meta name="description" content="Split a PDF into individual pages or custom page ranges. Free, fast, no login. Everything runs in your browser."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/global.css"/>
+  <link rel="stylesheet" href="../assets/css/tool.css"/>
+  <script>(function(){ const s=localStorage.getItem('fk-theme')||'light'; document.documentElement.setAttribute('data-theme',s); })();</script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="logo">Fix<span>-</span>Kit</a>
+    <div class="nav-right">
+      <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">
+        <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="ad-banner" style="margin-top:20px;"><div class="ad-banner-inner">Advertisement</div></div>
+
+<div class="tool-wrap">
+  <div class="tool-main">
+    <div class="tool-header">
+      <div class="tool-breadcrumb"><a href="../index.html">Home</a> › <a href="../index.html#pdf">PDF Tools</a> › Split PDF</div>
+      <h1 class="tool-title">Split PDF</h1>
+      <p class="tool-desc">Extract specific pages or split a PDF into individual pages. Enter page ranges like <code>1-3, 5, 7-9</code>.</p>
+    </div>
+
+    <div class="tool-box">
+      <h3>Upload PDF</h3>
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" accept=".pdf"/>
+        <div class="dz-icon">✂️</div>
+        <div class="dz-label">Drop a PDF here or click to upload</div>
+        <div class="dz-hint">Single PDF file · Max 100MB</div>
+      </div>
+      <div class="file-list" id="fileList"></div>
+    </div>
+
+    <div class="tool-box" id="optionsBox" style="display:none;">
+      <h3>Split Options</h3>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;">
+            <input type="radio" name="mode" value="all" checked id="modeAll"/> Split into individual pages
+          </label>
+        </div>
+        <div>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;">
+            <input type="radio" name="mode" value="range" id="modeRange"/> Extract page range
+          </label>
+          <div id="rangeInput" style="margin-top:10px;display:none;">
+            <div class="opt-group">
+              <label>Page Range (e.g. 1-3, 5, 7-9)</label>
+              <input type="text" id="pageRange" placeholder="1-3, 5, 7-9"/>
+            </div>
+            <p style="font-size:12px;color:var(--text3);margin-top:6px;" id="pageInfo"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="statusMsg" class="status-msg"></div>
+
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;">
+      <button class="btn-primary" id="splitBtn" disabled><span>✂️</span> Split PDF</button>
+      <button class="btn-secondary" id="clearBtn">Clear</button>
+    </div>
+
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-bar-bg"><div class="progress-bar" id="progressBar"></div></div>
+      <div class="progress-label" id="progressLabel">Processing…</div>
+    </div>
+
+    <div class="result-box" id="resultBox">
+      <div class="result-header"><span class="result-title">Split Results</span></div>
+      <div class="result-content" id="resultContent"></div>
+    </div>
+
+    <div class="related-section">
+      <div class="related-title">Related PDF Tools</div>
+      <div class="related-grid">
+        <a href="merge.html" class="related-card"><span class="rc-emoji">🔗</span><span class="rc-name">Merge PDF</span></a>
+        <a href="compress.html" class="related-card"><span class="rc-emoji">📦</span><span class="rc-name">Compress PDF</span></a>
+        <a href="rotate.html" class="related-card"><span class="rc-emoji">🔄</span><span class="rc-name">Rotate PDF</span></a>
+        <a href="extract-text.html" class="related-card"><span class="rc-emoji">📝</span><span class="rc-name">Extract Text</span></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="tool-side">
+    <div class="ad-side">Advertisement</div>
+    <div class="tool-box" style="margin-bottom:0;">
+      <h3>How to Use</h3>
+      <ol style="padding-left:18px;font-size:13px;color:var(--text2);line-height:2;">
+        <li>Upload your PDF</li>
+        <li>Choose split mode</li>
+        <li>Enter page range (optional)</li>
+        <li>Click <strong>Split PDF</strong></li>
+        <li>Download individual files</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="ad-banner"><div class="ad-banner-inner">Advertisement</div></div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Fix<span>-</span>Kit</div>
+    <div class="footer-links">
+      <a href="../index.html">Home</a><a href="#">About</a><a href="#">Privacy Policy</a><a href="#">Contact</a>
+    </div>
+    <p class="footer-copy">© 2025 FIX-KIT · No login required · No data stored on servers · 100% free forever</p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script>
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    const h = document.documentElement;
+    const next = h.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    h.setAttribute('data-theme', next); localStorage.setItem('fk-theme', next);
+  });
+
+  let pdfFile = null, totalPages = 0;
+  const dropZone = document.getElementById('dropZone');
+  const fileInput = document.getElementById('fileInput');
+  const splitBtn  = document.getElementById('splitBtn');
+  const clearBtn  = document.getElementById('clearBtn');
+  const statusMsg = document.getElementById('statusMsg');
+  const optionsBox = document.getElementById('optionsBox');
+  const rangeInput = document.getElementById('rangeInput');
+  const progressWrap = document.getElementById('progressWrap');
+  const progressBar  = document.getElementById('progressBar');
+  const progressLabel = document.getElementById('progressLabel');
+  const resultBox = document.getElementById('resultBox');
+  const resultContent = document.getElementById('resultContent');
+
+  function formatBytes(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+    return (b/1048576).toFixed(1) + ' MB';
+  }
+  function showStatus(msg, type) { statusMsg.textContent = msg; statusMsg.className = 'status-msg show ' + type; }
+
+  document.querySelectorAll('input[name="mode"]').forEach(r => {
+    r.addEventListener('change', () => {
+      rangeInput.style.display = r.value === 'range' ? 'block' : 'none';
+    });
+  });
+
+  async function loadFile(f) {
+    pdfFile = f;
+    try {
+      const bytes = await f.arrayBuffer();
+      const { PDFDocument } = PDFLib;
+      const pdf = await PDFDocument.load(bytes);
+      totalPages = pdf.getPageCount();
+      document.getElementById('fileList').innerHTML = `
+        <div class="file-item">
+          <span class="fi-icon">📄</span>
+          <span class="fi-name">${f.name}</span>
+          <span class="fi-size">${formatBytes(f.size)} · ${totalPages} pages</span>
+          <button class="fi-remove" id="removeBtn">✕</button>
+        </div>`;
+      document.getElementById('removeBtn').addEventListener('click', () => {
+        pdfFile = null; document.getElementById('fileList').innerHTML = '';
+        optionsBox.style.display = 'none'; splitBtn.disabled = true;
+      });
+      document.getElementById('pageInfo').textContent = `This PDF has ${totalPages} page${totalPages>1?'s':''}.`;
+      optionsBox.style.display = 'block';
+      splitBtn.disabled = false;
+    } catch(e) { showStatus('❌ Could not read PDF: ' + e.message, 'error'); }
+  }
+
+  dropZone.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', () => { if (fileInput.files[0]) loadFile(fileInput.files[0]); });
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault(); dropZone.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+  });
+
+  clearBtn.addEventListener('click', () => {
+    pdfFile = null; document.getElementById('fileList').innerHTML = '';
+    optionsBox.style.display = 'none'; splitBtn.disabled = true;
+    resultBox.classList.remove('show'); statusMsg.className = 'status-msg';
+  });
+
+  function parseRange(rangeStr, max) {
+    const pages = new Set();
+    rangeStr.split(',').forEach(part => {
+      part = part.trim();
+      if (part.includes('-')) {
+        const [a, b] = part.split('-').map(Number);
+        for (let i = a; i <= Math.min(b, max); i++) if (i >= 1) pages.add(i - 1);
+      } else {
+        const n = parseInt(part);
+        if (!isNaN(n) && n >= 1 && n <= max) pages.add(n - 1);
+      }
+    });
+    return [...pages].sort((a, b) => a - b);
+  }
+
+  splitBtn.addEventListener('click', async () => {
+    if (!pdfFile) return;
+    const mode = document.querySelector('input[name="mode"]:checked').value;
+    splitBtn.disabled = true;
+    progressWrap.classList.add('show');
+    resultBox.classList.remove('show');
+    statusMsg.className = 'status-msg';
+    resultContent.innerHTML = '';
+
+    try {
+      const { PDFDocument } = PDFLib;
+      const srcBytes = await pdfFile.arrayBuffer();
+      const srcPdf = await PDFDocument.load(srcBytes);
+      const total = srcPdf.getPageCount();
+
+      let groups = [];
+      if (mode === 'all') {
+        for (let i = 0; i < total; i++) groups.push([i]);
+      } else {
+        const rangeStr = document.getElementById('pageRange').value;
+        if (!rangeStr.trim()) { showStatus('❌ Please enter a page range.', 'error'); splitBtn.disabled = false; progressWrap.classList.remove('show'); return; }
+        const indices = parseRange(rangeStr, total);
+        if (indices.length === 0) { showStatus('❌ No valid pages found.', 'error'); splitBtn.disabled = false; progressWrap.classList.remove('show'); return; }
+        groups.push(indices);
+      }
+
+      const blobs = [];
+      for (let g = 0; g < groups.length; g++) {
+        progressBar.style.width = Math.round((g / groups.length) * 90) + '%';
+        progressLabel.textContent = `Creating part ${g+1} of ${groups.length}…`;
+        const newPdf = await PDFDocument.create();
+        const pages = await newPdf.copyPages(srcPdf, groups[g]);
+        pages.forEach(p => newPdf.addPage(p));
+        const bytes = await newPdf.save();
+        blobs.push({ blob: new Blob([bytes], {type:'application/pdf'}), pages: groups[g] });
+      }
+
+      progressBar.style.width = '100%';
+
+      blobs.forEach((item, i) => {
+        const url = URL.createObjectURL(item.blob);
+        const pageLabel = item.pages.length === 1 ? `Page ${item.pages[0]+1}` : `Pages ${item.pages[0]+1}–${item.pages[item.pages.length-1]+1}`;
+        const fname = mode === 'all' ? `page-${i+1}.pdf` : `split-${i+1}.pdf`;
+        const div = document.createElement('div');
+        div.className = 'result-file';
+        div.innerHTML = `
+          <span class="rf-icon">📄</span>
+          <div class="rf-info">
+            <div class="rf-name">${fname}</div>
+            <div class="rf-size">${pageLabel} · ${formatBytes(item.blob.size)}</div>
+          </div>
+          <button class="btn-primary" onclick="(function(){var a=document.createElement('a');a.href='${url}';a.download='${fname}';a.click();})()">⬇ Download</button>`;
+        resultContent.appendChild(div);
+      });
+
+      resultBox.classList.add('show');
+      showStatus(`✅ Split into ${blobs.length} file${blobs.length>1?'s':''}!`, 'success');
+    } catch(e) { showStatus('❌ Error: ' + e.message, 'error'); }
+    finally { progressWrap.classList.remove('show'); progressBar.style.width='0%'; splitBtn.disabled = false; }
+  });
+</script>
+</body>
+</html>

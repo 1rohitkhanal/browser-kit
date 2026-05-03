@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Love Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/global.css">
+  <link rel="stylesheet" href="assets/css/tool.css">
+  <style>
+    .love-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .panel-card,
+    .result-card,
+    .hint-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow-elevated, 0 16px 40px rgba(0,0,0,.05));
+    }
+
+    .panel-card {
+      display: grid;
+      gap: 18px;
+    }
+
+    .label-group {
+      display: grid;
+      gap: 10px;
+    }
+
+    .label-group label {
+      color: var(--text2);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .label-group input {
+      width: 100%;
+      height: 48px;
+      padding: 0 16px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      font-size: 14px;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .action-btn {
+      flex: 1;
+      min-width: 140px;
+      height: 48px;
+      border-radius: 14px;
+      border: none;
+      background: var(--accent);
+      color: var(--bg);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform .15s ease, opacity .15s ease;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-1px);
+      opacity: .92;
+    }
+
+    .result-card {
+      display: grid;
+      gap: 18px;
+      text-align: center;
+      min-height: 320px;
+      justify-items: center;
+    }
+
+    .result-score {
+      width: 138px;
+      height: 138px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+      font-size: 42px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .result-title {
+      margin: 0;
+      font-size: 20px;
+      color: var(--text);
+    }
+
+    .result-message {
+      margin: 0;
+      color: var(--text2);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .hint-card h3 {
+      margin: 0 0 12px;
+      font-size: 16px;
+      color: var(--text);
+    }
+
+    .hint-card p {
+      margin: 0;
+      color: var(--text2);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 980px) {
+      .love-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .love-grid { gap: 18px; }
+      .panel-card,
+      .result-card,
+      .hint-card { padding: 20px; }
+      .action-row { flex-direction: column; }
+      .result-score { width: 120px; height: 120px; font-size: 36px; }
+    }
+  </style>
+</head>
+<body>
+  <nav id="navbar"></nav>
+
+  <main class="tool-wrap">
+    <section class="tool-main">
+      <div class="tool-header">
+        <p class="tool-breadcrumb"><a href="index.html">Home</a> / Design / Love Calculator</p>
+        <h1 class="tool-title">Love Calculator</h1>
+        <p class="tool-desc">Find out the compatibility score between two names with a polished, responsive interface that looks great on desktop and mobile.</p>
+      </div>
+
+      <div class="love-grid">
+        <div class="panel-card">
+          <div class="label-group">
+            <label for="nameA">Name one</label>
+            <input id="nameA" type="text" placeholder="Enter first name" value="Emma" oninput="updateResult()">
+          </div>
+          <div class="label-group">
+            <label for="nameB">Name two</label>
+            <input id="nameB" type="text" placeholder="Enter second name" value="Liam" oninput="updateResult()">
+          </div>
+          <div class="action-row">
+            <button class="action-btn" onclick="calculateLove()">Calculate</button>
+            <button class="action-btn" onclick="resetLove()">Reset</button>
+          </div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-score" id="loveScore">0%</div>
+          <h2 class="result-title" id="resultTitle">Ready to calculate</h2>
+          <p class="result-message" id="resultMessage">Enter two names, then click Calculate to see your love score and compatibility message.</p>
+        </div>
+
+        <div class="hint-card">
+          <h3>How it works</h3>
+          <p>This tool uses a playful compatibility algorithm based on the letters in each name. It is designed for fun and to create a polished preview you can use in social or design prototypes.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer"></footer>
+
+  <script src="assets/js/navbar.js"></script>
+  <script src="assets/js/theme.js"></script>
+  <script>
+    const nameA = document.getElementById('nameA');
+    const nameB = document.getElementById('nameB');
+    const loveScore = document.getElementById('loveScore');
+    const resultTitle = document.getElementById('resultTitle');
+    const resultMessage = document.getElementById('resultMessage');
+
+    function calculateLove() {
+      const a = nameA.value.trim();
+      const b = nameB.value.trim();
+      if (!a || !b) {
+        resultTitle.textContent = 'Enter both names';
+        resultMessage.textContent = 'Please provide two names to generate a compatibility score.';
+        loveScore.textContent = '0%';
+        return;
+      }
+
+      const score = Math.min(100, Math.max(1, Math.abs(hashName(a) - hashName(b)) % 101));
+      loveScore.textContent = `${score}%`;
+      resultTitle.textContent = score >= 70 ? 'A strong connection' : score >= 40 ? 'A good match' : 'Keep the spark alive';
+      resultMessage.textContent = score >= 70
+        ? `Great chemistry between ${a} and ${b}! This score is perfect for a fun social share.`
+        : score >= 40
+          ? `There is potential between ${a} and ${b}, with room to grow and connect.`
+          : `The score is playful — sometimes opposites attract, too. Try again with different names.`;
+    }
+
+    function hashName(name) {
+      return name.toLowerCase().split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
+    }
+
+    function resetLove() {
+      nameA.value = 'Emma';
+      nameB.value = 'Liam';
+      loveScore.textContent = '0%';
+      resultTitle.textContent = 'Ready to calculate';
+      resultMessage.textContent = 'Enter two names, then click Calculate to see your love score and compatibility message.';
+    }
+
+    function updateResult() {
+      loveScore.textContent = '0%';
+      resultTitle.textContent = 'Ready to calculate';
+      resultMessage.textContent = 'Enter two names, then click Calculate to see your love score and compatibility message.';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('navbar').innerHTML = renderNavbar();
+      document.getElementById('footer').innerHTML = renderFooter();
+      initNavbar();
+      resetLove();
+    });
+  </script>
+</body>
+</html>

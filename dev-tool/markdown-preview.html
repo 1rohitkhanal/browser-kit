@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markdown Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/tool.css">
+  <style>
+    .page-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform .15s ease, background .15s ease;
+    }
+
+    .back-button:hover {
+      background: var(--bg3);
+      transform: translateY(-1px);
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .panel {
+      display: grid;
+      gap: 20px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 26px;
+    }
+
+    .panel label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      font-weight: 700;
+      color: var(--text2);
+    }
+
+    textarea,
+    select,
+    button {
+      width: 100%;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      padding: 16px;
+      font-size: 15px;
+      line-height: 1.7;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      min-height: 220px;
+      resize: vertical;
+    }
+
+    .button-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .action-btn {
+      border-radius: 14px;
+      border: 1px solid transparent;
+      padding: 14px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform .15s ease, opacity .15s ease;
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .action-btn.secondary {
+      background: var(--bg3);
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .action-btn:hover {
+      transform: translateY(-1px);
+      opacity: .95;
+    }
+
+    .preview-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      min-height: 420px;
+      overflow: auto;
+    }
+
+    .preview-card h2,
+    .preview-card h3,
+    .preview-card h4,
+    .preview-card p,
+    .preview-card ul,
+    .preview-card ol,
+    .preview-card blockquote {
+      color: var(--text);
+    }
+
+    .preview-card code,
+    .preview-card pre {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg3);
+      color: var(--text);
+      padding: 12px;
+      border-radius: 14px;
+    }
+
+    .info-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .info-card h3 {
+      margin: 0;
+      font-size: 18px;
+      color: var(--text);
+    }
+
+    .info-card p {
+      margin: 0;
+      color: var(--text2);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .tag {
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--bg3);
+      color: var(--text2);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 980px) {
+      .tool-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .button-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="navbar"></nav>
+
+  <main class="tool-wrap">
+    <section class="tool-main">
+      <div class="page-header">
+        <div>
+          <a class="back-button" href="../index.html">← Back</a>
+          <p class="tool-breadcrumb"><a href="../index.html">Home</a> / Dev Tools / Markdown Preview</p>
+          <h1 class="tool-title">Markdown Preview</h1>
+          <p class="tool-desc">Write markdown and instantly see the rendered result in a responsive preview panel.</p>
+        </div>
+      </div>
+
+      <div class="tool-grid">
+        <div class="panel">
+          <div>
+            <label for="markdownInput">Markdown Input</label>
+            <textarea id="markdownInput" placeholder="Type markdown here..." oninput="renderMarkdown()"># Welcome
+
+Type **Markdown** on the left and see the preview on the right.
+
+- Bullet list
+- Inline code: `const x = 1`
+
+> Blockquotes look great.
+
+```js
+console.log('Hello!');
+```
+</textarea>
+          </div>
+
+          <div class="button-row">
+            <button class="action-btn" onclick="renderMarkdown()">Render</button>
+            <button class="action-btn secondary" onclick="clearInput()">Clear</button>
+            <button class="action-btn secondary" onclick="copyHtml()">Copy HTML</button>
+          </div>
+
+          <div class="tags">
+            <span class="tag" id="wordCount">Words: 0</span>
+            <span class="tag" id="charCount">Chars: 0</span>
+          </div>
+        </div>
+
+        <aside class="tool-side">
+          <div class="preview-card" id="previewCard"></div>
+          <div class="info-card">
+            <h3>How to use</h3>
+            <p>Enter Markdown text on the left. The preview updates instantly to show headings, lists, code blocks, and formatting in a clean preview layout.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer"></footer>
+
+  <script src="../assets/js/navbar.js"></script>
+  <script src="../assets/js/theme.js"></script>
+  <script>
+    const markdownInput = document.getElementById('markdownInput');
+    const previewCard = document.getElementById('previewCard');
+    const wordCount = document.getElementById('wordCount');
+    const charCount = document.getElementById('charCount');
+
+    function renderMarkdown() {
+      const text = markdownInput.value;
+      previewCard.innerHTML = marked.parse(text);
+      updateMetrics(text);
+    }
+
+    function updateMetrics(text) {
+      const words = text.trim().split(/\s+/).filter(Boolean).length;
+      wordCount.textContent = `Words: ${words}`;
+      charCount.textContent = `Chars: ${text.length}`;
+    }
+
+    function clearInput() {
+      markdownInput.value = '';
+      renderMarkdown();
+    }
+
+    function copyHtml() {
+      navigator.clipboard.writeText(previewCard.innerHTML).then(() => {
+        alert('Rendered HTML copied to clipboard!');
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('navbar').innerHTML = renderNavbar();
+      document.getElementById('footer').innerHTML = renderFooter();
+      initNavbar();
+      renderMarkdown();
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</body>
+</html>

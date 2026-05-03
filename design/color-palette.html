@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Palette Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/global.css">
+  <link rel="stylesheet" href="../../assets/css/tool.css">
+  <style>
+    .input-row {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 1fr 1fr;
+      margin-top: 18px;
+    }
+
+    .input-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .input-card label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text2);
+    }
+
+    .input-card input,
+    .input-card select,
+    .input-card button {
+      width: 100%;
+      height: 44px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      padding: 0 14px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .input-card button {
+      cursor: pointer;
+      background: var(--accent);
+      color: var(--bg);
+      border-color: transparent;
+      transition: transform .15s ease, opacity .15s ease;
+    }
+
+    .input-card button:hover {
+      transform: translateY(-1px);
+      opacity: .95;
+    }
+
+    .palette-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-top: 20px;
+    }
+
+    .palette-swatch {
+      border-radius: 18px;
+      overflow: hidden;
+      min-height: 140px;
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      display: grid;
+      align-content: end;
+      padding: 16px;
+      color: var(--bg);
+      position: relative;
+    }
+
+    .palette-swatch::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: .08;
+      background: linear-gradient(180deg, transparent, rgba(0, 0, 0, .15));
+      pointer-events: none;
+    }
+
+    .palette-swatch span {
+      position: relative;
+      z-index: 1;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.4;
+      text-shadow: 0 1px 12px rgba(0,0,0,.25);
+    }
+
+    .palette-details {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .palette-detail {
+      flex: 1;
+      min-width: 120px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .palette-detail strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text2);
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+
+    .palette-detail p {
+      margin: 0;
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.7;
+      word-break: break-word;
+    }
+
+    @media (max-width: 840px) {
+      .tool-wrap { grid-template-columns: 1fr; }
+      .tool-side { order: 3; }
+      .input-row,
+      .palette-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .palette-swatch { min-height: 120px; }
+    }
+  </style>
+</head>
+<body>
+  <nav id="navbar"></nav>
+
+  <main class="tool-wrap">
+    <section class="tool-main">
+      <div class="tool-header">
+        <p class="tool-breadcrumb"><a href="../../index.html">Home</a> / Dev Tools / Color Palette</p>
+        <h1 class="tool-title">Color Palette Generator</h1>
+        <p class="tool-desc">Generate palettes from a base color with complementary, analogous, monochrome, triad and more. Responsive, theme-aware, and easy to copy.</p>
+      </div>
+
+      <div class="tool-box">
+        <div class="input-row">
+          <div class="input-card">
+            <label for="baseColor">Base Color</label>
+            <input id="baseColor" type="text" placeholder="#3498db" value="#3498db" oninput="updatePalette()">
+          </div>
+
+          <div class="input-card">
+            <label for="paletteType">Palette Type</label>
+            <select id="paletteType" onchange="updatePalette()">
+              <option value="complementary">Complementary</option>
+              <option value="analogous">Analogous</option>
+              <option value="monochrome">Monochrome</option>
+              <option value="triad">Triad</option>
+              <option value="split-complementary">Split Complementary</option>
+            </select>
+          </div>
+
+          <div class="input-card">
+            <label for="shadesCount">Swatch Count</label>
+            <input id="shadesCount" type="number" min="2" max="6" value="5" oninput="updatePalette()">
+          </div>
+
+          <div class="input-card">
+            <label>&nbsp;</label>
+            <button onclick="copyPalette()">Copy Palette</button>
+          </div>
+        </div>
+
+        <div class="palette-grid" id="paletteGrid"></div>
+
+        <div class="palette-details">
+          <div class="palette-detail">
+            <strong>HEX Output</strong>
+            <p id="hexOutput">#3498db</p>
+          </div>
+          <div class="palette-detail">
+            <strong>RGB Output</strong>
+            <p id="rgbOutput">rgb(52, 152, 219)</p>
+          </div>
+          <div class="palette-detail">
+            <strong>HSL Output</strong>
+            <p id="hslOutput">hsl(204, 70%, 52%)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="tool-side">
+      <div class="tool-box">
+        <h3>How to use</h3>
+        <p>Enter a base HEX color and choose a palette type. The tool updates the swatches automatically and shows converted color values for the first swatch.</p>
+      </div>
+
+      <div class="tool-box related-section">
+        <h3 class="related-title">Related Dev Tools</h3>
+        <div class="related-grid">
+          <a class="related-card" href="color-picker.html"><span class="rc-emoji">🎨</span><span class="rc-name">Color Picker</span></a>
+          <a class="related-card" href="css-gradient.html"><span class="rc-emoji">🌀</span><span class="rc-name">CSS Gradient</span></a>
+          <a class="related-card" href="color-converter.html"><span class="rc-emoji">🌈</span><span class="rc-name">Color Converter</span></a>
+          <a class="related-card" href="base64.html"><span class="rc-emoji">🧪</span><span class="rc-name">Base64 Encoder</span></a>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <footer id="footer"></footer>
+
+  <script src="../../assets/js/navbar.js"></script>
+  <script src="../../assets/js/theme.js"></script>
+  <script>
+    const baseColor = document.getElementById('baseColor');
+    const paletteType = document.getElementById('paletteType');
+    const shadesCount = document.getElementById('shadesCount');
+    const paletteGrid = document.getElementById('paletteGrid');
+    const hexOutput = document.getElementById('hexOutput');
+    const rgbOutput = document.getElementById('rgbOutput');
+    const hslOutput = document.getElementById('hslOutput');
+
+    function updatePalette() {
+      const color = baseColor.value.trim();
+      const type = paletteType.value;
+      const count = Math.max(2, Math.min(6, Number(shadesCount.value) || 5));
+      shadesCount.value = count;
+
+      try {
+        const rgb = parseHex(color);
+        const baseHsl = rgbToHsl(rgb);
+        const palette = generatePalette(baseHsl, type, count);
+        renderPalette(palette);
+        updateOutputs(palette[0]);
+      } catch (error) {
+        paletteGrid.innerHTML = `<div class="palette-swatch" style="background: var(--bg3); color: var(--text2);"><span>Invalid color value<br>Use #RRGGBB or #RGB</span></div>`;
+        hexOutput.textContent = '-';
+        rgbOutput.textContent = '-';
+        hslOutput.textContent = '-';
+      }
+    }
+
+    function parseHex(value) {
+      const hex = value.replace('#', '');
+      if (!/^([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(hex)) throw new Error('Invalid hex');
+      const normalized = hex.length === 3 ? hex.split('').map(c => c + c).join('') : hex;
+      return {
+        r: parseInt(normalized.slice(0, 2), 16),
+        g: parseInt(normalized.slice(2, 4), 16),
+        b: parseInt(normalized.slice(4, 6), 16)
+      };
+    }
+
+    function rgbToHex({ r, g, b }) {
+      const toHex = n => n.toString(16).padStart(2, '0');
+      return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+    }
+
+    function rgbToHsl({ r, g, b }) {
+      r /= 255; g /= 255; b /= 255;
+      const max = Math.max(r, g, b);
+      const min = Math.min(r, g, b);
+      const d = max - min;
+      const l = (max + min) / 2;
+      const s = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
+      let h = 0;
+      if (d !== 0) {
+        if (max === r) h = ((g - b) / d) % 6;
+        else if (max === g) h = (b - r) / d + 2;
+        else h = (r - g) / d + 4;
+      }
+      h = Math.round((h * 60 + 360) % 360);
+      return { h, s: +(s * 100).toFixed(0), l: +(l * 100).toFixed(0) };
+    }
+
+    function hslToRgb({ h, s, l }) {
+      s /= 100; l /= 100;
+      const c = (1 - Math.abs(2 * l - 1)) * s;
+      const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+      const m = l - c / 2;
+      let r = 0, g = 0, b = 0;
+      if (h < 60) { r = c; g = x; }
+      else if (h < 120) { r = x; g = c; }
+      else if (h < 180) { g = c; b = x; }
+      else if (h < 240) { g = x; b = c; }
+      else if (h < 300) { r = x; b = c; }
+      else { r = c; b = x; }
+      return {
+        r: Math.round((r + m) * 255),
+        g: Math.round((g + m) * 255),
+        b: Math.round((b + m) * 255)
+      };
+    }
+
+    function generatePalette(baseHsl, type, count) {
+      const palette = [];
+      const step = 360 / count;
+      for (let i = 0; i < count; i++) {
+        let h = baseHsl.h;
+        let s = baseHsl.s;
+        let l = baseHsl.l;
+
+        switch (type) {
+          case 'complementary':
+            h = (baseHsl.h + (i === 1 ? 180 : 0) + 360) % 360;
+            break;
+          case 'split-complementary':
+            h = (baseHsl.h + (i === 0 ? 0 : i === 1 ? 150 : 210)) % 360;
+            break;
+          case 'analogous':
+            h = (baseHsl.h + (i - Math.floor(count / 2)) * 30 + 360) % 360;
+            break;
+          case 'monochrome':
+            l = Math.max(0, Math.min(100, baseHsl.l + (i - Math.floor(count / 2)) * 10));
+            break;
+          case 'triad':
+            h = (baseHsl.h + i * 120) % 360;
+            break;
+        }
+
+        if (type !== 'monochrome') {
+          l = Math.max(20, Math.min(80, baseHsl.l + (i - Math.floor(count / 2)) * 8));
+        }
+
+        palette.push({ h, s, l });
+      }
+      return palette;
+    }
+
+    function renderPalette(palette) {
+      paletteGrid.innerHTML = palette.map(({ h, s, l }) => {
+        const rgb = hslToRgb({ h, s, l });
+        const hex = rgbToHex(rgb).toUpperCase();
+        const color = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+        return `<div class="palette-swatch" style="background:${color};"><span>${hex}<br>${h}°, ${s}%, ${l}%</span></div>`;
+      }).join('');
+    }
+
+    function updateOutputs(firstHsl) {
+      const rgb = hslToRgb(firstHsl);
+      hexOutput.textContent = rgbToHex(rgb).toUpperCase();
+      rgbOutput.textContent = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+      hslOutput.textContent = `hsl(${firstHsl.h}, ${firstHsl.s}%, ${firstHsl.l}%)`;
+    }
+
+    function copyPalette() {
+      const swatches = Array.from(paletteGrid.querySelectorAll('.palette-swatch span')).map(span => span.textContent.split('\n')[0]);
+      if (!swatches.length) return;
+      navigator.clipboard.writeText(swatches.join('\n')).then(() => {
+        alert('Palette copied to clipboard!');
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('navbar').innerHTML = renderNavbar();
+      document.getElementById('footer').innerHTML = renderFooter();
+      initNavbar();
+      updatePalette();
+    });
+  </script>
+</body>
+</html>
