@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lorem Ipsum Generator</title>
+
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --accent: #4f46e5;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Segoe UI", sans-serif; }
+
+    body {
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 600px;
+      background: var(--card);
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .header { display: flex; align-items: center; justify-content: space-between; }
+    .title { font-size: 18px; color: var(--text); }
+
+    .back-btn {
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 8px;
+    }
+
+    input, select {
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-size: 14px;
+      outline: none;
+      width: 100%;
+    }
+
+    .generate {
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      background: var(--accent);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .output {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      background: #fafafa;
+      min-height: 120px;
+      white-space: pre-wrap;
+      line-height: 1.5;
+    }
+
+    .copy {
+      align-self: flex-end;
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: none;
+      background: #111827;
+      color: #fff;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    @media (max-width: 480px) {
+      .app { padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="app">
+  <div class="header">
+    <button class="back-btn" onclick="goBack()">← Back</button>
+    <div class="title">Lorem Ipsum Generator</div>
+    <div></div>
+  </div>
+
+  <div class="controls">
+    <input type="number" id="count" min="1" max="20" value="3" />
+    <select id="type">
+      <option value="paragraphs">Paragraphs</option>
+      <option value="sentences">Sentences</option>
+      <option value="words">Words</option>
+    </select>
+  </div>
+
+  <button class="generate" onclick="generate()">Generate</button>
+
+  <div id="output" class="output"></div>
+  <button class="copy" onclick="copyText()">Copy</button>
+</div>
+
+<script>
+  const baseText = "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua";
+
+  function goBack() {
+    if (history.length > 1) {
+      history.back();
+    } else {
+      window.location.href = 'index.html';
+    }
+  }
+
+  function generate() {
+    const count = parseInt(document.getElementById('count').value) || 1;
+    const type = document.getElementById('type').value;
+    let result = "";
+
+    if (type === 'words') {
+      const words = baseText.split(' ');
+      for (let i = 0; i < count; i++) {
+        result += words[i % words.length] + ' ';
+      }
+    }
+
+    if (type === 'sentences') {
+      for (let i = 0; i < count; i++) {
+        result += baseText.charAt(0).toUpperCase() + baseText.slice(1) + '. ';
+      }
+    }
+
+    if (type === 'paragraphs') {
+      for (let i = 0; i < count; i++) {
+        result += (baseText + '. ').repeat(5) + "\n\n";
+      }
+    }
+
+    document.getElementById('output').textContent = result.trim();
+  }
+
+  function copyText() {
+    const text = document.getElementById('output').textContent;
+    navigator.clipboard.writeText(text);
+    const btn = event.target;
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1200);
+  }
+
+  generate();
+</script>
+
+</body>
+</html>

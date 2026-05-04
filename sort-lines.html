@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sort Lines</title>
+
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --accent: #4f46e5;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Segoe UI", sans-serif; }
+
+    body {
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 640px;
+      background: var(--card);
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .header { display: flex; align-items: center; justify-content: space-between; }
+    .title { font-size: 18px; color: var(--text); }
+
+    .back-btn {
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #fff;
+      cursor: pointer;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 140px;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      resize: vertical;
+      font-size: 14px;
+      outline: none;
+    }
+    textarea:focus { border-color: var(--accent); }
+
+    .options {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 8px;
+    }
+
+    .btn {
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .primary { background: var(--accent); color: #fff; }
+    .secondary { background: #111827; color: #fff; }
+    .ghost { background: #fff; border: 1px solid var(--border); }
+
+    .output {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      background: #fafafa;
+      min-height: 140px;
+      white-space: pre-wrap;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    @media (max-width: 480px) {
+      .app { padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="app">
+  <div class="header">
+    <button class="back-btn" onclick="goBack()">← Back</button>
+    <div class="title">Sort Lines</div>
+    <div></div>
+  </div>
+
+  <textarea id="input" placeholder="Enter lines (each on new line)..."></textarea>
+
+  <div class="options">
+    <label><input type="checkbox" id="asc" checked /> Ascending</label>
+    <label><input type="checkbox" id="desc" /> Descending</label>
+    <label><input type="checkbox" id="ignoreCase" /> Ignore case</label>
+  </div>
+
+  <div class="controls">
+    <button class="btn primary" onclick="process()">Sort</button>
+    <button class="btn ghost" onclick="clearAll()">Clear</button>
+    <button class="btn secondary" onclick="copyText()">Copy Output</button>
+  </div>
+
+  <div id="output" class="output"></div>
+</div>
+
+<script>
+  const input = document.getElementById('input');
+  const output = document.getElementById('output');
+
+  function goBack() {
+    if (history.length > 1) {
+      history.back();
+    } else {
+      window.location.href = 'index.html';
+    }
+  }
+
+  function process() {
+    let lines = input.value.split(/\r?\n/);
+    const ignoreCase = document.getElementById('ignoreCase').checked;
+    const asc = document.getElementById('asc').checked;
+    const desc = document.getElementById('desc').checked;
+
+    lines.sort((a, b) => {
+      let x = ignoreCase ? a.toLowerCase() : a;
+      let y = ignoreCase ? b.toLowerCase() : b;
+      if (x < y) return -1;
+      if (x > y) return 1;
+      return 0;
+    });
+
+    if (desc && !asc) lines.reverse();
+
+    output.textContent = lines.join('\n');
+  }
+
+  function clearAll() {
+    input.value = '';
+    output.textContent = '';
+  }
+
+  function copyText() {
+    const text = output.textContent;
+    if (!text) return;
+    navigator.clipboard.writeText(text);
+    const btn = event.target;
+    const prev = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(() => (btn.textContent = prev), 1200);
+  }
+
+  // Ensure only one of asc/desc is active
+  document.getElementById('asc').addEventListener('change', () => {
+    if (asc.checked) desc.checked = false;
+  });
+  document.getElementById('desc').addEventListener('change', () => {
+    if (desc.checked) asc.checked = false;
+  });
+</script>
+
+</body>
+</html>
