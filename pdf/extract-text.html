@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Text Extractor</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+    body { background: #0f172a; color: #e2e8f0; display: flex; flex-direction: column; height: 100vh; }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 20px;
+      background: #020617;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .back-btn {
+      background: #1e293b;
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .back-btn:hover { background: #334155; }
+
+    .container {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 15px;
+      padding: 20px;
+    }
+
+    .tool {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .ad {
+      background: #111827;
+      border: 1px dashed #475569;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+    }
+
+    .top-ad { height: 90px; }
+    .side-ad { height: 250px; }
+    .bottom-ad { height: 90px; }
+
+    .upload-box {
+      border: 2px dashed #334155;
+      padding: 30px;
+      text-align: center;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    textarea {
+      width: 100%;
+      height: 200px;
+      background: #020617;
+      color: #e2e8f0;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 10px;
+      resize: none;
+    }
+
+    button.action {
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      background: #2563eb;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button.action:hover { background: #1d4ed8; }
+
+    footer {
+      padding: 10px;
+      text-align: center;
+      font-size: 14px;
+      background: #020617;
+      border-top: 1px solid #1e293b;
+    }
+
+    @media (max-width: 900px) {
+      .container { grid-template-columns: 1fr; }
+      .side-ad { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <button class="back-btn" onclick="goBack()">← Back</button>
+  <h2>PDF Text Extractor</h2>
+  <div></div>
+</header>
+
+<div class="container">
+
+  <div>
+    <div class="ad top-ad">728x90 Ad Space</div>
+
+    <div class="tool">
+      <div class="upload-box" onclick="document.getElementById('fileInput').click()">
+        Click to upload PDF
+      </div>
+      <input type="file" id="fileInput" accept="application/pdf" hidden>
+
+      <button class="action" onclick="extractText()">Extract Text</button>
+
+      <textarea id="output" placeholder="Extracted text will appear here..."></textarea>
+    </div>
+
+    <div class="ad bottom-ad">Bottom Banner Ad</div>
+  </div>
+
+  <div class="ad side-ad">300x250 Ad</div>
+
+</div>
+
+<footer>
+  © fix-kit
+</footer>
+
+<script>
+  function goBack() {
+    window.history.back();
+  }
+
+  function extractText() {
+    const fileInput = document.getElementById('fileInput');
+    if (!fileInput.files.length) {
+      alert('Please upload a PDF first');
+      return;
+    }
+
+    document.getElementById('output').value = "(Demo) Text extraction requires PDF.js integration.";
+  }
+</script>
+
+</body>
+</html>
