@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emoji Picker</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --accent: #4f46e5;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 16px;
+    }
+
+    .picker {
+      width: 100%;
+      max-width: 420px;
+      background: var(--card);
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header h2 {
+      font-size: 18px;
+      color: var(--text);
+    }
+
+    .search {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      outline: none;
+      font-size: 14px;
+    }
+
+    .search:focus {
+      border-color: var(--accent);
+    }
+
+    .emoji-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+      gap: 8px;
+      max-height: 300px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .emoji {
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .emoji:hover {
+      background: #eef2ff;
+    }
+
+    .footer {
+      display: flex;
+      gap: 8px;
+    }
+
+    .output {
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-size: 16px;
+    }
+
+    .copy-btn {
+      padding: 10px 14px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .copy-btn:hover {
+      opacity: 0.9;
+    }
+
+    @media (max-width: 480px) {
+      .picker {
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="picker">
+    <div class="header">
+      <h2>Emoji Picker</h2>
+    </div>
+
+    <input type="text" class="search" placeholder="Search emoji..." />
+
+    <div class="emoji-grid" id="emojiGrid"></div>
+
+    <div class="footer">
+      <input type="text" class="output" id="output" placeholder="Selected emoji..." readonly />
+      <button class="copy-btn" id="copyBtn">Copy</button>
+    </div>
+  </div>
+
+  <script>
+   const emojis = [
+      // Faces & Expressions (Funny & Quirky)
+      "😀","😁","😂","🤣","😃","😄","😅","😆","😉","😊","😋","😎","😍","😘","😗","😙","😚","🙂","🤗","🤩",
+      "🤔","🤨","😐","😑","😶","🙄","😏","😣","😥","😮","🤐","😯","😪","😫","🥱","😴","😌","😛","😜","😝",
+      "🤤","😒","😓","😔","😕","🙃","🤑","😲","☹️","🙁","😖","😞","😟","😤","😢","😭","😦","😧","😨","😩",
+      "🤯","😬","😰","😱","🥵","🥶","😳","🤪","😵","😡","😠","🤬","😷","🤒","🤕","🤢","🤮","🤧","😇","🥳",
+      "🥰","🧐","🤓","🤡","💩","👻","💀","👽","👾","🤖","🎃","😺","😸","😹","😻","😼","😽","🙀","😿","😾",
+      
+      // Gestures & Body Language
+      "👋","🤚","🖐️","✋","🖖","👌","🤌","🤏","✌️","🤞","🤟","🤘","🤙","👈","👉","👆","🖕","👇","☝️","👍",
+      "👎","✊","👊","🤛","🤜","👏","🙌","👐","🤲","🤝","🙏","✍️","💅","🤳","💪","🦾","🦵","🦿","🦶","👣",
+      
+      // Romance & Vibes
+      "❤️","💔","💖","💘","💝","💗","💓","💞","💕","💌","💟","♥️","🔥","✨","⭐","🌟","💫","💨","💦","💢",
+      "💣","💤","🕳️","🎉","🎊","🎈","🧧","🎀","🎁","🎂","🏆","🎖️","🥇","🥈","🥉","🏅","💎","💍","💄","🕶️",
+      
+      // Food & Drink (Great for suggestive humor)
+      "🍏","🍎","🍐","🍊","🍋","🍌","🍉","🍇","🍓","🫐","🍈","🍒","🍑","🥭","🍍","🥥","🥝","🍅","🍆","🥑",
+      "🥦","🥬","🥒","🌶️","🌽","🥕","🫒","🧄"," onion ","🍄","🥜","🌰","🍞","🥐","🥖","🥨","🥯","🥞","🧇","🧀",
+      "🍖","🍗","🥩","🥓","🍔","🍟","🍕","🌭","🥪","🌮","🌯","🥙","🧆","🥚","🍳","🥘","🍲","🥣","🥗","🍿",
+      "🧈","🧂","🥫","🍱","🍘","🍙","🍚","🍛","🍜","🍝","🍠","🍢","🍣","🍤","🍥","🥮","🍡","🥟","🥠","🥡",
+      "🍦","🍧","🍨","🍩","🍪","🎂","🍰","🧁","🥧","🍫","🍬","🍭","🍮","🍯","🍼","🥛","☕","🍵","🍶","🍾",
+      "🍷","🍸","🍹","🍺","🍻","🥂","🥃","🥤","🧋","🧃","🧉","🧊",
+
+      "🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼","🐻‍❄️","🐨","🐯","🦁","🐮","🐷","🐽","🐸","🐵","🙈","🙉","🙊",
+  "🐒","🐔","🐧","🐦","🐤","🐣","🐥","🦆","🦅","🦉","🦇","🐺","🐗","🐴","🦄","🐝","🪱","🐛","🦋","🐌",
+  "🐞","🐜","🦟","🦗","🕷️","🕸️","🦂","🐢","🐍","🦎","🦖","🦕","🐙","🦑","🦐","🦞","🦀","🐡","🐠","🐟",
+  "🐬","🐳","🐋","🦈","🐊","🐅","🐆","🦓","🦍","🦧","🐘","🦛","🦏","🐪","🐫","🦒","🦘","🦬","🐃","🐂",
+  "🐄","🐎","🐖","🐏","🐑","🦙","🐐","🦌","🐕","🐩","🦮","🐕‍🦺","🐈","🐈‍⬛","🐓","🦃","🦚","🦜","🦢","🦩",
+  "🕊️","🐇","🦝","🦨","🦡"," beaver ","🦦","🦥","🐁","🐀","🐿️","🦔","🐾","🐉","🐲","🌵","🎄","🌲","🌳","🌴",
+  "🪵","🌱","🌿","☘️","🍀","🎍","🪴","🎋","🍃","🍂","🍁","🍄","🐚","🪸","🪨","🌾","💐","🌷","🌹","🥀",
+  "🌺","🌸","🌼","🌻","🌞","🌝","🌛","🌜","🌚","🌕","🌖","🌗","🌘","🌑","🌒","🌓","🌔","🌙","🌎","🌍",
+  "🌏","🪐","💫","⭐","🌟","✨","⚡","☄️","💥","🔥","🌪️","🌈","☀️","🌤️","⛅","🌥️","☁️","🌦️","🌧️","⛈️",
+  "🌩️","🌨️","❄️","☃️","⛄","🌬️","💨","💧","💦","🫧","☔","☂️","🌊","🌫️",
+
+  // Activities & Objects
+  "⚽","🏀","🏈","⚾","🥎","🎾","🏐","🏉","🎱","🪀","🏓","🏸","🥅","🏒","🏑","🏏","🥍","🏹","🎣","🤿",
+  "🥊","🥋","⛸️","🎿","🛷","⛸️","🥌","🎯","🪪","🎮","🕹️","🎰","🎲","🧩","🧸","🪅","🪩","🪆","🎨","🧵",
+  "🧶","🎼","🎵","🎶","🎙️","🎤","🎧","📻","🎷","🪗","🎸","🎹","🎺","🎻","🪕","🥁","🪘","📱","📲","☎️",
+  "📞","📟","📠","🔋","🪫","🔌","💻","🖥️","🖨️","⌨️","🖱️","🖲️","💽","💾","💿","📀","🧮","🎥","🎞️","📽️",
+  "🎬","📺","📷","📸","📹","📼","🔍","🔎","🕯️","💡","🔦","🏮","🪔","📔","📕","📖","📗","📘","📙","📚",
+  "📓","📒","📃","📜","📄","📰","🗞️","📑","🔖","🏷️","💰","🪙","💴","💵","💶","💷","💸","💳","🧾","💹",
+  "✉️","📧","📨","📩","📤","📥","📦","📫","📪","📅","📆","🗑️","⌛","⏳","⌚","⏰","🧭","🌋","🏠","🏢",
+  "🚀","🛸","🛰️","🛸","⚓","🛟","🚁","🛶","⛵","🛥️","🚢","🏎️","🏍️","🚲","🛴","🛹","🛼","🚨","🚔","🚒",
+  "🚑","🚐","🚚","🚜","🛤️","🛣️","🗺️","🗿","🗽","⛲","🏰","🏟️","🎡","🎢","🎠"
+    ];
+
+    const grid = document.getElementById("emojiGrid");
+    const search = document.querySelector(".search");
+    const output = document.getElementById("output");
+    const copyBtn = document.getElementById("copyBtn");
+
+    function render(list) {
+      grid.innerHTML = "";
+      list.forEach(e => {
+        const div = document.createElement("div");
+        div.className = "emoji";
+        div.textContent = e;
+        div.onclick = () => output.value += e;
+        grid.appendChild(div);
+      });
+    }
+
+    search.addEventListener("input", () => {
+      const val = search.value.toLowerCase();
+      const filtered = emojis.filter(e => e.includes(val));
+      render(filtered);
+    });
+
+    copyBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText(output.value);
+      copyBtn.textContent = "Copied!";
+      setTimeout(() => copyBtn.textContent = "Copy", 1500);
+    });
+
+    render(emojis);
+  </script>
+
+</body>
+</html>
