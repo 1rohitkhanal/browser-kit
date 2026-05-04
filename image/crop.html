@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blur & Pixelate Image Online Free — Censor & Blur Areas | Fix-Kit</title>
-  <meta name="description" content="Blur or pixelate parts of your image for free online. Censor faces, text or backgrounds. No upload to server — works 100% in your browser.">
-  <link rel="canonical" href="https://1rohitkhanal.github.io/Fix-kit/image/blur.html">
+  <title>Crop Image Online Free — Crop Photos with Custom Ratios | Fix-Kit</title>
+  <meta name="description" content="Crop JPG, PNG and WebP images for free online. Free crop or preset aspect ratios. No upload to server — works 100% in your browser. Fast and private.">
+  <link rel="canonical" href="https://1rohitkhanal.github.io/Fix-kit/image/crop.html">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Blur / Pixelate Image Free Online | Fix-Kit">
-  <meta property="og:description" content="Blur or pixelate images instantly in your browser. Free, no login, no server upload.">
-  <meta property="og:url" content="https://1rohitkhanal.github.io/Fix-kit/image/blur.html">
+  <meta property="og:title" content="Crop Image Free Online | Fix-Kit">
+  <meta property="og:description" content="Crop images instantly in your browser. Free, no login, no server upload.">
+  <meta property="og:url" content="https://1rohitkhanal.github.io/Fix-kit/image/crop.html">
   <meta property="og:site_name" content="Fix-Kit">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Blur Pixelate — Fix-Kit",
-    "url": "https://1rohitkhanal.github.io/Fix-kit/image/blur.html",
-    "description": "Blur or pixelate images in your browser. No login required.",
+    "name": "Crop Image — Fix-Kit",
+    "url": "https://1rohitkhanal.github.io/Fix-kit/image/crop.html",
+    "description": "Crop JPG, PNG and WebP images for free in your browser. No login required.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
@@ -32,7 +32,7 @@
     .navbar { display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; height: 56px; background: #fff; border-bottom: 1px solid #e5e7eb; position: sticky; top: 0; z-index: 100; }
     .navbar-brand { font-weight: 700; font-size: 1.15rem; text-decoration: none; color: #111827; letter-spacing: -0.02em; }
     .navbar-brand span { color: #6366f1; }
-    .back-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 13px; font-weight: 500; text-decoration: none; color: #374151; background: #fff; transition: background 0.15s, border-color 0.15s; }
+    .back-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 13px; font-weight: 500; text-decoration: none; color: #374151; background: #fff; transition: background 0.15s, border-color 0.15s; cursor: pointer; }
     .back-btn:hover { background: #f3f4f6; border-color: #9ca3af; }
 
     .ad-slot { background: #f3f4f6; border: 1px dashed #d1d5db; border-radius: 8px; text-align: center; color: #9ca3af; font-size: 12px; display: flex; align-items: center; justify-content: center; }
@@ -59,33 +59,43 @@
     .upload-area p { color: #6b7280; font-size: 14px; }
     .upload-area strong { color: #4f46e5; }
 
-    .mode-row { display: flex; gap: 8px; margin-bottom: 1.25rem; }
-    .mode-btn { flex: 1; padding: 10px; border: 2px solid #d1d5db; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; background: #fff; color: #374151; text-align: center; transition: all 0.15s; }
-    .mode-btn:hover { border-color: #6366f1; color: #4f46e5; }
-    .mode-btn.active { background: #6366f1; color: #fff; border-color: #6366f1; }
+    .ratio-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.25rem; }
+    .ratio-btn { padding: 6px 14px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; background: #fff; color: #374151; transition: all 0.15s; }
+    .ratio-btn:hover { border-color: #6366f1; color: #4f46e5; }
+    .ratio-btn.active { background: #6366f1; color: #fff; border-color: #6366f1; }
 
-    .form-group { margin-bottom: 1rem; }
-    .form-group label { display: flex; justify-content: space-between; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 6px; }
-    .form-group input[type="range"] { width: 100%; accent-color: #6366f1; cursor: pointer; }
-
-    .hint { font-size: 12px; color: #6b7280; margin-bottom: 1.25rem; background: #fef3c7; border: 1px solid #fde68a; border-radius: 8px; padding: 10px 14px; display: none; }
-    .hint.visible { display: block; }
-
-    .canvas-wrap { position: relative; display: none; margin-bottom: 1.25rem; border-radius: 10px; overflow: hidden; background: #1f2937; }
-    .canvas-wrap canvas { display: block; width: 100%; cursor: crosshair; }
-    .selection-box { position: absolute; border: 2px solid #6366f1; background: rgba(99,102,241,0.1); pointer-events: none; display: none; }
+    .crop-container { position: relative; background: #1f2937; border-radius: 10px; overflow: hidden; margin-bottom: 1.25rem; display: none; user-select: none; touch-action: none; }
+    .crop-container img { display: block; width: 100%; height: auto; pointer-events: none; }
+    .crop-overlay {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+    }
+    .crop-box {
+      position: absolute;
+      border: 2px solid #6366f1;
+      box-shadow: 0 0 0 9999px rgba(0,0,0,0.5);
+      cursor: move;
+    }
+    .crop-handle {
+      position: absolute; width: 10px; height: 10px;
+      background: #6366f1; border: 2px solid #fff; border-radius: 2px;
+    }
+    .crop-handle.tl { top: -5px; left: -5px; cursor: nw-resize; }
+    .crop-handle.tr { top: -5px; right: -5px; cursor: ne-resize; }
+    .crop-handle.bl { bottom: -5px; left: -5px; cursor: sw-resize; }
+    .crop-handle.br { bottom: -5px; right: -5px; cursor: se-resize; }
 
     .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
     .btn-primary { padding: 10px 24px; background: #6366f1; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.15s; }
     .btn-primary:hover { background: #4f46e5; }
     .btn-secondary { padding: 10px 20px; background: #fff; color: #374151; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.15s; }
     .btn-secondary:hover { background: #f3f4f6; }
-    .btn-ghost { padding: 10px 20px; background: #fff; color: #6b7280; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.15s; }
-    .btn-ghost:hover { background: #f3f4f6; }
 
-    #result-section { display: none; margin-top: 1.25rem; }
+    .result-area { margin-top: 1.25rem; display: none; }
     .result-box { border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden; background: #f9fafb; margin-bottom: 1rem; }
-    .result-box img { width: 100%; max-height: 350px; object-fit: contain; display: block; background: #f3f4f6; }
+    .result-box img { width: 100%; max-height: 300px; object-fit: contain; display: block; background: #f3f4f6; }
+    .result-label { padding: 8px 12px; font-size: 12px; color: #6b7280; display: flex; justify-content: space-between; }
+    .result-label strong { color: #111827; }
     .savings-badge { background: #dcfce7; color: #15803d; font-size: 13px; font-weight: 600; padding: 4px 12px; border-radius: 20px; }
 
     .how-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
@@ -125,14 +135,14 @@
     <span class="breadcrumb-sep">›</span>
     <a href="https://1rohitkhanal.github.io/Fix-kit/index.html#image">Image Tools</a>
     <span class="breadcrumb-sep">›</span>
-    <span>Blur / Pixelate</span>
+    <span>Crop Image</span>
   </div>
 
   <div class="page-wrap">
 
     <div class="page-header">
-      <h1>🌫️ Blur / Pixelate</h1>
-      <p>Blur or pixelate selected areas of your images directly in your browser. Perfect for censoring faces, text, or sensitive content. No server upload — completely private.</p>
+      <h1>✂️ Crop Image</h1>
+      <p>Crop JPG, PNG and WebP images freely or with preset aspect ratios directly in your browser. No upload to any server — fast, free and completely private.</p>
     </div>
 
     <div class="ad-slot ad-mid">
@@ -141,44 +151,47 @@
     </div>
 
     <div class="tool-card">
-      <h2>Upload Image</h2>
+      <h2>Upload &amp; Crop Image</h2>
 
       <div class="upload-area" id="dropZone" onclick="document.getElementById('fileInput').click()">
-        <div class="upload-icon">🌫️</div>
+        <div class="upload-icon">✂️</div>
         <p><strong>Click to upload</strong> or drag and drop</p>
         <p style="margin-top:4px; font-size:12px;">JPG, PNG, WebP supported · Max 10MB</p>
         <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp">
       </div>
 
-      <div class="mode-row">
-        <button class="mode-btn active" onclick="setMode(this,'blur')">🌫️ Blur</button>
-        <button class="mode-btn" onclick="setMode(this,'pixelate')">⬛ Pixelate</button>
-        <button class="mode-btn" onclick="setMode(this,'full-blur')">🖼️ Blur Entire Image</button>
+      <div class="ratio-row" id="ratioRow" style="display:none;">
+        <button class="ratio-btn active" data-ratio="free" onclick="setRatio(this,'free')">Free</button>
+        <button class="ratio-btn" data-ratio="1:1" onclick="setRatio(this,'1:1')">1:1 Square</button>
+        <button class="ratio-btn" data-ratio="4:3" onclick="setRatio(this,'4:3')">4:3</button>
+        <button class="ratio-btn" data-ratio="16:9" onclick="setRatio(this,'16:9')">16:9</button>
+        <button class="ratio-btn" data-ratio="3:2" onclick="setRatio(this,'3:2')">3:2</button>
+        <button class="ratio-btn" data-ratio="9:16" onclick="setRatio(this,'9:16')">9:16</button>
       </div>
 
-      <div class="form-group">
-        <label><span>Intensity</span><span id="intensityVal">10</span></label>
-        <input type="range" id="intensity" min="2" max="40" value="10" oninput="document.getElementById('intensityVal').textContent=this.value">
-      </div>
-
-      <p class="hint visible" id="selHint">📌 Draw a selection on the image below to choose the area to blur/pixelate</p>
-
-      <div class="canvas-wrap" id="canvasWrap">
-        <canvas id="mainCanvas"></canvas>
-        <div class="selection-box" id="selBox"></div>
+      <div class="crop-container" id="cropContainer">
+        <img id="sourceImg" src="" alt="Source image">
+        <div class="crop-box" id="cropBox">
+          <div class="crop-handle tl" data-dir="tl"></div>
+          <div class="crop-handle tr" data-dir="tr"></div>
+          <div class="crop-handle bl" data-dir="bl"></div>
+          <div class="crop-handle br" data-dir="br"></div>
+        </div>
       </div>
 
       <div class="btn-row">
-        <button class="btn-primary" id="applyBtn" style="display:none;" onclick="applyEffect()">⚡ Apply Effect</button>
-        <button class="btn-ghost" id="undoBtn" style="display:none;" onclick="undoLast()">↩ Undo Last</button>
+        <button class="btn-primary" id="cropBtn" style="display:none;" onclick="cropImage()">✂️ Crop Image</button>
         <button class="btn-secondary" onclick="resetTool()">✕ Clear</button>
       </div>
 
-      <div id="result-section">
-        <div class="result-box"><img id="resultImg" src="" alt="Result"></div>
+      <div class="result-area" id="resultArea">
+        <div class="result-box">
+          <img id="croppedPreview" src="" alt="Cropped image preview">
+          <div class="result-label"><span>Cropped</span><strong id="croppedInfo">—</strong></div>
+        </div>
         <div class="btn-row">
-          <button class="btn-primary" onclick="downloadImage()">⬇ Download Image</button>
-          <span class="savings-badge">Effect applied ✓</span>
+          <button class="btn-primary" onclick="downloadImage()">⬇ Download Cropped</button>
+          <span class="savings-badge" id="cropBadge"></span>
         </div>
       </div>
     </div>
@@ -187,9 +200,9 @@
       <h2>How to use</h2>
       <ol class="steps">
         <li><span class="step-num">1</span>Click <strong>Upload Image</strong> or drag your file into the box</li>
-        <li><span class="step-num">2</span>Choose <strong>Blur</strong>, <strong>Pixelate</strong>, or <strong>Blur Entire Image</strong></li>
-        <li><span class="step-num">3</span>Draw a selection on the image to mark the area, or use full-image mode</li>
-        <li><span class="step-num">4</span>Click <strong>Apply Effect</strong>, then <strong>Download</strong> your result</li>
+        <li><span class="step-num">2</span>Choose a <strong>preset ratio</strong> or select <strong>Free</strong> for custom cropping</li>
+        <li><span class="step-num">3</span>Drag the blue handles to adjust your crop area</li>
+        <li><span class="step-num">4</span>Click <strong>Crop Image</strong>, then <strong>Download</strong> the result</li>
       </ol>
     </div>
 
@@ -203,10 +216,10 @@
       <div class="related-grid">
         <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/compressor.html">🗜️ Image Compressor</a>
         <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/resizer.html">↔️ Image Resizer</a>
-        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/crop.html">✂️ Crop Image</a>
-        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/watermark.html">💧 Add Watermark</a>
         <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/converter.html">🔄 Convert Image</a>
-        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/text.html">📝 Add Text to Image</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/watermark.html">💧 Add Watermark</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/blur.html">🌫️ Blur / Pixelate</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/ocr.html">📷 Screenshot to Text</a>
       </div>
     </div>
 
@@ -226,13 +239,15 @@
     document.getElementById('yr').textContent = new Date().getFullYear();
 
     let originalFile = null;
-    let mode = 'blur';
-    let canvas, ctx;
-    let isDrawing = false;
-    let startX, startY, selX, selY, selW, selH;
-    let history = [];
-    let displayScale = 1;
-    let natW = 0, natH = 0;
+    let croppedBlob = null;
+    let currentRatio = 'free';
+    let imgNatW = 0, imgNatH = 0;
+    let displayW = 0, displayH = 0;
+
+    // Crop box state
+    let cb = { x: 0, y: 0, w: 0, h: 0 };
+    let dragging = false, resizing = false, resizeDir = '';
+    let startX = 0, startY = 0, startCB = {};
 
     const dropZone = document.getElementById('dropZone');
     dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
@@ -250,153 +265,140 @@
       originalFile = file;
       const reader = new FileReader();
       reader.onload = ev => {
-        const img = new Image();
+        const img = document.getElementById('sourceImg');
         img.onload = () => {
-          natW = img.naturalWidth; natH = img.naturalHeight;
-          canvas = document.getElementById('mainCanvas');
-          ctx = canvas.getContext('2d');
-          canvas.width = natW; canvas.height = natH;
-          ctx.drawImage(img, 0, 0);
-          history = [ctx.getImageData(0, 0, natW, natH)];
-          document.getElementById('canvasWrap').style.display = 'block';
-          document.getElementById('applyBtn').style.display = 'inline-flex';
-          setupSelection();
+          imgNatW = img.naturalWidth; imgNatH = img.naturalHeight;
+          const container = document.getElementById('cropContainer');
+          container.style.display = 'block';
+          displayW = container.offsetWidth;
+          displayH = img.offsetHeight;
+          initCropBox();
+          document.getElementById('ratioRow').style.display = 'flex';
+          document.getElementById('cropBtn').style.display = 'inline-flex';
         };
         img.src = ev.target.result;
       };
       reader.readAsDataURL(file);
     }
 
-    function setupSelection() {
-      canvas.addEventListener('mousedown', startSel);
-      canvas.addEventListener('mousemove', moveSel);
-      canvas.addEventListener('mouseup', endSel);
-      canvas.addEventListener('touchstart', e => { const t = e.touches[0]; startSel({clientX:t.clientX,clientY:t.clientY}); e.preventDefault(); }, {passive:false});
-      canvas.addEventListener('touchmove', e => { const t = e.touches[0]; moveSel({clientX:t.clientX,clientY:t.clientY}); e.preventDefault(); }, {passive:false});
-      canvas.addEventListener('touchend', endSel, {passive:false});
+    function initCropBox() {
+      const container = document.getElementById('cropContainer');
+      displayW = container.offsetWidth;
+      displayH = document.getElementById('sourceImg').offsetHeight;
+      cb = { x: displayW * 0.1, y: displayH * 0.1, w: displayW * 0.8, h: displayH * 0.8 };
+      if (currentRatio !== 'free') applyRatioToCB();
+      renderCropBox();
     }
 
-    function getCanvasXY(e) {
-      const rect = canvas.getBoundingClientRect();
-      displayScale = natW / rect.width;
-      return { x: (e.clientX - rect.left) * displayScale, y: (e.clientY - rect.top) * displayScale };
+    function applyRatioToCB() {
+      const parts = currentRatio.split(':');
+      const rw = parseFloat(parts[0]), rh = parseFloat(parts[1]);
+      let w = cb.w, h = w * rh / rw;
+      if (h > displayH * 0.9) { h = displayH * 0.9; w = h * rw / rh; }
+      cb.w = w; cb.h = h;
+      cb.x = Math.max(0, Math.min(cb.x, displayW - cb.w));
+      cb.y = Math.max(0, Math.min(cb.y, displayH - cb.h));
     }
 
-    function startSel(e) {
-      if (mode === 'full-blur') return;
-      isDrawing = true;
-      const {x, y} = getCanvasXY(e);
-      startX = x; startY = y;
-      const selBox = document.getElementById('selBox');
-      selBox.style.display = 'block';
+    function renderCropBox() {
+      const box = document.getElementById('cropBox');
+      box.style.left = cb.x + 'px';
+      box.style.top = cb.y + 'px';
+      box.style.width = cb.w + 'px';
+      box.style.height = cb.h + 'px';
     }
-    function moveSel(e) {
-      if (!isDrawing) return;
-      const {x, y} = getCanvasXY(e);
-      const rect = canvas.getBoundingClientRect();
-      const scaleBack = 1 / displayScale;
-      const sx = Math.min(startX, x) * scaleBack, sy = Math.min(startY, y) * scaleBack;
-      const sw = Math.abs(x - startX) * scaleBack, sh = Math.abs(y - startY) * scaleBack;
-      const selBox = document.getElementById('selBox');
-      selBox.style.left = (sx / rect.width * 100) + '%';
-      selBox.style.top = (sy / rect.height * 100) + '%';
-      selBox.style.width = (sw / rect.width * 100) + '%';
-      selBox.style.height = (sh / rect.height * 100) + '%';
-      selX = Math.min(startX, x); selY = Math.min(startY, y);
-      selW = Math.abs(x - startX); selH = Math.abs(y - startY);
-    }
-    function endSel() { isDrawing = false; }
 
-    function setMode(btn, m) {
-      mode = m;
-      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    function setRatio(btn, ratio) {
+      document.querySelectorAll('.ratio-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      document.getElementById('selHint').textContent = m === 'full-blur'
-        ? '🖼️ Click Apply Effect to blur the entire image'
-        : '📌 Draw a selection on the image below to choose the area to blur/pixelate';
+      currentRatio = ratio;
+      if (ratio !== 'free') applyRatioToCB();
+      renderCropBox();
     }
 
-    function applyEffect() {
-      if (!canvas) return;
-      history.push(ctx.getImageData(0, 0, natW, natH));
-      const intensity = parseInt(document.getElementById('intensity').value);
-
-      if (mode === 'full-blur') {
-        applyBlurToRegion(0, 0, natW, natH, intensity * 2);
-      } else {
-        if (!selW || !selH) { alert('Please draw a selection on the image first.'); return; }
-        const x = Math.round(selX), y = Math.round(selY), w = Math.round(selW), h = Math.round(selH);
-        if (mode === 'blur') applyBlurToRegion(x, y, w, h, intensity);
-        else applyPixelate(x, y, w, h, intensity);
-      }
-
-      document.getElementById('selBox').style.display = 'none';
-      document.getElementById('undoBtn').style.display = 'inline-flex';
-
-      canvas.toBlob(blob => {
-        document.getElementById('resultImg').src = URL.createObjectURL(blob);
-        document.getElementById('result-section').style.display = 'block';
-      }, originalFile.type || 'image/jpeg', 0.95);
-    }
-
-    function applyBlurToRegion(x, y, w, h, radius) {
-      // Box blur approximation
-      const imgData = ctx.getImageData(x, y, w, h);
-      const data = imgData.data;
-      const r = Math.max(1, Math.round(radius));
-      for (let pass = 0; pass < 3; pass++) {
-        for (let py = 0; py < h; py++) {
-          for (let px = 0; px < w; px++) {
-            let rr=0,g=0,b=0,a=0,cnt=0;
-            for (let ky=-r;ky<=r;ky++) for (let kx=-r;kx<=r;kx++) {
-              const nx=Math.max(0,Math.min(w-1,px+kx)), ny=Math.max(0,Math.min(h-1,py+ky));
-              const i=(ny*w+nx)*4; rr+=data[i];g+=data[i+1];b+=data[i+2];a+=data[i+3];cnt++;
-            }
-            const i=(py*w+px)*4; data[i]=rr/cnt;data[i+1]=g/cnt;data[i+2]=b/cnt;data[i+3]=a/cnt;
-          }
+    // Drag to move
+    const cropBox = document.getElementById('cropBox');
+    cropBox.addEventListener('mousedown', e => {
+      if (e.target.classList.contains('crop-handle')) return;
+      dragging = true; startX = e.clientX; startY = e.clientY; startCB = {...cb};
+      e.preventDefault();
+    });
+    cropBox.querySelectorAll('.crop-handle').forEach(h => {
+      h.addEventListener('mousedown', e => {
+        resizing = true; resizeDir = h.dataset.dir;
+        startX = e.clientX; startY = e.clientY; startCB = {...cb};
+        e.preventDefault(); e.stopPropagation();
+      });
+    });
+    document.addEventListener('mousemove', e => {
+      if (!dragging && !resizing) return;
+      const dx = e.clientX - startX, dy = e.clientY - startY;
+      if (dragging) {
+        cb.x = Math.max(0, Math.min(startCB.x + dx, displayW - cb.w));
+        cb.y = Math.max(0, Math.min(startCB.y + dy, displayH - cb.h));
+      } else if (resizing) {
+        let {x, y, w, h} = startCB;
+        if (resizeDir.includes('r')) w = Math.max(20, Math.min(x + w + dx, displayW) - x);
+        if (resizeDir.includes('b')) h = Math.max(20, Math.min(y + h + dy, displayH) - y);
+        if (resizeDir.includes('l')) { const nx = Math.max(0, Math.min(x + dx, x + w - 20)); w = x + w - nx; x = nx; }
+        if (resizeDir.includes('t')) { const ny = Math.max(0, Math.min(y + dy, y + h - 20)); h = y + h - ny; y = ny; }
+        if (currentRatio !== 'free') {
+          const parts = currentRatio.split(':'); const rw = parseFloat(parts[0]), rh = parseFloat(parts[1]);
+          if (resizeDir.includes('r') || resizeDir.includes('l')) h = w * rh / rw;
+          else w = h * rw / rh;
         }
+        cb = {x, y, w, h};
       }
-      ctx.putImageData(imgData, x, y);
-    }
+      renderCropBox();
+    });
+    document.addEventListener('mouseup', () => { dragging = false; resizing = false; });
 
-    function applyPixelate(x, y, w, h, size) {
-      const sz = Math.max(2, size * 2);
-      for (let py=0;py<h;py+=sz) for (let px=0;px<w;px+=sz) {
-        const bw=Math.min(sz,w-px), bh=Math.min(sz,h-py);
-        const d=ctx.getImageData(x+px,y+py,bw,bh).data;
-        let rr=0,g=0,b=0,cnt=d.length/4;
-        for(let i=0;i<d.length;i+=4){rr+=d[i];g+=d[i+1];b+=d[i+2];}
-        ctx.fillStyle=`rgb(${Math.round(rr/cnt)},${Math.round(g/cnt)},${Math.round(b/cnt)})`;
-        ctx.fillRect(x+px,y+py,bw,bh);
-      }
-    }
-
-    function undoLast() {
-      if (history.length > 1) {
-        history.pop();
-        ctx.putImageData(history[history.length-1], 0, 0);
-        if (history.length === 1) document.getElementById('undoBtn').style.display = 'none';
-      }
+    function cropImage() {
+      if (!originalFile) return;
+      const scaleX = imgNatW / displayW;
+      const scaleY = imgNatH / displayH;
+      const sx = Math.round(cb.x * scaleX);
+      const sy = Math.round(cb.y * scaleY);
+      const sw = Math.round(cb.w * scaleX);
+      const sh = Math.round(cb.h * scaleY);
+      const canvas = document.createElement('canvas');
+      canvas.width = sw; canvas.height = sh;
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      img.onload = () => {
+        ctx.drawImage(img, sx, sy, sw, sh, 0, 0, sw, sh);
+        canvas.toBlob(blob => {
+          croppedBlob = blob;
+          const url = URL.createObjectURL(blob);
+          document.getElementById('croppedPreview').src = url;
+          document.getElementById('croppedInfo').textContent = `${sw}×${sh} px`;
+          document.getElementById('cropBadge').textContent = `${sw} × ${sh} px`;
+          document.getElementById('resultArea').style.display = 'block';
+        }, originalFile.type, 0.95);
+      };
+      img.src = document.getElementById('sourceImg').src;
     }
 
     function downloadImage() {
-      canvas.toBlob(blob => {
-        const ext = originalFile.type === 'image/png' ? 'png' : originalFile.type === 'image/webp' ? 'webp' : 'jpg';
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = `blurred.${ext}`;
-        a.click();
-      }, originalFile.type || 'image/jpeg', 0.95);
+      if (!croppedBlob) return;
+      const ext = originalFile.type === 'image/png' ? 'png' : originalFile.type === 'image/webp' ? 'webp' : 'jpg';
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(croppedBlob);
+      a.download = `cropped.${ext}`;
+      a.click();
     }
 
     function resetTool() {
-      originalFile = null; history = [];
+      originalFile = null; croppedBlob = null;
       document.getElementById('fileInput').value = '';
-      document.getElementById('canvasWrap').style.display = 'none';
-      document.getElementById('applyBtn').style.display = 'none';
-      document.getElementById('undoBtn').style.display = 'none';
-      document.getElementById('result-section').style.display = 'none';
-      document.getElementById('selBox').style.display = 'none';
+      document.getElementById('sourceImg').src = '';
+      document.getElementById('cropContainer').style.display = 'none';
+      document.getElementById('ratioRow').style.display = 'none';
+      document.getElementById('cropBtn').style.display = 'none';
+      document.getElementById('resultArea').style.display = 'none';
+      currentRatio = 'free';
+      document.querySelectorAll('.ratio-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('[data-ratio="free"]').classList.add('active');
     }
   </script>
 </body>
