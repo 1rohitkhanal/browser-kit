@@ -1,201 +1,433 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image Watermark Tool</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <title>Add Watermark to Image Free Online — Text & Logo Watermark | Fix-Kit</title>
+  <meta name="description" content="Add text or logo watermark to JPG, PNG and WebP images for free online. No upload to server — works 100% in your browser. Fast and private.">
+  <link rel="canonical" href="https://1rohitkhanal.github.io/Fix-kit/image/watermark.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Add Watermark Free Online | Fix-Kit">
+  <meta property="og:description" content="Watermark images instantly in your browser. Free, no login, no server upload.">
+  <meta property="og:url" content="https://1rohitkhanal.github.io/Fix-kit/image/watermark.html">
+  <meta property="og:site_name" content="Fix-Kit">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Add Watermark — Fix-Kit",
+    "url": "https://1rohitkhanal.github.io/Fix-kit/image/watermark.html",
+    "description": "Add text or logo watermark to images in your browser. No login required.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "publisher": { "@type": "Organization", "name": "Fix-Kit", "url": "https://1rohitkhanal.github.io/Fix-kit/" }
+  }
+  </script>
+
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #f4f6f9;
-      margin: 0;
-      padding: 40px;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; color: #111827; min-height: 100vh; }
 
-    .page-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 24px;
-    }
+    .navbar { display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; height: 56px; background: #fff; border-bottom: 1px solid #e5e7eb; position: sticky; top: 0; z-index: 100; }
+    .navbar-brand { font-weight: 700; font-size: 1.15rem; text-decoration: none; color: #111827; letter-spacing: -0.02em; }
+    .navbar-brand span { color: #6366f1; }
+    .back-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 13px; font-weight: 500; text-decoration: none; color: #374151; background: #fff; transition: background 0.15s, border-color 0.15s; }
+    .back-btn:hover { background: #f3f4f6; border-color: #9ca3af; }
 
-    .back-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 16px;
-      border-radius: 12px;
-      border: 1px solid #ccc;
-      background: #fff;
-      color: #333;
-      text-decoration: none;
-      font-weight: 600;
-      transition: background .2s ease, transform .2s ease;
-    }
+    .ad-slot { background: #f3f4f6; border: 1px dashed #d1d5db; border-radius: 8px; text-align: center; color: #9ca3af; font-size: 12px; display: flex; align-items: center; justify-content: center; }
+    .ad-top { width: 100%; height: 90px; border-radius: 0; border-left: none; border-right: none; border-top: none; background: #fafafa; }
+    .ad-mid { height: 120px; margin: 1.5rem 0; }
+    .ad-bottom { height: 90px; margin: 1.5rem 0; }
 
-    .back-button:hover {
-      background: #eee;
-      transform: translateY(-1px);
-    }
+    .breadcrumb { padding: 10px 1.5rem; font-size: 13px; color: #6b7280; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .breadcrumb a { color: #6b7280; text-decoration: none; } .breadcrumb a:hover { color: #4f46e5; }
+    .breadcrumb-sep { color: #d1d5db; }
 
-    .tool-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
+    .page-wrap { max-width: 820px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem; }
+    .page-header { margin-bottom: 1.5rem; }
+    .page-header h1 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.03em; color: #111827; }
+    .page-header p { margin-top: 6px; color: #6b7280; font-size: 15px; line-height: 1.6; }
 
-    .panel {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 16px;
-      padding: 24px;
-      display: grid;
-      gap: 20px;
-    }
+    .tool-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .tool-card h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: #111827; }
 
-    label {
-      font-size: 13px;
-      font-weight: 600;
-      color: #555;
-      margin-bottom: 6px;
-      display: block;
-    }
+    .upload-area { border: 2px dashed #d1d5db; border-radius: 10px; padding: 2rem 1rem; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; background: #f9fafb; margin-bottom: 1.25rem; }
+    .upload-area:hover, .upload-area.drag-over { border-color: #6366f1; background: #eef2ff; }
+    .upload-area input[type="file"] { display: none; }
+    .upload-area .upload-icon { font-size: 2rem; margin-bottom: 8px; }
+    .upload-area p { color: #6b7280; font-size: 14px; }
+    .upload-area strong { color: #4f46e5; }
 
-    input[type="file"], input[type="text"], input[type="color"], input[type="number"] {
-      width: 100%;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      font-size: 14px;
-      box-sizing: border-box;
-    }
+    .tabs { display: flex; gap: 4px; margin-bottom: 1.25rem; background: #f3f4f6; border-radius: 8px; padding: 4px; }
+    .tab { flex: 1; padding: 8px; text-align: center; font-size: 13px; font-weight: 500; cursor: pointer; border-radius: 6px; border: none; background: transparent; color: #6b7280; transition: all 0.15s; }
+    .tab.active { background: #fff; color: #111827; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
 
-    button {
-      background: #0078d7;
-      color: #fff;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 600;
-      transition: background .2s ease;
-    }
+    .tab-panel { display: none; } .tab-panel.active { display: block; }
 
-    button:hover {
-      background: #005a9e;
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: flex; justify-content: space-between; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 6px; }
+    .form-group input[type="text"], .form-group select {
+      width: 100%; padding: 9px 12px; border: 1px solid #d1d5db; border-radius: 8px;
+      font-size: 14px; color: #111827; outline: none; transition: border-color 0.15s;
     }
+    .form-group input:focus, .form-group select:focus { border-color: #6366f1; box-shadow: 0 0 0 3px #eef2ff; }
+    .form-group input[type="range"] { width: 100%; accent-color: #6366f1; cursor: pointer; }
+    .form-group input[type="color"] { width: 48px; height: 36px; border: 1px solid #d1d5db; border-radius: 6px; cursor: pointer; padding: 2px; }
 
-    canvas {
-      max-width: 100%;
-      border-radius: 12px;
-      border: 1px solid #ddd;
-    }
+    .color-row { display: flex; align-items: center; gap: 10px; }
+    .color-row input[type="text"] { flex: 1; }
 
-    @media (max-width: 768px) {
-      .tool-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+    .position-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 6px; }
+    .pos-btn { padding: 8px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 11px; cursor: pointer; background: #fff; color: #374151; text-align: center; transition: all 0.15s; }
+    .pos-btn:hover { border-color: #6366f1; color: #4f46e5; }
+    .pos-btn.active { background: #6366f1; color: #fff; border-color: #6366f1; }
+
+    .logo-upload { border: 2px dashed #d1d5db; border-radius: 8px; padding: 1.5rem 1rem; text-align: center; cursor: pointer; transition: border-color 0.2s; background: #f9fafb; }
+    .logo-upload:hover { border-color: #6366f1; background: #eef2ff; }
+    .logo-upload input { display: none; }
+    .logo-upload p { font-size: 13px; color: #6b7280; }
+    .logo-upload strong { color: #4f46e5; }
+
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 1.25rem; }
+    .btn-primary { padding: 10px 24px; background: #6366f1; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.15s; }
+    .btn-primary:hover { background: #4f46e5; }
+    .btn-secondary { padding: 10px 20px; background: #fff; color: #374151; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.15s; }
+    .btn-secondary:hover { background: #f3f4f6; }
+
+    #preview-section { display: none; margin-top: 1.25rem; }
+    .result-box { border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden; background: #f9fafb; margin-bottom: 1rem; }
+    .result-box img { width: 100%; max-height: 350px; object-fit: contain; display: block; background: #f3f4f6; }
+    .result-label { padding: 8px 12px; font-size: 12px; color: #6b7280; }
+    .savings-badge { background: #dcfce7; color: #15803d; font-size: 13px; font-weight: 600; padding: 4px 12px; border-radius: 20px; }
+
+    .how-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .how-section h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: #111827; }
+    .steps { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .steps li { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: #374151; line-height: 1.5; }
+    .step-num { background: #eef2ff; color: #4f46e5; font-weight: 700; font-size: 12px; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+
+    .related-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; }
+    .related-section h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: #111827; }
+    .related-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+    .related-link { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; text-decoration: none; color: #374151; background: #f9fafb; transition: border-color 0.15s, background 0.15s; }
+    .related-link:hover { border-color: #6366f1; background: #eef2ff; color: #4f46e5; }
+
+    .site-footer { border-top: 1px solid #e5e7eb; background: #fff; padding: 1.5rem; text-align: center; font-size: 13px; color: #9ca3af; margin-top: 2rem; }
+    .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 10px; }
+    .footer-links a { color: #6b7280; text-decoration: none; } .footer-links a:hover { color: #4f46e5; }
   </style>
 </head>
 <body>
-  <div class="page-header">
-    <a class="back-button" href="../index.html">← Back</a>
-    <h1>Image Watermark Tool</h1>
+
+  <nav class="navbar">
+    <a class="navbar-brand" href="https://1rohitkhanal.github.io/Fix-kit/index.html">Fix<span>-Kit</span></a>
+    <a class="back-btn" href="https://1rohitkhanal.github.io/Fix-kit/index.html">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to All Tools
+    </a>
+  </nav>
+
+  <div class="ad-slot ad-top">
+    Advertisement
+    <!-- ✏️ Paste your Google AdSense 728×90 leaderboard code here -->
   </div>
 
-  <div class="tool-grid">
-    <div class="panel">
-      <div>
-        <label for="imageUpload">Upload Image</label>
-        <input type="file" id="imageUpload" accept="image/*">
-      </div>
-
-      <div>
-        <label for="watermarkText">Watermark Text</label>
-        <input type="text" id="watermarkText" placeholder="Enter watermark text">
-      </div>
-
-      <div>
-        <label for="colorInput">Text Color</label>
-        <input type="color" id="colorInput" value="#000000">
-      </div>
-
-      <div>
-        <label for="sizeInput">Font Size (px)</label>
-        <input type="number" id="sizeInput" value="32" min="10" max="100">
-      </div>
-
-      <button onclick="applyWatermark()">Apply Watermark</button>
-      <button onclick="downloadImage()">Download</button>
-    </div>
-
-    <div class="panel">
-      <label>Preview</label>
-      <canvas id="canvas"></canvas>
-    </div>
+  <div class="breadcrumb">
+    <a href="https://1rohitkhanal.github.io/Fix-kit/index.html">Home</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="https://1rohitkhanal.github.io/Fix-kit/index.html#image">Image Tools</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>Add Watermark</span>
   </div>
+
+  <div class="page-wrap">
+
+    <div class="page-header">
+      <h1>💧 Add Watermark</h1>
+      <p>Stamp a text or logo watermark onto JPG, PNG and WebP images directly in your browser. No upload to any server — fast, free and completely private.</p>
+    </div>
+
+    <div class="ad-slot ad-mid">
+      Advertisement (300×250)
+      <!-- ✏️ Paste your Google AdSense 300×250 rectangle code here -->
+    </div>
+
+    <div class="tool-card">
+      <h2>Upload Image</h2>
+
+      <div class="upload-area" id="dropZone" onclick="document.getElementById('fileInput').click()">
+        <div class="upload-icon">💧</div>
+        <p><strong>Click to upload</strong> or drag and drop</p>
+        <p style="margin-top:4px; font-size:12px;">JPG, PNG, WebP supported · Max 10MB</p>
+        <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp">
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab('text',this)">✏️ Text Watermark</button>
+        <button class="tab" onclick="switchTab('logo',this)">🖼️ Logo Watermark</button>
+      </div>
+
+      <!-- Text Tab -->
+      <div class="tab-panel active" id="tab-text">
+        <div class="form-group">
+          <label>Watermark Text</label>
+          <input type="text" id="wmText" value="© Fix-Kit" placeholder="Enter watermark text">
+        </div>
+        <div class="form-group">
+          <label><span>Font Size</span><span id="fontSizeVal">36px</span></label>
+          <input type="range" id="fontSize" min="10" max="120" value="36" oninput="document.getElementById('fontSizeVal').textContent=this.value+'px'">
+        </div>
+        <div class="form-group">
+          <label><span>Opacity</span><span id="opacityVal">60%</span></label>
+          <input type="range" id="opacity" min="5" max="100" value="60" oninput="document.getElementById('opacityVal').textContent=this.value+'%'">
+        </div>
+        <div class="form-group">
+          <label>Color</label>
+          <div class="color-row">
+            <input type="color" id="wmColor" value="#ffffff">
+            <input type="text" id="wmColorHex" value="#ffffff" placeholder="#ffffff">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Position</label>
+          <div class="position-grid">
+            <button class="pos-btn" onclick="setPos(this,'top-left')">↖ Top Left</button>
+            <button class="pos-btn" onclick="setPos(this,'top-center')">↑ Top Center</button>
+            <button class="pos-btn" onclick="setPos(this,'top-right')">↗ Top Right</button>
+            <button class="pos-btn" onclick="setPos(this,'mid-left')">← Middle Left</button>
+            <button class="pos-btn active" onclick="setPos(this,'center')">⊕ Center</button>
+            <button class="pos-btn" onclick="setPos(this,'mid-right')">→ Middle Right</button>
+            <button class="pos-btn" onclick="setPos(this,'bot-left')">↙ Bottom Left</button>
+            <button class="pos-btn" onclick="setPos(this,'bot-center')">↓ Bottom Center</button>
+            <button class="pos-btn" onclick="setPos(this,'bot-right')">↘ Bottom Right</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Logo Tab -->
+      <div class="tab-panel" id="tab-logo">
+        <div class="logo-upload" onclick="document.getElementById('logoInput').click()">
+          <p><strong>Click to upload logo</strong></p>
+          <p style="margin-top:4px;">PNG with transparency recommended</p>
+          <input type="file" id="logoInput" accept="image/*">
+        </div>
+        <div class="form-group" style="margin-top:1rem;">
+          <label><span>Logo Size</span><span id="logoSizeVal">25%</span></label>
+          <input type="range" id="logoSize" min="5" max="80" value="25" oninput="document.getElementById('logoSizeVal').textContent=this.value+'%'">
+        </div>
+        <div class="form-group">
+          <label><span>Opacity</span><span id="logoOpacityVal">80%</span></label>
+          <input type="range" id="logoOpacity" min="5" max="100" value="80" oninput="document.getElementById('logoOpacityVal').textContent=this.value+'%'">
+        </div>
+        <div class="form-group">
+          <label>Position</label>
+          <div class="position-grid">
+            <button class="pos-btn" onclick="setPos(this,'top-left')">↖ Top Left</button>
+            <button class="pos-btn" onclick="setPos(this,'top-center')">↑ Top Center</button>
+            <button class="pos-btn" onclick="setPos(this,'top-right')">↗ Top Right</button>
+            <button class="pos-btn" onclick="setPos(this,'mid-left')">← Middle Left</button>
+            <button class="pos-btn active" onclick="setPos(this,'center')">⊕ Center</button>
+            <button class="pos-btn" onclick="setPos(this,'mid-right')">→ Middle Right</button>
+            <button class="pos-btn" onclick="setPos(this,'bot-left')">↙ Bottom Left</button>
+            <button class="pos-btn" onclick="setPos(this,'bot-center')">↓ Bottom Center</button>
+            <button class="pos-btn" onclick="setPos(this,'bot-right')">↘ Bottom Right</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-primary" onclick="applyWatermark()">💧 Apply Watermark</button>
+        <button class="btn-secondary" onclick="resetTool()">✕ Clear</button>
+      </div>
+
+      <div id="preview-section">
+        <div class="result-box">
+          <img id="wmPreview" src="" alt="Watermarked image">
+          <div class="result-label">Watermarked image</div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-primary" onclick="downloadImage()">⬇ Download Image</button>
+          <span class="savings-badge">Watermark applied ✓</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="how-section">
+      <h2>How to use</h2>
+      <ol class="steps">
+        <li><span class="step-num">1</span>Click <strong>Upload Image</strong> or drag your file into the box</li>
+        <li><span class="step-num">2</span>Choose <strong>Text</strong> or <strong>Logo</strong> watermark tab</li>
+        <li><span class="step-num">3</span>Customize text, size, opacity, color and position</li>
+        <li><span class="step-num">4</span>Click <strong>Apply Watermark</strong>, then <strong>Download</strong></li>
+      </ol>
+    </div>
+
+    <div class="ad-slot ad-bottom">
+      Advertisement (728×90)
+      <!-- ✏️ Paste your Google AdSense 728×90 leaderboard code here -->
+    </div>
+
+    <div class="related-section">
+      <h2>Related image tools</h2>
+      <div class="related-grid">
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/compressor.html">🗜️ Image Compressor</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/resizer.html">↔️ Image Resizer</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/crop.html">✂️ Crop Image</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/converter.html">🔄 Convert Image</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/blur.html">🌫️ Blur / Pixelate</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/text.html">📝 Add Text to Image</a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="https://1rohitkhanal.github.io/Fix-kit/index.html">Home</a>
+      <a href="https://1rohitkhanal.github.io/Fix-kit/about.html">About</a>
+      <a href="https://1rohitkhanal.github.io/Fix-kit/privacy.html">Privacy Policy</a>
+      <a href="mailto:your@email.com">Contact</a>
+    </div>
+    <p>© <span id="yr"></span> Fix-Kit · No login required · No data stored on servers · 100% free forever</p>
+  </footer>
 
   <script>
-    const canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d");
-    let uploadedImage = null;
-    let watermarkedDataUrl = null;
+    document.getElementById('yr').textContent = new Date().getFullYear();
 
-    document.getElementById("imageUpload").addEventListener("change", function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
+    let originalFile = null;
+    let logoFile = null;
+    let resultBlob = null;
+    let activeTab = 'text';
+    let wmPos = 'center';
 
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        const img = new Image();
-        img.onload = function() {
-          uploadedImage = img;
-          canvas.width = img.width;
-          canvas.height = img.height;
-          ctx.drawImage(img, 0, 0);
-        };
-        img.src = event.target.result;
-      };
-      reader.readAsDataURL(file);
+    // Sync color picker and hex input
+    document.getElementById('wmColor').addEventListener('input', function() {
+      document.getElementById('wmColorHex').value = this.value;
+    });
+    document.getElementById('wmColorHex').addEventListener('input', function() {
+      if (/^#[0-9A-Fa-f]{6}$/.test(this.value)) document.getElementById('wmColor').value = this.value;
     });
 
+    const dropZone = document.getElementById('dropZone');
+    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault(); dropZone.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) { originalFile = file; }
+    });
+    document.getElementById('fileInput').addEventListener('change', e => { if (e.target.files[0]) originalFile = e.target.files[0]; });
+    document.getElementById('logoInput').addEventListener('change', e => { if (e.target.files[0]) { logoFile = e.target.files[0]; e.target.closest('.logo-upload').querySelector('p').textContent = logoFile.name; } });
+
+    function switchTab(tab, btn) {
+      activeTab = tab;
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + tab).classList.add('active');
+    }
+
+    function setPos(btn, pos) {
+      wmPos = pos;
+      btn.closest('.position-grid').querySelectorAll('.pos-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    function getXY(ctx, pos, tw, th) {
+      const W = ctx.canvas.width, H = ctx.canvas.height, pad = 20;
+      const map = {
+        'top-left': [pad, pad + th], 'top-center': [W/2, pad + th], 'top-right': [W - pad, pad + th],
+        'mid-left': [pad, H/2], 'center': [W/2, H/2], 'mid-right': [W - pad, H/2],
+        'bot-left': [pad, H - pad], 'bot-center': [W/2, H - pad], 'bot-right': [W - pad, H - pad]
+      };
+      return map[pos] || [W/2, H/2];
+    }
+
     function applyWatermark() {
-      if (!uploadedImage) {
-        alert("Please upload an image first.");
-        return;
-      }
+      if (!originalFile) { alert('Please upload an image first.'); return; }
+      const reader = new FileReader();
+      reader.onload = ev => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.width; canvas.height = img.height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0);
 
-      const text = document.getElementById("watermarkText").value;
-      const color = document.getElementById("colorInput").value;
-      const size = parseInt(document.getElementById("sizeInput").value, 10);
+          if (activeTab === 'text') {
+            const text = document.getElementById('wmText').value || '© Watermark';
+            const size = parseInt(document.getElementById('fontSize').value);
+            const op = parseInt(document.getElementById('opacity').value) / 100;
+            const color = document.getElementById('wmColor').value;
+            ctx.save();
+            ctx.globalAlpha = op;
+            ctx.font = `bold ${size}px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`;
+            ctx.fillStyle = color;
+            ctx.textAlign = ['top-left','mid-left','bot-left'].includes(wmPos) ? 'left' :
+                            ['top-right','mid-right','bot-right'].includes(wmPos) ? 'right' : 'center';
+            ctx.textBaseline = 'middle';
+            const tm = ctx.measureText(text);
+            const [x, y] = getXY(ctx, wmPos, tm.width, size);
+            // shadow for readability
+            ctx.shadowColor = 'rgba(0,0,0,0.5)'; ctx.shadowBlur = 4;
+            ctx.fillText(text, x, y);
+            ctx.restore();
+            finalize(canvas);
+          } else {
+            if (!logoFile) { alert('Please upload a logo image.'); return; }
+            const lr = new FileReader();
+            lr.onload = lev => {
+              const logo = new Image();
+              logo.onload = () => {
+                const maxW = canvas.width * parseInt(document.getElementById('logoSize').value) / 100;
+                const scale = maxW / logo.width;
+                const lw = maxW, lh = logo.height * scale;
+                const op = parseInt(document.getElementById('logoOpacity').value) / 100;
+                ctx.save(); ctx.globalAlpha = op;
+                const [x, y] = getXY(ctx, wmPos, lw, lh);
+                const ax = ['top-left','mid-left','bot-left'].includes(wmPos) ? x :
+                           ['top-right','mid-right','bot-right'].includes(wmPos) ? x - lw : x - lw/2;
+                const ay = ['top-left','top-center','top-right'].includes(wmPos) ? y :
+                           ['bot-left','bot-center','bot-right'].includes(wmPos) ? y - lh : y - lh/2;
+                ctx.drawImage(logo, ax, ay, lw, lh);
+                ctx.restore();
+                finalize(canvas);
+              };
+              logo.src = lev.target.result;
+            };
+            lr.readAsDataURL(logoFile);
+          }
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(originalFile);
+    }
 
-      // Redraw image
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(uploadedImage, 0, 0);
-
-      // Apply watermark
-      ctx.fillStyle = color;
-      ctx.font = `${size}px Inter, sans-serif`;
-      ctx.globalAlpha = 0.5; // semi-transparent watermark
-      ctx.textAlign = "center";
-      ctx.fillText(text, canvas.width / 2, canvas.height - 40);
-      ctx.globalAlpha = 1.0;
-
-      watermarkedDataUrl = canvas.toDataURL("image/png");
+    function finalize(canvas) {
+      canvas.toBlob(blob => {
+        resultBlob = blob;
+        const url = URL.createObjectURL(blob);
+        document.getElementById('wmPreview').src = url;
+        document.getElementById('preview-section').style.display = 'block';
+      }, originalFile.type || 'image/jpeg', 0.92);
     }
 
     function downloadImage() {
-      if (!watermarkedDataUrl) {
-        alert("Please apply the watermark first.");
-        return;
-      }
-      const link = document.createElement("a");
-      link.download = "watermarked-image.png";
-      link.href = watermarkedDataUrl;
-      link.click();
+      if (!resultBlob) return;
+      const ext = originalFile.type === 'image/png' ? 'png' : originalFile.type === 'image/webp' ? 'webp' : 'jpg';
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(resultBlob);
+      a.download = `watermarked.${ext}`;
+      a.click();
+    }
+
+    function resetTool() {
+      originalFile = null; logoFile = null; resultBlob = null;
+      document.getElementById('fileInput').value = '';
+      document.getElementById('logoInput').value = '';
+      document.getElementById('wmPreview').src = '';
+      document.getElementById('preview-section').style.display = 'none';
     }
   </script>
 </body>
