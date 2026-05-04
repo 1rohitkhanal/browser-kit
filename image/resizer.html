@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Resizer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 40px;
+    }
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      background: #fff;
+      color: #333;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background .2s ease, transform .2s ease;
+    }
+
+    .back-button:hover {
+      background: #eee;
+      transform: translateY(-1px);
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .panel {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 16px;
+      padding: 24px;
+      display: grid;
+      gap: 20px;
+    }
+
+    label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    input[type="file"], input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background: #0078d7;
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background .2s ease;
+    }
+
+    button:hover {
+      background: #005a9e;
+    }
+
+    canvas {
+      max-width: 100%;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+    }
+
+    @media (max-width: 768px) {
+      .tool-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-header">
+    <a class="back-button" href="../index.html">← Back</a>
+    <h1>Image Resizer</h1>
+  </div>
+
+  <div class="tool-grid">
+    <div class="panel">
+      <div>
+        <label for="imageUpload">Upload Image</label>
+        <input type="file" id="imageUpload" accept="image/*">
+      </div>
+
+      <div>
+        <label for="widthInput">Width (px)</label>
+        <input type="number" id="widthInput" placeholder="Enter width">
+      </div>
+
+      <div>
+        <label for="heightInput">Height (px)</label>
+        <input type="number" id="heightInput" placeholder="Enter height">
+      </div>
+
+      <button onclick="resizeImage()">Resize</button>
+      <button onclick="downloadImage()">Download</button>
+    </div>
+
+    <div class="panel">
+      <label>Preview</label>
+      <canvas id="canvas"></canvas>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    let uploadedImage = null;
+    let resizedDataUrl = null;
+
+    document.getElementById("imageUpload").addEventListener("change", function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const img = new Image();
+        img.onload = function() {
+          uploadedImage = img;
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    function resizeImage() {
+      if (!uploadedImage) {
+        alert("Please upload an image first.");
+        return;
+      }
+
+      const width = parseInt(document.getElementById("widthInput").value, 10);
+      const height = parseInt(document.getElementById("heightInput").value, 10);
+
+      if (!width || !height) {
+        alert("Please enter valid width and height.");
+        return;
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+      ctx.clearRect(0, 0, width, height);
+      ctx.drawImage(uploadedImage, 0, 0, width, height);
+
+      resizedDataUrl = canvas.toDataURL("image/png");
+    }
+
+    function downloadImage() {
+      if (!resizedDataUrl) {
+        alert("Please resize the image first.");
+        return;
+      }
+      const link = document.createElement("a");
+      link.download = "resized-image.png";
+      link.href = resizedDataUrl;
+      link.click();
+    }
+  </script>
+</body>
+</html>
