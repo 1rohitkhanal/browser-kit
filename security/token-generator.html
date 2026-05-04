@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Random Token Generator — API Keys, Secrets & UUIDs | ToolSite</title>
+<meta name="description" content="Generate random tokens, API keys, secrets, and UUIDs online. Cryptographically secure random token generator — free tool, no data stored.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0a0f;--surface:#13131a;--surface2:#1c1c28;--border:#2a2a3d;--accent:#7c3aed;--accent2:#06b6d4;--text:#e2e8f0;--muted:#64748b;--success:#10b981}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:1px solid var(--border);background:var(--surface)}
+  .logo{font-size:1.4rem;font-weight:800;color:var(--accent);text-decoration:none}.logo span{color:var(--accent2)}
+  nav a{color:var(--muted);text-decoration:none;font-size:0.85rem}nav a:hover{color:var(--text)}
+  .ad-banner{background:var(--surface);border:1px dashed var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.75rem;margin:1rem auto}
+  .ad-top{width:100%;max-width:728px;height:90px}.ad-bottom{width:100%;max-width:728px;height:90px}.ad-side{width:300px;height:250px;flex-shrink:0}
+  .container{max-width:900px;margin:0 auto;padding:2rem}
+  .tool-header{text-align:center;margin-bottom:2.5rem}
+  .tool-header h1{font-size:2.2rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-fix-kit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem}
+  .tool-header p{color:var(--muted);font-size:1rem}
+  .main-layout{display:flex;gap:2rem}.tool-area{flex:1}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem}
+  .section-label{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:0.75rem;display:block}
+
+  /* TYPE CARDS */
+  .type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-bottom:1.5rem}
+  .type-card{padding:1rem;background:var(--surface2);border:2px solid var(--border);border-radius:12px;cursor:pointer;text-align:center;transition:all 0.2s}
+  .type-card:hover{border-color:var(--muted)}
+  .type-card.active{border-color:var(--accent);background:rgba(124,58,237,0.1)}
+  .type-card .type-icon{font-size:1.5rem;margin-bottom:0.4rem}
+  .type-card .type-name{font-size:0.8rem;font-weight:700}
+  .type-card .type-desc{font-size:0.7rem;color:var(--muted);margin-top:2px}
+
+  /* OPTIONS */
+  .opt-row{display:flex;justify-content:space-between;align-items:center;padding:0.7rem 0;border-bottom:1px solid var(--border)}
+  .opt-row:last-child{border-bottom:none}
+  .opt-label{font-size:0.88rem}
+  .opt-label small{display:block;color:var(--muted);font-size:0.73rem;margin-top:2px}
+  select{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:5px 10px;border-radius:8px;font-family:'Syne',sans-serif;font-size:0.85rem;outline:none}
+  input[type=number]{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:5px 10px;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:0.85rem;width:70px;outline:none;text-align:center}
+
+  /* TOKEN OUTPUT */
+  .token-box{background:var(--surface2);border:2px solid var(--accent);border-radius:12px;padding:1.2rem;font-family:'JetBrains Mono',monospace;font-size:0.9rem;word-break:break-all;min-height:64px;position:relative;margin-bottom:1rem;line-height:1.6}
+  .generate-btn{width:100%;padding:1rem;font-size:1rem;font-weight:700;font-family:'Syne',sans-serif;background:linear-gradient(135deg,var(--accent),#4f46e5);color:white;border:none;border-radius:12px;cursor:pointer;transition:all 0.25s}
+  .generate-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(124,58,237,0.4)}
+  .btn-row{display:flex;gap:0.75rem;margin-top:1rem}
+  .copy-btn{flex:1;padding:0.75rem;font-size:0.9rem;font-weight:700;font-family:'Syne',sans-serif;background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all 0.2s}
+  .copy-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* BATCH */
+  .batch-list{display:flex;flex-direction:column;gap:0.4rem;max-height:280px;overflow-y:auto}
+  .batch-item{font-family:'JetBrains Mono',monospace;font-size:0.78rem;background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:0.5rem 0.75rem;display:flex;justify-content:space-between;align-items:center;gap:0.5rem}
+  .batch-val{flex:1;word-break:break-all;min-width:0}
+  .mini-copy{background:none;border:1px solid var(--border);color:var(--muted);border-radius:5px;padding:2px 7px;font-size:0.7rem;cursor:pointer;transition:all 0.2s;flex-shrink:0}
+  .mini-copy:hover{border-color:var(--accent);color:var(--accent)}
+
+  .related{margin-top:2rem}.related h2{font-size:0.8rem;font-weight:700;margin-bottom:1rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+  .related-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.75rem}
+  .related-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1rem;text-decoration:none;color:var(--text);transition:all 0.2s;display:flex;align-items:center;gap:0.6rem;font-size:0.88rem}
+  .related-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+  footer{border-top:1px solid var(--border);background:var(--surface);padding:1.5rem 2rem;margin-top:3rem;text-align:center;color:var(--muted);font-size:0.8rem}
+  footer a{color:var(--muted);text-decoration:none;margin:0 0.5rem}footer a:hover{color:var(--text)}
+  @media(max-width:700px){.main-layout{flex-direction:column}.ad-side{width:100%;height:100px}.type-grid{grid-template-columns:repeat(2,1fr)}.related-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav><a class="logo" href="../index.html">Tool<span>Site</span></a><a href="../index.html">← All Tools</a></nav>
+
+<div class="container">
+  <div style="display:flex;justify-content:center"><div class="ad-banner ad-top">Advertisement (728×90)</div></div>
+
+  <div class="tool-header">
+    <h1>🎲 Random Token Generator</h1>
+    <p>Generate cryptographically secure tokens, API keys, secrets, and UUIDs. Powered by <code style="background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:0.85rem">crypto.getRandomValues()</code></p>
+  </div>
+
+  <div class="main-layout">
+    <div class="tool-area">
+      <div class="card">
+        <span class="section-label">Token Type</span>
+        <div class="type-grid" id="typeGrid">
+          <div class="type-card active" data-type="hex" onclick="selectType(this)"><div class="type-icon">🔑</div><div class="type-name">Hex Token</div><div class="type-desc">API keys, secrets</div></div>
+          <div class="type-card" data-type="uuid" onclick="selectType(this)"><div class="type-icon">🆔</div><div class="type-name">UUID v4</div><div class="type-desc">Unique identifiers</div></div>
+          <div class="type-card" data-type="base64" onclick="selectType(this)"><div class="type-icon">📦</div><div class="type-name">Base64</div><div class="type-desc">URL-safe tokens</div></div>
+          <div class="type-card" data-type="alphanumeric" onclick="selectType(this)"><div class="type-icon">🔤</div><div class="type-name">Alphanumeric</div><div class="type-desc">Readable tokens</div></div>
+          <div class="type-card" data-type="numeric" onclick="selectType(this)"><div class="type-icon">🔢</div><div class="type-name">Numeric PIN</div><div class="type-desc">OTP / PIN codes</div></div>
+          <div class="type-card" data-type="jwt" onclick="selectType(this)"><div class="type-icon">🎫</div><div class="type-name">JWT Secret</div><div class="type-desc">256-bit secret</div></div>
+        </div>
+
+        <div class="opt-row">
+          <div class="opt-label">Length / Size<small>Characters or bits depending on type</small></div>
+          <input type="number" id="tokenLength" value="32" min="4" max="256">
+        </div>
+        <div class="opt-row">
+          <div class="opt-label">Format<small>Output encoding</small></div>
+          <select id="formatSel">
+            <option value="plain">Plain</option>
+            <option value="upper">UPPERCASE</option>
+            <option value="lower">lowercase</option>
+            <option value="dashes">With dashes (every 8)</option>
+          </select>
+        </div>
+
+        <button class="generate-btn" onclick="generateToken()" style="margin-top:1.25rem">⚡ Generate Token</button>
+      </div>
+
+      <div class="card">
+        <span class="section-label">Generated Token</span>
+        <div class="token-box" id="tokenOutput">Your secure token will appear here…</div>
+        <div class="btn-row">
+          <button class="copy-btn" onclick="copyToken()">📋 Copy Token</button>
+          <button class="copy-btn" onclick="generateToken()">🔄 Regenerate</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+          <span class="section-label" style="margin:0">Batch Generate</span>
+          <div style="display:flex;align-items:center;gap:0.5rem">
+            <select id="batchCount" style="font-size:0.8rem"><option>5</option><option>10</option><option>20</option><option>50</option></select>
+            <button onclick="batchGenerate()" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:5px 12px;border-radius:7px;cursor:pointer;font-family:'Syne',sans-serif;font-size:0.8rem">Generate</button>
+            <button onclick="copyBatch()" style="background:var(--accent);border:none;color:white;padding:5px 12px;border-radius:7px;cursor:pointer;font-family:'Syne',sans-serif;font-size:0.8rem">Copy All</button>
+          </div>
+        </div>
+        <div class="batch-list" id="batchList"><div style="color:var(--muted);font-size:0.85rem">Click "Generate" to create multiple tokens at once.</div></div>
+      </div>
+    </div>
+
+    <div class="ad-banner ad-side">Ad (300×250)</div>
+  </div>
+
+  <div style="display:flex;justify-content:center"><div class="ad-banner ad-bottom">Advertisement (728×90)</div></div>
+
+  <div class="related">
+    <h2>Related Security Tools</h2>
+    <div class="related-grid">
+      <a class="related-card" href="password-generator.html">🔑 Password Generator</a>
+      <a class="related-card" href="hash-generator.html"># Hash Generator</a>
+      <a class="related-card" href="encrypt-decrypt.html">🔐 Encrypt / Decrypt Text</a>
+      <a class="related-card" href="password-checker.html">🔍 Password Strength Checker</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div style="margin-bottom:0.5rem"><a href="../index.html">Home</a> | <a href="../index.html">All Tools</a> | <a href="#">About</a> | <a href="#">Privacy Policy</a></div>
+  © 2025 ToolSite — No login required. No data stored on servers.
+</footer>
+
+<script>
+let currentType = 'hex';
+
+function selectType(el) {
+  document.querySelectorAll('.type-card').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  currentType = el.dataset.type;
+  generateToken();
+}
+
+function randBytes(n) {
+  const arr = new Uint8Array(n);
+  crypto.getRandomValues(arr);
+  return arr;
+}
+
+function generateOne() {
+  const len = parseInt(document.getElementById('tokenLength').value) || 32;
+  const fmt = document.getElementById('formatSel').value;
+  let token = '';
+
+  if (currentType === 'uuid') {
+    const bytes = randBytes(16);
+    bytes[6] = (bytes[6] & 0x0f) | 0x40;
+    bytes[8] = (bytes[8] & 0x3f) | 0x80;
+    const hex = [...bytes].map(b => b.toString(16).padStart(2,'0')).join('');
+    token = `${hex.slice(0,8)}-${hex.slice(8,12)}-${hex.slice(12,16)}-${hex.slice(16,20)}-${hex.slice(20)}`;
+  } else if (currentType === 'hex') {
+    const bytes = randBytes(Math.ceil(len/2));
+    token = [...bytes].map(b => b.toString(16).padStart(2,'0')).join('').slice(0, len);
+  } else if (currentType === 'base64') {
+    const bytes = randBytes(Math.ceil(len * 0.75));
+    token = btoa(String.fromCharCode(...bytes)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'').slice(0, len);
+  } else if (currentType === 'alphanumeric') {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+    const bytes = randBytes(len);
+    token = [...bytes].map(b => chars[b % chars.length]).join('');
+  } else if (currentType === 'numeric') {
+    const bytes = randBytes(len);
+    token = [...bytes].map(b => b % 10).join('').slice(0, len);
+  } else if (currentType === 'jwt') {
+    const bytes = randBytes(32);
+    token = [...bytes].map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  if (fmt === 'upper') token = token.toUpperCase();
+  else if (fmt === 'lower') token = token.toLowerCase();
+  else if (fmt === 'dashes') token = token.match(/.{1,8}/g)?.join('-') || token;
+
+  return token;
+}
+
+function generateToken() {
+  const token = generateOne();
+  document.getElementById('tokenOutput').textContent = token;
+}
+
+function copyToken() {
+  const text = document.getElementById('tokenOutput').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.btn-row .copy-btn');
+    btn.textContent = '✓ Copied!';
+    btn.style.color = '#10b981';
+    setTimeout(() => { btn.textContent = '📋 Copy Token'; btn.style.color = ''; }, 1500);
+  });
+}
+
+function batchGenerate() {
+  const count = parseInt(document.getElementById('batchCount').value);
+  const list = document.getElementById('batchList');
+  list.innerHTML = '';
+  for (let i = 0; i < count; i++) {
+    const token = generateOne();
+    const item = document.createElement('div');
+    item.className = 'batch-item';
+    item.innerHTML = `<span class="batch-val">${token}</span><button class="mini-copy" onclick="navigator.clipboard.writeText('${token.replace(/'/g,"\\'")}');this.textContent='✓';setTimeout(()=>this.textContent='Copy',1200)">Copy</button>`;
+    list.appendChild(item);
+  }
+}
+
+function copyBatch() {
+  const tokens = [...document.querySelectorAll('.batch-val')].map(v => v.textContent).join('\n');
+  navigator.clipboard.writeText(tokens);
+}
+
+generateToken();
+</script>
+</body>
+</html>
