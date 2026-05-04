@@ -3,402 +3,674 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FIX-KIT — 70+ Free Online Tools</title>
+
+  <!-- ── PRIMARY SEO ─────────────────────────────────── -->
+  <title>Fix-Kit — Free Online Tools for Everyone | PDF, Image, Dev & More</title>
+  <meta name="description" content="Fix-Kit: 70+ free browser-based tools for PDF editing, image conversion, text utilities, developer tools, calculators and more. No login. No uploads. Completely free."/>
+  <meta name="keywords" content="Fix-Kit, fixkit, fix kit tools, free online tools, PDF tools, image tools, developer tools, text tools, online calculator, base64 encoder, JSON formatter, QR code generator, password generator, free utilities"/>
+  <meta name="author" content="Rohit Khanal"/>
+  <link rel="canonical" href="https://fix-kit.vercel.app/"/>
+  <meta name="robots" content="index, follow"/>
   <meta name="google-site-verification" content="G-yGWycI3jiqcJXBLAiKGfmsBlIBcAOnooavSWr6hlc" />
-  <meta name="description" content="Free online tools for PDF, images, text, calculators, developer utilities and more. No login, no limits, no cost."/>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <meta name="description" content="70+ free online tools for PDF, images, text, developers and more. No login. No limits. Runs entirely in your browser.">
-  <meta name="keywords" content="free online tools, PDF tools, image tools, developer tools, text tools">
-  <meta property="og:title" content="FIX-KIT — 70+ Free Online Tools">
-  <meta property="og:description" content="Every tool you need, completely free. No login, no uploads, no cost.">
-  <meta property="og:url" content="https://1rohitkhanal.github.io/Fix-kit/">
-  <meta name="twitter:card" content="summary_large_image">
-  <style>
-    /* ── TOKENS ─────────────────────────────────────────── */
-    :root {
-      --bg:       #ffffff;
-      --bg2:      #f7f7f5;
-      --bg3:      #efefed;
-      --border:   #e5e5e3;
-      --text:     #1a1a18;
-      --text2:    #6b6b67;
-      --text3:    #9b9b97;
-      --accent:   #1a1a18;
-      --accent-h: #3d3d3a;
-      --card-bg:  #ffffff;
-      --shadow:   0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
-      --shadow-h: 0 4px 16px rgba(0,0,0,.10);
-      --radius:   10px;
-      --tag-pdf:    #fff1f0; --tag-pdf-t:    #c0392b;
-      --tag-image:  #f0f7ff; --tag-image-t:  #1d6fa4;
-      --tag-text:   #f3faf0; --tag-text-t:   #2e7d32;
-      --tag-calc:   #fff8f0; --tag-calc-t:   #c07a1a;
-      --tag-dev:    #f5f0ff; --tag-dev-t:    #6b3fa0;
-      --tag-sec:    #f0faf5; --tag-sec-t:    #1a7a52;
-      --tag-design: #fff0fa; --tag-design-t: #a0226b;
-      --tag-social: #f0f5ff; --tag-social-t: #1a3fa0;
-      --tag-prod:   #fffbf0; --tag-prod-t:   #8a6800;
+
+  <!-- ── OPEN GRAPH ───────────────────────────────────── -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Fix-Kit — 70+ Free Online Tools"/>
+  <meta property="og:description" content="Every tool you need, completely free. PDF, image, text, dev tools and more — runs entirely in your browser. No login required."/>
+  <meta property="og:url" content="https://fix-kit.vercel.app/"/>
+  <meta property="og:site_name" content="Fix-Kit"/>
+
+  <!-- ── TWITTER CARD ─────────────────────────────────── -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Fix-Kit — 70+ Free Online Tools"/>
+  <meta name="twitter:description" content="Every tool you need, completely free. No login. No uploads. Runs in your browser."/>
+
+  <!-- ── STRUCTURED DATA ──────────────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Fix-Kit",
+    "url": "https://fix-kit.vercel.app/",
+    "description": "70+ free browser-based tools for PDF, images, text, developers and more.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://fix-kit.vercel.app/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
     }
-    [data-theme="dark"] {
-      --bg:       #111110;
-      --bg2:      #1a1a18;
-      --bg3:      #222220;
-      --border:   #2e2e2c;
-      --text:     #ededeb;
-      --text2:    #9b9b97;
-      --text3:    #6b6b67;
-      --accent:   #ededeb;
-      --accent-h: #c8c8c4;
-      --card-bg:  #1a1a18;
-      --shadow:   0 1px 3px rgba(0,0,0,.3);
-      --shadow-h: 0 4px 20px rgba(0,0,0,.5);
-      --tag-pdf:    #2a1512; --tag-pdf-t:    #f08070;
-      --tag-image:  #0d1e2e; --tag-image-t:  #60b0f0;
-      --tag-text:   #0d1e10; --tag-text-t:   #70c878;
-      --tag-calc:   #2a1e0a; --tag-calc-t:   #f0b060;
-      --tag-dev:    #1a1030; --tag-dev-t:    #b090f0;
-      --tag-sec:    #0a1e14; --tag-sec-t:    #50c890;
-      --tag-design: #2a0e1e; --tag-design-t: #f080c0;
-      --tag-social: #0a1430; --tag-social-t: #7090f8;
-      --tag-prod:   #201a04; --tag-prod-t:   #d4aa40;
+  }
+  </script>
+
+  <!-- ── FONTS ────────────────────────────────────────── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* ══════════════════════════════════════════════════════
+       TOKENS
+    ══════════════════════════════════════════════════════ */
+    :root {
+      --bg:        #fafaf8;
+      --bg2:       #f2f1ed;
+      --bg3:       #e8e7e2;
+      --surface:   #ffffff;
+      --border:    #e2e1db;
+      --border2:   #d0cfc8;
+      --text:      #18181b;
+      --text2:     #52524e;
+      --text3:     #8c8b85;
+      --accent:    #1d4ed8;
+      --accent-fg: #ffffff;
+      --mark:      #fef08a;
+
+      /* category palette */
+      --c-pdf:    #dc2626; --c-pdf-bg:    #fef2f2;
+      --c-img:    #0284c7; --c-img-bg:    #f0f9ff;
+      --c-txt:    #16a34a; --c-txt-bg:    #f0fdf4;
+      --c-calc:   #d97706; --c-calc-bg:   #fffbeb;
+      --c-dev:    #7c3aed; --c-dev-bg:    #f5f3ff;
+      --c-sec:    #0f766e; --c-sec-bg:    #f0fdfa;
+      --c-des:    #be185d; --c-des-bg:    #fdf2f8;
+      --c-soc:    #1d4ed8; --c-soc-bg:    #eff6ff;
+      --c-prod:   #92400e; --c-prod-bg:   #fffbeb;
+
+      --radius:   12px;
+      --radius-sm: 8px;
+      --shadow:   0 1px 2px rgba(0,0,0,.05), 0 0 0 1px rgba(0,0,0,.04);
+      --shadow-md: 0 4px 20px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.05);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,.12);
     }
 
-    /* ── RESET ──────────────────────────────────────────── */
+    [data-theme="dark"] {
+      --bg:        #0c0c0b;
+      --bg2:       #161614;
+      --bg3:       #1f1f1c;
+      --surface:   #1a1a17;
+      --border:    #2a2a26;
+      --border2:   #3a3a35;
+      --text:      #f0efe8;
+      --text2:     #9b9a93;
+      --text3:     #5c5b55;
+      --accent:    #60a5fa;
+      --accent-fg: #0f0f0e;
+      --mark:      #713f12;
+
+      --c-pdf:    #f87171; --c-pdf-bg:    #1c0a0a;
+      --c-img:    #38bdf8; --c-img-bg:    #071a26;
+      --c-txt:    #4ade80; --c-txt-bg:    #052010;
+      --c-calc:   #fbbf24; --c-calc-bg:   #1c1205;
+      --c-dev:    #a78bfa; --c-dev-bg:    #110a26;
+      --c-sec:    #2dd4bf; --c-sec-bg:    #041a18;
+      --c-des:    #f472b6; --c-des-bg:    #1c0516;
+      --c-soc:    #60a5fa; --c-soc-bg:    #050e26;
+      --c-prod:   #d97706; --c-prod-bg:   #1c1005;
+
+      --shadow:   0 1px 2px rgba(0,0,0,.3), 0 0 0 1px rgba(255,255,255,.04);
+      --shadow-md: 0 4px 20px rgba(0,0,0,.4);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,.6);
+    }
+
+    /* ══════════════════════════════════════════════════════
+       RESET
+    ══════════════════════════════════════════════════════ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; font-size: 16px; }
     body {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Bricolage Grotesque', sans-serif;
       background: var(--bg);
       color: var(--text);
-      font-size: 15px;
-      line-height: 1.6;
-      transition: background .25s, color .25s;
+      line-height: 1.65;
       -webkit-font-smoothing: antialiased;
+      transition: background .3s, color .3s;
     }
     a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
 
-    /* ── NAVBAR ─────────────────────────────────────────── */
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      background: var(--bg);
+    /* ══════════════════════════════════════════════════════
+       NAVBAR
+    ══════════════════════════════════════════════════════ */
+    .nav {
+      position: sticky; top: 0; z-index: 200;
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
       border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
     }
     .nav-inner {
-      max-width: 1200px; margin: 0 auto;
-      padding: 0 24px;
-      height: 58px;
-      display: flex; align-items: center; gap: 20px;
+      max-width: 1160px; margin: 0 auto;
+      padding: 0 28px;
+      height: 60px;
+      display: flex; align-items: center; gap: 16px;
     }
-    .logo {
-      font-family: 'Instrument Serif', serif;
-      font-size: 22px; font-weight: 400;
-      letter-spacing: -.3px;
-      white-space: nowrap;
+    .nav-logo {
+      display: flex; align-items: center; gap: 8px;
       flex-shrink: 0;
+      font-size: 18px; font-weight: 700;
+      letter-spacing: -.4px;
     }
-    .logo span { opacity: .4; }
-    .search-wrap {
-      flex: 1; max-width: 420px;
+    .nav-logo-icon {
+      width: 30px; height: 30px;
+      background: var(--text);
+      color: var(--bg);
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      transition: transform .2s;
+    }
+    .nav-logo:hover .nav-logo-icon { transform: rotate(-6deg); }
+    .nav-logo-text { font-family: 'Lora', serif; font-weight: 500; font-style: italic; }
+
+    .search-container {
+      flex: 1; max-width: 440px;
       position: relative;
     }
-    .search-wrap svg {
-      position: absolute; left: 12px; top: 50%;
+    .search-icon {
+      position: absolute; left: 13px; top: 50%;
       transform: translateY(-50%);
-      color: var(--text3); pointer-events: none;
+      color: var(--text3);
+      pointer-events: none;
+      transition: color .2s;
+    }
+    .search-kbd {
+      position: absolute; right: 11px; top: 50%;
+      transform: translateY(-50%);
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      border-radius: 5px;
+      padding: 1px 6px;
+      font-size: 11px; font-weight: 500;
+      color: var(--text3);
+      pointer-events: none;
+      transition: opacity .2s;
     }
     #search {
-      width: 100%; height: 38px;
-      padding: 0 12px 0 38px;
+      width: 100%; height: 40px;
+      padding: 0 40px 0 40px;
+      background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--bg2);
+      border-radius: var(--radius-sm);
       color: var(--text);
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Bricolage Grotesque', sans-serif;
       font-size: 14px;
       outline: none;
       transition: border-color .2s, box-shadow .2s;
+      box-shadow: var(--shadow);
     }
     #search:focus {
-      border-color: var(--text3);
-      box-shadow: 0 0 0 3px rgba(100,100,96,.1);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent);
     }
+    #search:focus ~ .search-kbd { opacity: 0; }
+    #search:focus + .search-icon ~ .search-icon,
+    .search-container:focus-within .search-icon { color: var(--accent); }
     #search::placeholder { color: var(--text3); }
-    .nav-right { display: flex; align-items: center; gap: 10px; margin-left: auto; }
-    .theme-btn {
-      width: 36px; height: 36px;
+
+    .nav-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+
+    .btn-icon {
+      width: 38px; height: 38px;
+      border-radius: var(--radius-sm);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--bg2);
+      background: var(--surface);
       color: var(--text2);
-      cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      transition: background .2s, color .2s;
-      flex-shrink: 0;
+      transition: background .2s, color .2s, border-color .2s, transform .15s;
+      box-shadow: var(--shadow);
     }
-    .theme-btn:hover { background: var(--bg3); color: var(--text); }
-    .icon-moon, .icon-sun { display: none; }
+    .btn-icon:hover { background: var(--bg3); color: var(--text); transform: translateY(-1px); }
+    .icon-moon { display: none; }
+    .icon-sun  { display: none; }
     [data-theme="light"] .icon-moon { display: block; }
     [data-theme="dark"]  .icon-sun  { display: block; }
 
-    /* ── HERO ───────────────────────────────────────────── */
+    /* ══════════════════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════════════════ */
     .hero {
-      max-width: 1200px; margin: 0 auto;
-      padding: 72px 24px 48px;
-      text-align: center;
+      max-width: 1160px; margin: 0 auto;
+      padding: 80px 28px 64px;
     }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 4px 12px;
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: center;
+    }
+    .hero-label {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 5px 12px 5px 8px;
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 100px;
       font-size: 12px; font-weight: 500;
       color: var(--text2);
-      margin-bottom: 24px;
-      background: var(--bg2);
+      margin-bottom: 22px;
+      box-shadow: var(--shadow);
     }
-    .hero-badge span { width:6px; height:6px; border-radius:50%; background:#4caf50; display:inline-block; }
-    .hero h1 {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(38px, 6vw, 64px);
-      font-weight: 400;
-      line-height: 1.1;
+    .hero-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 0 3px rgba(34,197,94,.2);
+    }
+    .hero-h1 {
+      font-family: 'Lora', serif;
+      font-size: clamp(36px, 5.5vw, 60px);
+      font-weight: 500;
+      line-height: 1.12;
       letter-spacing: -.5px;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
-    .hero h1 em { font-style: italic; color: var(--text2); }
-    .hero p {
-      font-size: 16px; color: var(--text2);
-      max-width: 500px; margin: 0 auto 32px;
-      font-weight: 300;
+    .hero-h1 .serif-em {
+      font-style: italic;
+      color: var(--text2);
     }
+    .hero-sub {
+      font-size: 16px;
+      color: var(--text2);
+      max-width: 480px;
+      font-weight: 400;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+    .hero-pills {
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 5px 12px;
+      border-radius: 100px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      font-size: 12px; font-weight: 500;
+      color: var(--text2);
+      box-shadow: var(--shadow);
+    }
+    .pill svg { color: var(--text3); }
+
     .hero-stats {
-      display: flex; justify-content: center; gap: 32px;
-      flex-wrap: wrap;
+      display: flex; flex-direction: column; gap: 3px;
+      flex-shrink: 0;
+      padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      min-width: 160px;
     }
-    .stat { text-align: center; }
-    .stat-num {
-      font-family: 'Instrument Serif', serif;
-      font-size: 28px; font-weight: 400;
-      display: block; line-height: 1;
-    }
-    .stat-label { font-size: 12px; color: var(--text3); margin-top: 4px; }
-
-    /* ── MAIN ───────────────────────────────────────────── */
-    .main { max-width: 1200px; margin: 0 auto; padding: 0 24px 80px; }
-
-    /* ── SECTION ────────────────────────────────────────── */
-    .section { margin-bottom: 56px; }
-    .section-head {
-      display: flex; align-items: center; gap: 12px;
-      margin-bottom: 18px;
-      padding-bottom: 14px;
+    .stat-row {
+      display: flex; align-items: baseline;
+      justify-content: space-between;
+      padding: 10px 0;
       border-bottom: 1px solid var(--border);
+      gap: 16px;
     }
+    .stat-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .stat-row:first-child { padding-top: 0; }
+    .stat-val {
+      font-family: 'Lora', serif;
+      font-size: 26px; font-weight: 500;
+      line-height: 1;
+      color: var(--text);
+    }
+    .stat-lbl {
+      font-size: 11px; font-weight: 500;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      text-align: right;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       JUMP NAV (category tabs)
+    ══════════════════════════════════════════════════════ */
+    .jump-nav-wrap {
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 60px; z-index: 100;
+      background: color-mix(in srgb, var(--bg) 90%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .jump-nav {
+      max-width: 1160px; margin: 0 auto;
+      padding: 0 28px;
+      display: flex; gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .jump-nav::-webkit-scrollbar { display: none; }
+    .jump-link {
+      display: flex; align-items: center; gap: 6px;
+      padding: 14px 16px;
+      font-size: 13px; font-weight: 500;
+      color: var(--text3);
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: color .2s, border-color .2s;
+      flex-shrink: 0;
+    }
+    .jump-link:hover { color: var(--text); border-bottom-color: var(--border2); }
+    .jump-link.active { color: var(--text); border-bottom-color: var(--text); }
+    .jump-link .jl-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       MAIN
+    ══════════════════════════════════════════════════════ */
+    .main {
+      max-width: 1160px; margin: 0 auto;
+      padding: 0 28px 100px;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       SECTION
+    ══════════════════════════════════════════════════════ */
+    .section {
+      padding-top: 56px;
+      margin-bottom: 8px;
+    }
+    .section-header {
+      display: flex; align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .section-title-group { display: flex; align-items: center; gap: 12px; }
     .section-icon {
-      width: 34px; height: 34px; border-radius: 8px;
+      width: 38px; height: 38px;
+      border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 17px; flex-shrink: 0;
+      font-size: 18px; flex-shrink: 0;
+      border: 1px solid transparent;
     }
-    .section-title {
-      font-family: 'Instrument Serif', serif;
-      font-size: 20px; font-weight: 400;
+    .section-name {
+      font-family: 'Lora', serif;
+      font-size: 22px; font-weight: 500;
     }
     .section-count {
-      margin-left: auto;
-      font-size: 12px; color: var(--text3);
-      font-weight: 500;
+      font-size: 12px; font-weight: 500;
+      color: var(--text3);
+      padding: 3px 9px;
+      background: var(--bg2);
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      margin-left: 10px;
+    }
+    .section-divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 20px;
     }
 
-    /* ── GRID ───────────────────────────────────────────── */
+    /* section icon variants */
+    .si-pdf  { background: var(--c-pdf-bg);  color: var(--c-pdf);  border-color: color-mix(in srgb, var(--c-pdf) 20%, transparent); }
+    .si-img  { background: var(--c-img-bg);  color: var(--c-img);  border-color: color-mix(in srgb, var(--c-img) 20%, transparent); }
+    .si-txt  { background: var(--c-txt-bg);  color: var(--c-txt);  border-color: color-mix(in srgb, var(--c-txt) 20%, transparent); }
+    .si-calc { background: var(--c-calc-bg); color: var(--c-calc); border-color: color-mix(in srgb, var(--c-calc) 20%, transparent); }
+    .si-dev  { background: var(--c-dev-bg);  color: var(--c-dev);  border-color: color-mix(in srgb, var(--c-dev) 20%, transparent); }
+    .si-sec  { background: var(--c-sec-bg);  color: var(--c-sec);  border-color: color-mix(in srgb, var(--c-sec) 20%, transparent); }
+    .si-des  { background: var(--c-des-bg);  color: var(--c-des);  border-color: color-mix(in srgb, var(--c-des) 20%, transparent); }
+    .si-soc  { background: var(--c-soc-bg);  color: var(--c-soc);  border-color: color-mix(in srgb, var(--c-soc) 20%, transparent); }
+    .si-prod { background: var(--c-prod-bg); color: var(--c-prod); border-color: color-mix(in srgb, var(--c-prod) 20%, transparent); }
+
+    /* ══════════════════════════════════════════════════════
+       GRID
+    ══════════════════════════════════════════════════════ */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
       gap: 10px;
     }
 
-    /* ── CARD ───────────────────────────────────────────── */
+    /* ══════════════════════════════════════════════════════
+       CARD
+    ══════════════════════════════════════════════════════ */
     .card {
-      background: var(--card-bg);
+      position: relative;
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 16px;
+      padding: 18px;
+      display: flex; flex-direction: column; gap: 10px;
       cursor: pointer;
-      transition: box-shadow .18s, transform .18s, border-color .18s;
-      display: flex; flex-direction: column; gap: 8px;
-      position: relative; overflow: hidden;
+      transition:
+        box-shadow .2s,
+        transform .2s,
+        border-color .2s,
+        background .2s;
+      box-shadow: var(--shadow);
+      overflow: hidden;
     }
-    .card::before {
+    .card::after {
       content: '';
       position: absolute; inset: 0;
-      background: var(--bg2);
+      background: linear-gradient(135deg, var(--bg2) 0%, transparent 70%);
       opacity: 0;
-      transition: opacity .18s;
+      transition: opacity .2s;
     }
-    .card:hover { box-shadow: var(--shadow-h); transform: translateY(-2px); border-color: var(--text3); }
-    .card:hover::before { opacity: 1; }
-    .card * { position: relative; }
-    .card-top { display: flex; align-items: flex-start; justify-content: space-between; }
-    .card-emoji { font-size: 22px; line-height: 1; }
-    .card-tag {
+    .card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+      border-color: var(--border2);
+    }
+    .card:hover::after { opacity: 1; }
+    .card:active { transform: translateY(-1px); }
+    .card > * { position: relative; z-index: 1; }
+
+    .card-header { display: flex; align-items: flex-start; justify-content: space-between; }
+    .card-emoji { font-size: 24px; line-height: 1; }
+    .card-badge {
       font-size: 10px; font-weight: 600;
-      padding: 2px 7px; border-radius: 100px;
+      padding: 2px 8px; border-radius: 100px;
       letter-spacing: .3px; text-transform: uppercase;
+      border: 1px solid transparent;
     }
     .card-name {
-      font-size: 14px; font-weight: 500;
-      line-height: 1.3; color: var(--text);
+      font-size: 13.5px; font-weight: 600;
+      color: var(--text); line-height: 1.35;
     }
     .card-desc {
       font-size: 12px; color: var(--text3);
-      line-height: 1.5; font-weight: 300;
+      line-height: 1.55; font-weight: 400;
+      margin-top: -2px;
     }
-
-    /* tag colors */
-    .tag-pdf    { background: var(--tag-pdf);    color: var(--tag-pdf-t); }
-    .tag-image  { background: var(--tag-image);  color: var(--tag-image-t); }
-    .tag-text   { background: var(--tag-text);   color: var(--tag-text-t); }
-    .tag-calc   { background: var(--tag-calc);   color: var(--tag-calc-t); }
-    .tag-dev    { background: var(--tag-dev);    color: var(--tag-dev-t); }
-    .tag-sec    { background: var(--tag-sec);    color: var(--tag-sec-t); }
-    .tag-design { background: var(--tag-design); color: var(--tag-design-t); }
-    .tag-social { background: var(--tag-social); color: var(--tag-social-t); }
-    .tag-prod   { background: var(--tag-prod);   color: var(--tag-prod-t); }
-
-    /* section icon colors */
-    .si-pdf    { background: var(--tag-pdf);    }
-    .si-image  { background: var(--tag-image);  }
-    .si-text   { background: var(--tag-text);   }
-    .si-calc   { background: var(--tag-calc);   }
-    .si-dev    { background: var(--tag-dev);    }
-    .si-sec    { background: var(--tag-sec);    }
-    .si-design { background: var(--tag-design); }
-    .si-social { background: var(--tag-social); }
-    .si-prod   { background: var(--tag-prod);   }
-
-    /* ── NO RESULTS ─────────────────────────────────────── */
-    #no-results {
-      display: none; text-align: center;
-      padding: 80px 24px;
+    .card-arrow {
+      margin-top: auto;
+      font-size: 11px; font-weight: 600;
       color: var(--text3);
+      display: flex; align-items: center; gap: 4px;
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: opacity .2s, transform .2s, color .2s;
     }
-    #no-results p { font-size: 32px; margin-bottom: 10px; }
-    #no-results span { font-size: 14px; }
+    .card:hover .card-arrow {
+      opacity: 1;
+      transform: translateX(0);
+      color: var(--accent);
+    }
 
-    /* ── FOOTER ─────────────────────────────────────────── */
-   .footer {
-  background: #0f172a;
-  color: #e5e7eb;
-  padding: 40px 20px 20px;
-  font-family: Arial, sans-serif;
-}
+    /* badge colors */
+    .b-pdf  { background: var(--c-pdf-bg);  color: var(--c-pdf);  border-color: color-mix(in srgb, var(--c-pdf) 25%, transparent); }
+    .b-img  { background: var(--c-img-bg);  color: var(--c-img);  border-color: color-mix(in srgb, var(--c-img) 25%, transparent); }
+    .b-txt  { background: var(--c-txt-bg);  color: var(--c-txt);  border-color: color-mix(in srgb, var(--c-txt) 25%, transparent); }
+    .b-calc { background: var(--c-calc-bg); color: var(--c-calc); border-color: color-mix(in srgb, var(--c-calc) 25%, transparent); }
+    .b-dev  { background: var(--c-dev-bg);  color: var(--c-dev);  border-color: color-mix(in srgb, var(--c-dev) 25%, transparent); }
+    .b-sec  { background: var(--c-sec-bg);  color: var(--c-sec);  border-color: color-mix(in srgb, var(--c-sec) 25%, transparent); }
+    .b-des  { background: var(--c-des-bg);  color: var(--c-des);  border-color: color-mix(in srgb, var(--c-des) 25%, transparent); }
+    .b-soc  { background: var(--c-soc-bg);  color: var(--c-soc);  border-color: color-mix(in srgb, var(--c-soc) 25%, transparent); }
+    .b-prod { background: var(--c-prod-bg); color: var(--c-prod); border-color: color-mix(in srgb, var(--c-prod) 25%, transparent); }
 
-.footer-container {
-  max-width: 1200px;
-  margin: auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 30px;
-}
-
-.footer-logo {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.footer-logo span {
-  color: #38bdf8;
-}
-
-.footer-desc {
-  margin-top: 10px;
-  font-size: 14px;
-  color: #9ca3af;
-}
-
-.footer-section h3 {
-  margin-bottom: 10px;
-  font-size: 16px;
-}
-
-.footer-section ul {
-  list-style: none;
-  padding: 0;
-}
-
-.footer-section ul li {
-  margin: 6px 0;
-}
-
-.footer-section a {
-  text-decoration: none;
-  color: #cbd5f5;
-  font-size: 14px;
-}
-
-.footer-section a:hover {
-  color: #38bdf8;
-}
-
-.social-links a {
-  display: block;
-  margin-bottom: 6px;
-}
-
-.footer-bottom {
-  border-top: 1px solid #1e293b;
-  margin-top: 30px;
-  padding-top: 15px;
-  text-align: center;
-  font-size: 13px;
-  color: #9ca3af;
-}
-    /* ── SEARCH HIGHLIGHT ───────────────────────────────── */
+    /* ══════════════════════════════════════════════════════
+       SEARCH STATE
+    ══════════════════════════════════════════════════════ */
     .hidden { display: none !important; }
     .section.empty { display: none; }
 
-    /* ── ANIMATIONS ─────────────────────────────────────── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
+    #no-results {
+      display: none;
+      text-align: center;
+      padding: 100px 24px;
+    }
+    .nr-icon {
+      font-size: 44px; margin-bottom: 16px;
+      display: block;
+    }
+    .nr-title {
+      font-family: 'Lora', serif;
+      font-size: 20px; font-weight: 500;
+      color: var(--text2);
+      margin-bottom: 8px;
+    }
+    .nr-sub { font-size: 14px; color: var(--text3); }
+
+    /* ══════════════════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════════════════ */
+    .footer {
+      background: var(--text);
+      color: color-mix(in srgb, var(--bg) 80%, transparent);
+    }
+    .footer-top {
+      max-width: 1160px; margin: 0 auto;
+      padding: 56px 28px 48px;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+    }
+    .footer-brand-name {
+      font-family: 'Lora', serif;
+      font-size: 22px; font-weight: 500; font-style: italic;
+      color: var(--bg);
+      margin-bottom: 12px;
+    }
+    .footer-brand-desc {
+      font-size: 13px;
+      line-height: 1.7;
+      color: color-mix(in srgb, var(--bg) 55%, transparent);
+      max-width: 240px;
+    }
+    .footer-col-title {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .8px;
+      color: color-mix(in srgb, var(--bg) 40%, transparent);
+      margin-bottom: 14px;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .footer-links a {
+      font-size: 13px;
+      color: color-mix(in srgb, var(--bg) 65%, transparent);
+      transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--bg); }
+    .footer-bottom {
+      border-top: 1px solid color-mix(in srgb, var(--bg) 10%, transparent);
+    }
+    .footer-bottom-inner {
+      max-width: 1160px; margin: 0 auto;
+      padding: 18px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+    }
+    .footer-copy {
+      font-size: 12px;
+      color: color-mix(in srgb, var(--bg) 35%, transparent);
+    }
+    .footer-copy strong { color: color-mix(in srgb, var(--bg) 60%, transparent); }
+    .footer-pills-sm { display: flex; gap: 6px; }
+    .footer-pill-sm {
+      font-size: 11px; font-weight: 500;
+      padding: 3px 9px;
+      border-radius: 100px;
+      background: color-mix(in srgb, var(--bg) 8%, transparent);
+      color: color-mix(in srgb, var(--bg) 45%, transparent);
+      border: 1px solid color-mix(in srgb, var(--bg) 12%, transparent);
+    }
+
+    /* ══════════════════════════════════════════════════════
+       ANIMATIONS
+    ══════════════════════════════════════════════════════ */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .hero { animation: fadeUp .5s ease both; }
-    .section { animation: fadeUp .5s ease both; }
-    .section:nth-child(2)  { animation-delay: .05s; }
-    .section:nth-child(3)  { animation-delay: .10s; }
-    .section:nth-child(4)  { animation-delay: .15s; }
-    .section:nth-child(5)  { animation-delay: .20s; }
-    .section:nth-child(6)  { animation-delay: .25s; }
-    .section:nth-child(7)  { animation-delay: .30s; }
-    .section:nth-child(8)  { animation-delay: .35s; }
-    .section:nth-child(9)  { animation-delay: .40s; }
+    .hero  { animation: slideUp .5s ease both; }
+    .section { animation: slideUp .4s ease both; }
+    .section:nth-child(1) { animation-delay: .05s; }
+    .section:nth-child(2) { animation-delay: .08s; }
+    .section:nth-child(3) { animation-delay: .11s; }
+    .section:nth-child(4) { animation-delay: .14s; }
+    .section:nth-child(5) { animation-delay: .17s; }
+    .section:nth-child(6) { animation-delay: .20s; }
+    .section:nth-child(7) { animation-delay: .23s; }
+    .section:nth-child(8) { animation-delay: .26s; }
+    .section:nth-child(9) { animation-delay: .29s; }
 
-    /* ── RESPONSIVE ─────────────────────────────────────── */
+    /* ══════════════════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-stats {
+        flex-direction: row; flex-wrap: wrap;
+        min-width: auto; width: 100%;
+        padding: 16px 20px;
+        gap: 0;
+      }
+      .stat-row {
+        flex: 1; min-width: 120px;
+        flex-direction: column; align-items: center;
+        border-bottom: none;
+        border-right: 1px solid var(--border);
+        padding: 8px 16px;
+        gap: 4px;
+      }
+      .stat-row:last-child { border-right: none; }
+      .stat-lbl { text-align: center; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
     @media (max-width: 640px) {
-      .nav-inner { padding: 0 16px; gap: 12px; }
-      .hero { padding: 48px 16px 36px; }
-      .main { padding: 0 16px 60px; }
-      .hero-stats { gap: 20px; }
-      .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
-      .search-wrap { max-width: none; }
-      .footer-inner { flex-direction: column; align-items: flex-start; }
+      .nav-inner { padding: 0 16px; gap: 10px; }
+      .search-kbd { display: none; }
+      .hero { padding: 48px 16px 40px; }
+      .main { padding: 0 16px 80px; }
+      .jump-nav { padding: 0 16px; }
+      .grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .footer-top { grid-template-columns: 1fr; padding: 40px 16px 32px; }
+      .footer-bottom-inner { flex-direction: column; align-items: flex-start; padding: 16px; }
+    }
+    @media (max-width: 380px) {
+      .grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-<!-- ── NAVBAR ────────────────────────────────────────────── -->
-<nav>
+<!-- ─────────────────── NAVBAR ─────────────────── -->
+<nav class="nav" role="banner">
   <div class="nav-inner">
-    <a href="index.html" class="logo">Fix<span>-</span>Kit</a>
-    <div class="search-wrap">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input type="text" id="search" placeholder="Search 70+ tools…" autocomplete="off" spellcheck="false"/>
+    <a href="index.html" class="nav-logo" aria-label="Fix-Kit Home">
+      <div class="nav-logo-icon" aria-hidden="true">⚙</div>
+      <span class="nav-logo-text">Fix-Kit</span>
+    </a>
+
+    <div class="search-container">
+      <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input
+        type="search"
+        id="search"
+        placeholder="Search tools…"
+        autocomplete="off"
+        spellcheck="false"
+        aria-label="Search tools"
+      />
+      <span class="search-kbd">/</span>
     </div>
-    <div class="nav-right">
-      <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">
+
+    <div class="nav-actions">
+      <button class="btn-icon" id="themeToggle" aria-label="Toggle dark mode">
         <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         <svg class="icon-sun"  width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
       </button>
@@ -406,298 +678,378 @@
   </div>
 </nav>
 
-<!-- ── HERO ──────────────────────────────────────────────── -->
-<section class="hero">
-  <div class="hero-badge"><span></span> All tools run in your browser — nothing uploaded</div>
-  <h1>Every tool you need,<br><em>completely free</em></h1>
-  <p>70+ utilities for PDF, images, text, dev work and more. No login. No limits. No cost.</p>
-  <div class="hero-stats">
-    <!-- Replace your stats section with this -->
-<div class="stats-grid">
-  <div class="stat">
-    <span class="stat-num">70+</span>
-    <span class="stat-label">Free Tools</span>
+<!-- ─────────────────── HERO ─────────────────── -->
+<header class="hero" role="main">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-label">
+        <span class="hero-dot"></span>
+        All tools run in your browser — nothing leaves your device
+      </div>
+      <h1 class="hero-h1">
+        Every tool you need,<br>
+        <span class="serif-em">completely free.</span>
+      </h1>
+      <p class="hero-sub">
+        70+ utilities for PDF, images, text, dev work and more.
+        Built for people who want things done fast — no login, no paywalls, no nonsense.
+      </p>
+      <div class="hero-pills">
+        <span class="pill">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          100% Private
+        </span>
+        <span class="pill">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polyline></svg>
+          Instant &amp; Fast
+        </span>
+        <span class="pill">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          No Account Needed
+        </span>
+        <span class="pill">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Free Forever
+        </span>
+      </div>
+    </div>
+    <aside class="hero-stats" aria-label="Site statistics">
+      <div class="stat-row">
+        <span class="stat-val">70+</span>
+        <span class="stat-lbl">Tools</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-val">9</span>
+        <span class="stat-lbl">Categories</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-val">0</span>
+        <span class="stat-lbl">Logins</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-val">∞</span>
+        <span class="stat-lbl">Free uses</span>
+      </div>
+    </aside>
   </div>
-  <div class="stat">
-    <span class="stat-num">9</span>
-    <span class="stat-label">Categories</span>
-  </div>
-  <div class="stat">
-    <span class="stat-num">0</span>
-    <span class="stat-label">Logins Required</span>
-  </div>
-  <div class="stat">
-    <span class="stat-num">100%</span>
-    <span class="stat-label">Runs in Browser</span>
-  </div>
-</div>
-  </div>
-</section>
+</header>
 
-<!-- ── MAIN ───────────────────────────────────────────────── -->
+<!-- ─────────────────── JUMP NAV ─────────────────── -->
+<div class="jump-nav-wrap" aria-label="Tool categories">
+  <nav class="jump-nav" id="jumpNav">
+    <a href="#pdf"          class="jump-link"><span class="jl-dot" style="background:var(--c-pdf)"></span>  PDF</a>
+    <a href="#image"        class="jump-link"><span class="jl-dot" style="background:var(--c-img)"></span>  Image</a>
+    <a href="#text"         class="jump-link"><span class="jl-dot" style="background:var(--c-txt)"></span>  Text</a>
+    <a href="#calculators"  class="jump-link"><span class="jl-dot" style="background:var(--c-calc)"></span> Calculators</a>
+    <a href="#dev-tools"    class="jump-link"><span class="jl-dot" style="background:var(--c-dev)"></span>  Developer</a>
+    <a href="#security"     class="jump-link"><span class="jl-dot" style="background:var(--c-sec)"></span>  Security</a>
+    <a href="#design"       class="jump-link"><span class="jl-dot" style="background:var(--c-des)"></span>  Design</a>
+    <a href="#social"       class="jump-link"><span class="jl-dot" style="background:var(--c-soc)"></span>  Social</a>
+    <a href="#productivity" class="jump-link"><span class="jl-dot" style="background:var(--c-prod)"></span> Productivity</a>
+  </nav>
+</div>
+
+<!-- ─────────────────── MAIN ─────────────────── -->
 <main class="main" id="toolGrid">
 
-  <!-- PDF -->
-  <div class="section" data-section="pdf">
-    <div class="section-head">
-      <div class="section-icon si-pdf">📄</div>
-      <h2 class="section-title">PDF Tools</h2>
-      <span class="section-count">11 tools</span>
+  <!-- ── PDF ── -->
+  <div class="section" id="pdf" data-section="pdf">
+    <div class="section-header">
+      <div class="section-title-group">
+        <div class="section-icon si-pdf" aria-hidden="true">📄</div>
+        <h2 class="section-name">PDF Tools</h2>
+        <span class="section-count">11 tools</span>
+      </div>
     </div>
+    <div class="section-divider"></div>
     <div class="grid">
-      <a href="pdf/merge.html"        class="card"><div class="card-top"><span class="card-emoji">🔗</span><span class="card-tag tag-pdf">PDF</span></div><div class="card-name">Merge PDF</div><div class="card-desc">Combine multiple PDFs into one file</div></a>
-      <a href="pdf/split.html"        class="card"><div class="card-top"><span class="card-emoji">✂️</span><span class="card-tag tag-pdf">PDF</span></div><div class="card-name">Split PDF</div><div class="card-desc">Extract pages or split into parts</div></a>
-      <a href="pdf/compress.html"     class="card"><div class="card-top"><span class="card-emoji">📦</span><span class="card-tag tag-pdf">PDF</span></div><div class="card-name">Compress PDF</div><div class="card-desc">Reduce PDF file size instantly</div></a>
-      <a href="pdf/rotate.html"       class="card"><div class="card-top"><span class="card-emoji">🔄</span><span class="card-tag tag-pdf">PDF</span></div><div class="card-name">Rotate PDF</div><div class="card-desc">Rotate pages to any angle</div></a>
-      <a href="pdf/pdf-to-image.html" class="card"><div class="card-top"><span class="card-emoji">🖼️</span><span class="card-tag tag-pdf">PDF</span></div><div class="card-name">PDF to Image</div><div class="card-desc">Convert PDF pages to JPG or PNG</div></a>
-      <a href="pdf/image-to-pdf.html" class="card"><div class="card-top"><span class="card-emoji">📸</span><span class="card-tag tag-pdf">PDF</span></div><div class="card-name">Image to PDF</div><div class="card-desc">Turn images into a PDF document</div></a>
-      <a href="pdf/watermark.html"    class="card"><div class="card-top"><span class="card-emoji">💧</span><span class="card-tag tag-pdf">PDF</span></div><div class="card-name">Add Watermark</div><div class="card-desc">Stamp text watermark on PDF pages</div></a>
-      <a href="pdf/page-numbers.html" class="card"><div class="card-top"><span class="card-emoji">🔢</span><span class="card-tag tag-pdf">PDF</span></div><div class="card-name">Add Page Numbers</div><div class="card-desc">Insert page numbers into any PDF</div></a>
-      <a href="pdf/protect.html"      class="card"><div class="card-top"><span class="card-emoji">🔒</span><span class="card-tag tag-pdf">PDF</span></div><div class="card-name">Protect PDF</div><div class="card-desc">Add a password to your PDF</div></a>
-      <a href="pdf/unlock.html"       class="card"><div class="card-top"><span class="card-emoji">🔓</span><span class="card-tag tag-pdf">PDF</span></div><div class="card-name">Unlock PDF</div><div class="card-desc">Remove password from a PDF</div></a>
-      <a href="pdf/extract-text.html" class="card"><div class="card-top"><span class="card-emoji">📝</span><span class="card-tag tag-pdf">PDF</span></div><div class="card-name">Extract Text (OCR)</div><div class="card-desc">Pull readable text from any PDF</div></a>
+      <a href="pdf/merge.html" class="card"><div class="card-header"><span class="card-emoji">🔗</span><span class="card-badge b-pdf">PDF</span></div><div class="card-name">Merge PDF</div><div class="card-desc">Combine multiple PDFs into one file</div><span class="card-arrow">Open →</span></a>
+      <a href="pdf/split.html" class="card"><div class="card-header"><span class="card-emoji">✂️</span><span class="card-badge b-pdf">PDF</span></div><div class="card-name">Split PDF</div><div class="card-desc">Extract pages or split into parts</div><span class="card-arrow">Open →</span></a>
+      <a href="pdf/compress.html" class="card"><div class="card-header"><span class="card-emoji">📦</span><span class="card-badge b-pdf">PDF</span></div><div class="card-name">Compress PDF</div><div class="card-desc">Reduce PDF file size instantly</div><span class="card-arrow">Open →</span></a>
+      <a href="pdf/rotate.html" class="card"><div class="card-header"><span class="card-emoji">🔄</span><span class="card-badge b-pdf">PDF</span></div><div class="card-name">Rotate PDF</div><div class="card-desc">Rotate pages to any angle</div><span class="card-arrow">Open →</span></a>
+      <a href="pdf/pdf-to-image.html" class="card"><div class="card-header"><span class="card-emoji">🖼️</span><span class="card-badge b-pdf">PDF</span></div><div class="card-name">PDF to Image</div><div class="card-desc">Convert PDF pages to JPG or PNG</div><span class="card-arrow">Open →</span></a>
+      <a href="pdf/image-to-pdf.html" class="card"><div class="card-header"><span class="card-emoji">📸</span><span class="card-badge b-pdf">PDF</span></div><div class="card-name">Image to PDF</div><div class="card-desc">Turn images into a PDF document</div><span class="card-arrow">Open →</span></a>
+      <a href="pdf/watermark.html" class="card"><div class="card-header"><span class="card-emoji">💧</span><span class="card-badge b-pdf">PDF</span></div><div class="card-name">Add Watermark</div><div class="card-desc">Stamp text watermark on PDF pages</div><span class="card-arrow">Open →</span></a>
+      <a href="pdf/page-numbers.html" class="card"><div class="card-header"><span class="card-emoji">🔢</span><span class="card-badge b-pdf">PDF</span></div><div class="card-name">Add Page Numbers</div><div class="card-desc">Insert page numbers into any PDF</div><span class="card-arrow">Open →</span></a>
+      <a href="pdf/protect.html" class="card"><div class="card-header"><span class="card-emoji">🔒</span><span class="card-badge b-pdf">PDF</span></div><div class="card-name">Protect PDF</div><div class="card-desc">Add a password to your PDF</div><span class="card-arrow">Open →</span></a>
+      <a href="pdf/unlock.html" class="card"><div class="card-header"><span class="card-emoji">🔓</span><span class="card-badge b-pdf">PDF</span></div><div class="card-name">Unlock PDF</div><div class="card-desc">Remove password from a PDF</div><span class="card-arrow">Open →</span></a>
+      <a href="pdf/extract-text.html" class="card"><div class="card-header"><span class="card-emoji">📝</span><span class="card-badge b-pdf">PDF</span></div><div class="card-name">Extract Text (OCR)</div><div class="card-desc">Pull readable text from any PDF</div><span class="card-arrow">Open →</span></a>
     </div>
   </div>
 
-  <!-- IMAGE -->
-  <div class="section" data-section="image">
-    <div class="section-head">
-      <div class="section-icon si-image">🖼️</div>
-      <h2 class="section-title">Image Tools</h2>
-      <span class="section-count">10 tools</span>
+  <!-- ── IMAGE ── -->
+  <div class="section" id="image" data-section="image">
+    <div class="section-header">
+      <div class="section-title-group">
+        <div class="section-icon si-img" aria-hidden="true">🖼️</div>
+        <h2 class="section-name">Image Tools</h2>
+        <span class="section-count">10 tools</span>
+      </div>
     </div>
+    <div class="section-divider"></div>
     <div class="grid">
-      <a href="image/compressor.html"      class="card"><div class="card-top"><span class="card-emoji">📦</span><span class="card-tag tag-image">Image</span></div><div class="card-name">Image Compressor</div><div class="card-desc">Shrink image size without quality loss</div></a>
-      <a href="image/resizer.html"         class="card"><div class="card-top"><span class="card-emoji">↔️</span><span class="card-tag tag-image">Image</span></div><div class="card-name">Image Resizer</div><div class="card-desc">Resize to any width and height</div></a>
-      <a href="image/crop.html"            class="card"><div class="card-top"><span class="card-emoji">✂️</span><span class="card-tag tag-image">Image</span></div><div class="card-name">Crop Image</div><div class="card-desc">Crop free or with preset ratios</div></a>
-      <a href="image/converter.html"       class="card"><div class="card-top"><span class="card-emoji">🔄</span><span class="card-tag tag-image">Image</span></div><div class="card-name">Convert Image</div><div class="card-desc">PNG ↔ JPG ↔ WEBP conversion</div></a>
-      <a href="image/watermark.html"       class="card"><div class="card-top"><span class="card-emoji">💧</span><span class="card-tag tag-image">Image</span></div><div class="card-name">Add Watermark</div><div class="card-desc">Stamp text or logo on your image</div></a>
-      <a href="image/add-text.html"        class="card"><div class="card-top"><span class="card-emoji">✍️</span><span class="card-tag tag-image">Image</span></div><div class="card-name">Add Text to Image</div><div class="card-desc">Write captions or meme text</div></a>
-      <a href="image/color-picker.html"    class="card"><div class="card-top"><span class="card-emoji">🎨</span><span class="card-tag tag-image">Image</span></div><div class="card-name">Color Picker</div><div class="card-desc">Get HEX & RGB from any image</div></a>
-      <a href="image/profile-picture.html" class="card"><div class="card-top"><span class="card-emoji">👤</span><span class="card-tag tag-image">Image</span></div><div class="card-name">Profile Picture Maker</div><div class="card-desc">Circle crop for social media DPs</div></a>
-      <a href="image/ocr.html"             class="card"><div class="card-top"><span class="card-emoji">📷</span><span class="card-tag tag-image">Image</span></div><div class="card-name">Screenshot to Text</div><div class="card-desc">Extract text from any image (OCR)</div></a>
-      <a href="image/blur.html"            class="card"><div class="card-top"><span class="card-emoji">🌫️</span><span class="card-tag tag-image">Image</span></div><div class="card-name">Blur / Pixelate</div><div class="card-desc">Blur backgrounds or censor areas</div></a>
+      <a href="image/compressor.html" class="card"><div class="card-header"><span class="card-emoji">📦</span><span class="card-badge b-img">Image</span></div><div class="card-name">Image Compressor</div><div class="card-desc">Shrink image size without quality loss</div><span class="card-arrow">Open →</span></a>
+      <a href="image/resizer.html" class="card"><div class="card-header"><span class="card-emoji">↔️</span><span class="card-badge b-img">Image</span></div><div class="card-name">Image Resizer</div><div class="card-desc">Resize to any width and height</div><span class="card-arrow">Open →</span></a>
+      <a href="image/crop.html" class="card"><div class="card-header"><span class="card-emoji">✂️</span><span class="card-badge b-img">Image</span></div><div class="card-name">Crop Image</div><div class="card-desc">Crop free or with preset ratios</div><span class="card-arrow">Open →</span></a>
+      <a href="image/converter.html" class="card"><div class="card-header"><span class="card-emoji">🔄</span><span class="card-badge b-img">Image</span></div><div class="card-name">Convert Image</div><div class="card-desc">PNG ↔ JPG ↔ WEBP conversion</div><span class="card-arrow">Open →</span></a>
+      <a href="image/watermark.html" class="card"><div class="card-header"><span class="card-emoji">💧</span><span class="card-badge b-img">Image</span></div><div class="card-name">Add Watermark</div><div class="card-desc">Stamp text or logo on your image</div><span class="card-arrow">Open →</span></a>
+      <a href="image/add-text.html" class="card"><div class="card-header"><span class="card-emoji">✍️</span><span class="card-badge b-img">Image</span></div><div class="card-name">Add Text to Image</div><div class="card-desc">Write captions or meme text</div><span class="card-arrow">Open →</span></a>
+      <a href="image/color-picker.html" class="card"><div class="card-header"><span class="card-emoji">🎨</span><span class="card-badge b-img">Image</span></div><div class="card-name">Color Picker</div><div class="card-desc">Get HEX &amp; RGB from any image</div><span class="card-arrow">Open →</span></a>
+      <a href="image/profile-picture.html" class="card"><div class="card-header"><span class="card-emoji">👤</span><span class="card-badge b-img">Image</span></div><div class="card-name">Profile Picture Maker</div><div class="card-desc">Circle crop for social media DPs</div><span class="card-arrow">Open →</span></a>
+      <a href="image/ocr.html" class="card"><div class="card-header"><span class="card-emoji">📷</span><span class="card-badge b-img">Image</span></div><div class="card-name">Screenshot to Text</div><div class="card-desc">Extract text from any image (OCR)</div><span class="card-arrow">Open →</span></a>
+      <a href="image/blur.html" class="card"><div class="card-header"><span class="card-emoji">🌫️</span><span class="card-badge b-img">Image</span></div><div class="card-name">Blur / Pixelate</div><div class="card-desc">Blur backgrounds or censor areas</div><span class="card-arrow">Open →</span></a>
     </div>
   </div>
 
-  <!-- TEXT -->
-  <div class="section" data-section="text">
-    <div class="section-head">
-      <div class="section-icon si-text">✍️</div>
-      <h2 class="section-title">Text Tools</h2>
-      <span class="section-count">10 tools</span>
+  <!-- ── TEXT ── -->
+  <div class="section" id="text" data-section="text">
+    <div class="section-header">
+      <div class="section-title-group">
+        <div class="section-icon si-txt" aria-hidden="true">✍️</div>
+        <h2 class="section-name">Text Tools</h2>
+        <span class="section-count">10 tools</span>
+      </div>
     </div>
+    <div class="section-divider"></div>
     <div class="grid">
-      <a href="text/word-counter.html"       class="card"><div class="card-top"><span class="card-emoji">🔢</span><span class="card-tag tag-text">Text</span></div><div class="card-name">Word Counter</div><div class="card-desc">Count words, characters, sentences</div></a>
-      <a href="text/case-converter.html"     class="card"><div class="card-top"><span class="card-emoji">🔡</span><span class="card-tag tag-text">Text</span></div><div class="card-name">Case Converter</div><div class="card-desc">UPPER, lower, Title, camelCase</div></a>
-      <a href="text/lorem-ipsum.html"        class="card"><div class="card-top"><span class="card-emoji">📄</span><span class="card-tag tag-text">Text</span></div><div class="card-name">Lorem Ipsum Generator</div><div class="card-desc">Generate placeholder text instantly</div></a>
-      <a href="text/text-to-slug.html"       class="card"><div class="card-top"><span class="card-emoji">🔗</span><span class="card-tag tag-text">Text</span></div><div class="card-name">Text to Slug</div><div class="card-desc">Convert text to URL-friendly slugs</div></a>
-      <a href="text/remove-duplicates.html"  class="card"><div class="card-top"><span class="card-emoji">🗑️</span><span class="card-tag tag-text">Text</span></div><div class="card-name">Remove Duplicates</div><div class="card-desc">Delete duplicate lines from text</div></a>
-      <a href="text/sort-lines.html"         class="card"><div class="card-top"><span class="card-emoji">🔃</span><span class="card-tag tag-text">Text</span></div><div class="card-name">Sort Lines</div><div class="card-desc">Sort alphabetically A–Z or Z–A</div></a>
-      <a href="text/reverse-text.html"       class="card"><div class="card-top"><span class="card-emoji">↩️</span><span class="card-tag tag-text">Text</span></div><div class="card-name">Reverse Text</div><div class="card-desc">Flip your text backwards</div></a>
-      <a href="text/text-repeater.html"      class="card"><div class="card-top"><span class="card-emoji">🔁</span><span class="card-tag tag-text">Text</span></div><div class="card-name">Text Repeater</div><div class="card-desc">Repeat any text N times</div></a>
-      <a href="text/whitespace-remover.html" class="card"><div class="card-top"><span class="card-emoji">🧹</span><span class="card-tag tag-text">Text</span></div><div class="card-name">Whitespace Remover</div><div class="card-desc">Clean extra spaces and blank lines</div></a>
-      <a href="text/vowel-counter.html"      class="card"><div class="card-top"><span class="card-emoji">🔤</span><span class="card-tag tag-text">Text</span></div><div class="card-name">Vowel Counter</div><div class="card-desc">Count vowels and consonants</div></a>
+      <a href="text/word-counter.html" class="card"><div class="card-header"><span class="card-emoji">🔢</span><span class="card-badge b-txt">Text</span></div><div class="card-name">Word Counter</div><div class="card-desc">Count words, characters, sentences</div><span class="card-arrow">Open →</span></a>
+      <a href="text/case-converter.html" class="card"><div class="card-header"><span class="card-emoji">🔡</span><span class="card-badge b-txt">Text</span></div><div class="card-name">Case Converter</div><div class="card-desc">UPPER, lower, Title, camelCase</div><span class="card-arrow">Open →</span></a>
+      <a href="text/lorem-ipsum.html" class="card"><div class="card-header"><span class="card-emoji">📄</span><span class="card-badge b-txt">Text</span></div><div class="card-name">Lorem Ipsum Generator</div><div class="card-desc">Generate placeholder text instantly</div><span class="card-arrow">Open →</span></a>
+      <a href="text/text-to-slug.html" class="card"><div class="card-header"><span class="card-emoji">🔗</span><span class="card-badge b-txt">Text</span></div><div class="card-name">Text to Slug</div><div class="card-desc">Convert text to URL-friendly slugs</div><span class="card-arrow">Open →</span></a>
+      <a href="text/remove-duplicates.html" class="card"><div class="card-header"><span class="card-emoji">🗑️</span><span class="card-badge b-txt">Text</span></div><div class="card-name">Remove Duplicates</div><div class="card-desc">Delete duplicate lines from text</div><span class="card-arrow">Open →</span></a>
+      <a href="text/sort-lines.html" class="card"><div class="card-header"><span class="card-emoji">🔃</span><span class="card-badge b-txt">Text</span></div><div class="card-name">Sort Lines</div><div class="card-desc">Sort alphabetically A–Z or Z–A</div><span class="card-arrow">Open →</span></a>
+      <a href="text/reverse-text.html" class="card"><div class="card-header"><span class="card-emoji">↩️</span><span class="card-badge b-txt">Text</span></div><div class="card-name">Reverse Text</div><div class="card-desc">Flip your text backwards</div><span class="card-arrow">Open →</span></a>
+      <a href="text/text-repeater.html" class="card"><div class="card-header"><span class="card-emoji">🔁</span><span class="card-badge b-txt">Text</span></div><div class="card-name">Text Repeater</div><div class="card-desc">Repeat any text N times</div><span class="card-arrow">Open →</span></a>
+      <a href="text/whitespace-remover.html" class="card"><div class="card-header"><span class="card-emoji">🧹</span><span class="card-badge b-txt">Text</span></div><div class="card-name">Whitespace Remover</div><div class="card-desc">Clean extra spaces and blank lines</div><span class="card-arrow">Open →</span></a>
+      <a href="text/vowel-counter.html" class="card"><div class="card-header"><span class="card-emoji">🔤</span><span class="card-badge b-txt">Text</span></div><div class="card-name">Vowel Counter</div><div class="card-desc">Count vowels and consonants</div><span class="card-arrow">Open →</span></a>
     </div>
   </div>
 
-  <!-- CALCULATORS -->
-  <div class="section" data-section="calculators">
-    <div class="section-head">
-      <div class="section-icon si-calc">🔢</div>
-      <h2 class="section-title">Calculators</h2>
-      <span class="section-count">10 tools</span>
+  <!-- ── CALCULATORS ── -->
+  <div class="section" id="calculators" data-section="calculators">
+    <div class="section-header">
+      <div class="section-title-group">
+        <div class="section-icon si-calc" aria-hidden="true">🔢</div>
+        <h2 class="section-name">Calculators</h2>
+        <span class="section-count">10 tools</span>
+      </div>
     </div>
+    <div class="section-divider"></div>
     <div class="grid">
-      <a href="calculators/age.html"               class="card"><div class="card-top"><span class="card-emoji">🎂</span><span class="card-tag tag-calc">Calc</span></div><div class="card-name">Age Calculator</div><div class="card-desc">Find exact age from date of birth</div></a>
-      <a href="calculators/percentage.html"        class="card"><div class="card-top"><span class="card-emoji">💯</span><span class="card-tag tag-calc">Calc</span></div><div class="card-name">Percentage Calculator</div><div class="card-desc">Calculate percentages instantly</div></a>
-      <a href="calculators/discount.html"          class="card"><div class="card-top"><span class="card-emoji">🏷️</span><span class="card-tag tag-calc">Calc</span></div><div class="card-name">Discount Calculator</div><div class="card-desc">Find sale price and savings</div></a>
-      <a href="calculators/loan-emi.html"          class="card"><div class="card-top"><span class="card-emoji">🏦</span><span class="card-tag tag-calc">Calc</span></div><div class="card-name">Loan / EMI Calculator</div><div class="card-desc">Monthly payments & interest</div></a>
-      <a href="calculators/gpa.html"               class="card"><div class="card-top"><span class="card-emoji">🎓</span><span class="card-tag tag-calc">Calc</span></div><div class="card-name">GPA Calculator</div><div class="card-desc">Calculate your grade point average</div></a>
-      <a href="calculators/bmi.html"               class="card"><div class="card-top"><span class="card-emoji">⚖️</span><span class="card-tag tag-calc">Calc</span></div><div class="card-name">BMI Calculator</div><div class="card-desc">Body mass index from height & weight</div></a>
-      <a href="calculators/tip.html"               class="card"><div class="card-top"><span class="card-emoji">🍽️</span><span class="card-tag tag-calc">Calc</span></div><div class="card-name">Tip Calculator</div><div class="card-desc">Split bills and calculate tips</div></a>
-      <a href="calculators/scientific.html"        class="card"><div class="card-top"><span class="card-emoji">🧮</span><span class="card-tag tag-calc">Calc</span></div><div class="card-name">Scientific Calculator</div><div class="card-desc">Full scientific calculator online</div></a>
-      <a href="calculators/compound-interest.html" class="card"><div class="card-top"><span class="card-emoji">📈</span><span class="card-tag tag-calc">Calc</span></div><div class="card-name">Compound Interest</div><div class="card-desc">Grow your savings over time</div></a>
-      <a href="calculators/date-difference.html"   class="card"><div class="card-top"><span class="card-emoji">📅</span><span class="card-tag tag-calc">Calc</span></div><div class="card-name">Date Difference</div><div class="card-desc">Days between two dates</div></a>
+      <a href="calculators/age.html" class="card"><div class="card-header"><span class="card-emoji">🎂</span><span class="card-badge b-calc">Calc</span></div><div class="card-name">Age Calculator</div><div class="card-desc">Find exact age from date of birth</div><span class="card-arrow">Open →</span></a>
+      <a href="calculators/percentage.html" class="card"><div class="card-header"><span class="card-emoji">💯</span><span class="card-badge b-calc">Calc</span></div><div class="card-name">Percentage Calculator</div><div class="card-desc">Calculate percentages instantly</div><span class="card-arrow">Open →</span></a>
+      <a href="calculators/discount.html" class="card"><div class="card-header"><span class="card-emoji">🏷️</span><span class="card-badge b-calc">Calc</span></div><div class="card-name">Discount Calculator</div><div class="card-desc">Find sale price and savings</div><span class="card-arrow">Open →</span></a>
+      <a href="calculators/loan-emi.html" class="card"><div class="card-header"><span class="card-emoji">🏦</span><span class="card-badge b-calc">Calc</span></div><div class="card-name">Loan / EMI Calculator</div><div class="card-desc">Monthly payments &amp; interest</div><span class="card-arrow">Open →</span></a>
+      <a href="calculators/gpa.html" class="card"><div class="card-header"><span class="card-emoji">🎓</span><span class="card-badge b-calc">Calc</span></div><div class="card-name">GPA Calculator</div><div class="card-desc">Calculate your grade point average</div><span class="card-arrow">Open →</span></a>
+      <a href="calculators/bmi.html" class="card"><div class="card-header"><span class="card-emoji">⚖️</span><span class="card-badge b-calc">Calc</span></div><div class="card-name">BMI Calculator</div><div class="card-desc">Body mass index from height &amp; weight</div><span class="card-arrow">Open →</span></a>
+      <a href="calculators/tip.html" class="card"><div class="card-header"><span class="card-emoji">🍽️</span><span class="card-badge b-calc">Calc</span></div><div class="card-name">Tip Calculator</div><div class="card-desc">Split bills and calculate tips</div><span class="card-arrow">Open →</span></a>
+      <a href="calculators/scientific.html" class="card"><div class="card-header"><span class="card-emoji">🧮</span><span class="card-badge b-calc">Calc</span></div><div class="card-name">Scientific Calculator</div><div class="card-desc">Full scientific calculator online</div><span class="card-arrow">Open →</span></a>
+      <a href="calculators/compound-interest.html" class="card"><div class="card-header"><span class="card-emoji">📈</span><span class="card-badge b-calc">Calc</span></div><div class="card-name">Compound Interest</div><div class="card-desc">Grow your savings over time</div><span class="card-arrow">Open →</span></a>
+      <a href="calculators/date-difference.html" class="card"><div class="card-header"><span class="card-emoji">📅</span><span class="card-badge b-calc">Calc</span></div><div class="card-name">Date Difference</div><div class="card-desc">Days between two dates</div><span class="card-arrow">Open →</span></a>
     </div>
   </div>
 
-  <!-- DEV TOOLS -->
-  <div class="section" data-section="dev-tools">
-    <div class="section-head">
-      <div class="section-icon si-dev">🌐</div>
-      <h2 class="section-title">Developer Tools</h2>
-      <span class="section-count">15 tools</span>
+  <!-- ── DEV TOOLS ── -->
+  <div class="section" id="dev-tools" data-section="dev-tools">
+    <div class="section-header">
+      <div class="section-title-group">
+        <div class="section-icon si-dev" aria-hidden="true">🌐</div>
+        <h2 class="section-name">Developer Tools</h2>
+        <span class="section-count">15 tools</span>
+      </div>
     </div>
+    <div class="section-divider"></div>
     <div class="grid">
-      <a href="dev-tool/json-formatter.html"  class="card"><div class="card-top"><span class="card-emoji">📋</span><span class="card-tag tag-dev">Dev</span></div><div class="card-name">JSON Formatter</div><div class="card-desc">Format and validate JSON instantly</div></a>
-      <a href="dev-tool/base-64.html"          class="card"><div class="card-top"><span class="card-emoji">🔐</span><span class="card-tag tag-dev">Dev</span></div><div class="card-name">Base64 Encoder</div><div class="card-desc">Encode and decode Base64 strings</div></a>
-      <a href="dev-tool/url-encoder.html"     class="card"><div class="card-top"><span class="card-emoji">🔗</span><span class="card-tag tag-dev">Dev</span></div><div class="card-name">URL Encoder</div><div class="card-desc">Encode and decode URLs</div></a>
-      <a href="dev-tool/html-entity.html"     class="card"><div class="card-top"><span class="card-emoji">🏷️</span><span class="card-tag tag-dev">Dev</span></div><div class="card-name">HTML Entity Encoder</div><div class="card-desc">Escape HTML special characters</div></a>
-      <a href="dev-tool/color-converter.html" class="card"><div class="card-top"><span class="card-emoji">🎨</span><span class="card-tag tag-dev">Dev</span></div><div class="card-name">Color Converter</div><div class="card-desc">HEX ↔ RGB ↔ HSL conversion</div></a>
-      <a href="dev-tool/css-gradient.html"    class="card"><div class="card-top"><span class="card-emoji">🌈</span><span class="card-tag tag-dev">Dev</span></div><div class="card-name">CSS Gradient Generator</div><div class="card-desc">Build beautiful CSS gradients</div></a>
-      <a href="dev-tool/qr-generator.html"    class="card"><div class="card-top"><span class="card-emoji">📱</span><span class="card-tag tag-dev">Dev</span></div><div class="card-name">QR Code Generator</div><div class="card-desc">Create QR codes for any URL or text</div></a>
-      <a href="dev-tool/qr-scanner.html"      class="card"><div class="card-top"><span class="card-emoji">🔍</span><span class="card-tag tag-dev">Dev</span></div><div class="card-name">QR Code Scanner</div><div class="card-desc">Scan QR codes from uploaded images</div></a>
-      <a href="dev-tool/regex-tester.html"    class="card"><div class="card-top"><span class="card-emoji">⚙️</span><span class="card-tag tag-dev">Dev</span></div><div class="card-name">Regex Tester</div><div class="card-desc">Test regular expressions live</div></a>
-      <a href="dev-tool/markdown-preview.html" class="card"><div class="card-top"><span class="card-emoji">📝</span><span class="card-tag tag-dev">Dev</span></div><div class="card-name">Markdown Preview</div><div class="card-desc">Write and preview Markdown live</div></a>
-      <a href="dev-tool/uuid-generator.html"  class="card"><div class="card-top"><span class="card-emoji">🆔</span><span class="card-tag tag-dev">Dev</span></div><div class="card-name">UUID Generator</div><div class="card-desc">Generate unique UUIDs instantly</div></a>
-      <a href="dev-tool/jwt-decoder.html"     class="card"><div class="card-top"><span class="card-emoji">🔑</span><span class="card-tag tag-dev">Dev</span></div><div class="card-name">JWT Decoder</div><div class="card-desc">Decode and inspect JWT tokens</div></a>
-      <a href="dev-tool/cron-helper.html"     class="card"><div class="card-top"><span class="card-emoji">⏰</span><span class="card-tag tag-dev">Dev</span></div><div class="card-name">Cron Helper</div><div class="card-desc">Build and understand cron expressions</div></a>
-      <a href="dev-tool/code-minifier.html"   class="card"><div class="card-top"><span class="card-emoji">🗜️</span><span class="card-tag tag-dev">Dev</span></div><div class="card-name">Code Minifier</div><div class="card-desc">Minify HTML, CSS and JavaScript</div></a>
-      <a href="dev-tool/diff-checker.html"    class="card"><div class="card-top"><span class="card-emoji">🔀</span><span class="card-tag tag-dev">Dev</span></div><div class="card-name">Diff Checker</div><div class="card-desc">Compare two texts side by side</div></a>
+      <a href="dev-tool/json-formatter.html" class="card"><div class="card-header"><span class="card-emoji">📋</span><span class="card-badge b-dev">Dev</span></div><div class="card-name">JSON Formatter</div><div class="card-desc">Format and validate JSON instantly</div><span class="card-arrow">Open →</span></a>
+      <a href="dev-tool/base-64.html" class="card"><div class="card-header"><span class="card-emoji">🔐</span><span class="card-badge b-dev">Dev</span></div><div class="card-name">Base64 Encoder</div><div class="card-desc">Encode and decode Base64 strings</div><span class="card-arrow">Open →</span></a>
+      <a href="dev-tool/url-encoder.html" class="card"><div class="card-header"><span class="card-emoji">🔗</span><span class="card-badge b-dev">Dev</span></div><div class="card-name">URL Encoder</div><div class="card-desc">Encode and decode URLs</div><span class="card-arrow">Open →</span></a>
+      <a href="dev-tool/html-entity.html" class="card"><div class="card-header"><span class="card-emoji">🏷️</span><span class="card-badge b-dev">Dev</span></div><div class="card-name">HTML Entity Encoder</div><div class="card-desc">Escape HTML special characters</div><span class="card-arrow">Open →</span></a>
+      <a href="dev-tool/color-converter.html" class="card"><div class="card-header"><span class="card-emoji">🎨</span><span class="card-badge b-dev">Dev</span></div><div class="card-name">Color Converter</div><div class="card-desc">HEX ↔ RGB ↔ HSL conversion</div><span class="card-arrow">Open →</span></a>
+      <a href="dev-tool/css-gradient.html" class="card"><div class="card-header"><span class="card-emoji">🌈</span><span class="card-badge b-dev">Dev</span></div><div class="card-name">CSS Gradient Generator</div><div class="card-desc">Build beautiful CSS gradients</div><span class="card-arrow">Open →</span></a>
+      <a href="dev-tool/qr-generator.html" class="card"><div class="card-header"><span class="card-emoji">📱</span><span class="card-badge b-dev">Dev</span></div><div class="card-name">QR Code Generator</div><div class="card-desc">Create QR codes for any URL or text</div><span class="card-arrow">Open →</span></a>
+      <a href="dev-tool/qr-scanner.html" class="card"><div class="card-header"><span class="card-emoji">🔍</span><span class="card-badge b-dev">Dev</span></div><div class="card-name">QR Code Scanner</div><div class="card-desc">Scan QR codes from uploaded images</div><span class="card-arrow">Open →</span></a>
+      <a href="dev-tool/regex-tester.html" class="card"><div class="card-header"><span class="card-emoji">⚙️</span><span class="card-badge b-dev">Dev</span></div><div class="card-name">Regex Tester</div><div class="card-desc">Test regular expressions live</div><span class="card-arrow">Open →</span></a>
+      <a href="dev-tool/markdown-preview.html" class="card"><div class="card-header"><span class="card-emoji">📝</span><span class="card-badge b-dev">Dev</span></div><div class="card-name">Markdown Preview</div><div class="card-desc">Write and preview Markdown live</div><span class="card-arrow">Open →</span></a>
+      <a href="dev-tool/uuid-generator.html" class="card"><div class="card-header"><span class="card-emoji">🆔</span><span class="card-badge b-dev">Dev</span></div><div class="card-name">UUID Generator</div><div class="card-desc">Generate unique UUIDs instantly</div><span class="card-arrow">Open →</span></a>
+      <a href="dev-tool/jwt-decoder.html" class="card"><div class="card-header"><span class="card-emoji">🔑</span><span class="card-badge b-dev">Dev</span></div><div class="card-name">JWT Decoder</div><div class="card-desc">Decode and inspect JWT tokens</div><span class="card-arrow">Open →</span></a>
+      <a href="dev-tool/cron-helper.html" class="card"><div class="card-header"><span class="card-emoji">⏰</span><span class="card-badge b-dev">Dev</span></div><div class="card-name">Cron Helper</div><div class="card-desc">Build and understand cron expressions</div><span class="card-arrow">Open →</span></a>
+      <a href="dev-tool/code-minifier.html" class="card"><div class="card-header"><span class="card-emoji">🗜️</span><span class="card-badge b-dev">Dev</span></div><div class="card-name">Code Minifier</div><div class="card-desc">Minify HTML, CSS and JavaScript</div><span class="card-arrow">Open →</span></a>
+      <a href="dev-tool/diff-checker.html" class="card"><div class="card-header"><span class="card-emoji">🔀</span><span class="card-badge b-dev">Dev</span></div><div class="card-name">Diff Checker</div><div class="card-desc">Compare two texts side by side</div><span class="card-arrow">Open →</span></a>
     </div>
   </div>
 
-  <!-- SECURITY -->
-  <div class="section" data-section="security">
-    <div class="section-head">
-      <div class="section-icon si-sec">🔐</div>
-      <h2 class="section-title">Security Tools</h2>
-      <span class="section-count">5 tools</span>
+  <!-- ── SECURITY ── -->
+  <div class="section" id="security" data-section="security">
+    <div class="section-header">
+      <div class="section-title-group">
+        <div class="section-icon si-sec" aria-hidden="true">🔐</div>
+        <h2 class="section-name">Security Tools</h2>
+        <span class="section-count">5 tools</span>
+      </div>
     </div>
+    <div class="section-divider"></div>
     <div class="grid">
-      <a href="security/password-generator.html" class="card"><div class="card-top"><span class="card-emoji">🔑</span><span class="card-tag tag-sec">Security</span></div><div class="card-name">Password Generator</div><div class="card-desc">Create strong secure passwords</div></a>
-      <a href="security/password-checker.html"   class="card"><div class="card-top"><span class="card-emoji">🛡️</span><span class="card-tag tag-sec">Security</span></div><div class="card-name">Password Strength</div><div class="card-desc">Check how strong your password is</div></a>
-      <a href="security/hash-generator.html"     class="card"><div class="card-top"><span class="card-emoji">#️⃣</span><span class="card-tag tag-sec">Security</span></div><div class="card-name">Hash Generator</div><div class="card-desc">MD5, SHA-1, SHA-256 hashing</div></a>
-      <a href="security/encrypt-decrypt.html"    class="card"><div class="card-top"><span class="card-emoji">🔐</span><span class="card-tag tag-sec">Security</span></div><div class="card-name">Encrypt / Decrypt</div><div class="card-desc">AES text encryption in browser</div></a>
-      <a href="security/token-generator.html"    class="card"><div class="card-top"><span class="card-emoji">🎲</span><span class="card-tag tag-sec">Security</span></div><div class="card-name">Token Generator</div><div class="card-desc">Generate random secure tokens</div></a>
+      <a href="security/password-generator.html" class="card"><div class="card-header"><span class="card-emoji">🔑</span><span class="card-badge b-sec">Security</span></div><div class="card-name">Password Generator</div><div class="card-desc">Create strong secure passwords</div><span class="card-arrow">Open →</span></a>
+      <a href="security/password-checker.html" class="card"><div class="card-header"><span class="card-emoji">🛡️</span><span class="card-badge b-sec">Security</span></div><div class="card-name">Password Strength</div><div class="card-desc">Check how strong your password is</div><span class="card-arrow">Open →</span></a>
+      <a href="security/hash-generator.html" class="card"><div class="card-header"><span class="card-emoji">#️⃣</span><span class="card-badge b-sec">Security</span></div><div class="card-name">Hash Generator</div><div class="card-desc">MD5, SHA-1, SHA-256 hashing</div><span class="card-arrow">Open →</span></a>
+      <a href="security/encrypt-decrypt.html" class="card"><div class="card-header"><span class="card-emoji">🔐</span><span class="card-badge b-sec">Security</span></div><div class="card-name">Encrypt / Decrypt</div><div class="card-desc">AES text encryption in browser</div><span class="card-arrow">Open →</span></a>
+      <a href="security/token-generator.html" class="card"><div class="card-header"><span class="card-emoji">🎲</span><span class="card-badge b-sec">Security</span></div><div class="card-name">Token Generator</div><div class="card-desc">Generate random secure tokens</div><span class="card-arrow">Open →</span></a>
     </div>
   </div>
 
-  <!-- DESIGN -->
-  <div class="section" data-section="design">
-    <div class="section-head">
-      <div class="section-icon si-design">🎨</div>
-      <h2 class="section-title">Design & Fun</h2>
-      <span class="section-count">7 tools</span>
+  <!-- ── DESIGN ── -->
+  <div class="section" id="design" data-section="design">
+    <div class="section-header">
+      <div class="section-title-group">
+        <div class="section-icon si-des" aria-hidden="true">🎨</div>
+        <h2 class="section-name">Design &amp; Fun</h2>
+        <span class="section-count">7 tools</span>
+      </div>
     </div>
+    <div class="section-divider"></div>
     <div class="grid">
-      <a href="design/color-palette.html"    class="card"><div class="card-top"><span class="card-emoji">🎨</span><span class="card-tag tag-design">Design</span></div><div class="card-name">Color Palette</div><div class="card-desc">Generate beautiful color palettes</div></a>
-      <a href="design/gradient-generator.html" class="card"><div class="card-top"><span class="card-emoji">🌈</span><span class="card-tag tag-design">Design</span></div><div class="card-name">Gradient Generator</div><div class="card-desc">Create stunning gradient backgrounds</div></a>
-      <a href="design/meme-generator.html"   class="card"><div class="card-top"><span class="card-emoji">😂</span><span class="card-tag tag-design">Design</span></div><div class="card-name">Meme Generator</div><div class="card-desc">Add text to images, make memes</div></a>
-      <a href="design/fake-tweet.html"       class="card"><div class="card-top"><span class="card-emoji">🐦</span><span class="card-tag tag-design">Design</span></div><div class="card-name">Fake Tweet Generator</div><div class="card-desc">Create a fun fake tweet screenshot</div></a>
-      <a href="design/love-calculator.html"  class="card"><div class="card-top"><span class="card-emoji">❤️</span><span class="card-tag tag-design">Design</span></div><div class="card-name">Love Calculator</div><div class="card-desc">How compatible are you? 😄</div></a>
-      <a href="design/name-generator.html"   class="card"><div class="card-top"><span class="card-emoji">✨</span><span class="card-tag tag-design">Design</span></div><div class="card-name">Name Generator</div><div class="card-desc">Generate random creative names</div></a>
-      <a href="design/dice-roller.html"      class="card"><div class="card-top"><span class="card-emoji">🎲</span><span class="card-tag tag-design">Design</span></div><div class="card-name">Dice Roller</div><div class="card-desc">Roll dice or flip a coin</div></a>
+      <a href="design/color-palette.html" class="card"><div class="card-header"><span class="card-emoji">🎨</span><span class="card-badge b-des">Design</span></div><div class="card-name">Color Palette</div><div class="card-desc">Generate beautiful color palettes</div><span class="card-arrow">Open →</span></a>
+      <a href="design/gradient-generator.html" class="card"><div class="card-header"><span class="card-emoji">🌈</span><span class="card-badge b-des">Design</span></div><div class="card-name">Gradient Generator</div><div class="card-desc">Create stunning gradient backgrounds</div><span class="card-arrow">Open →</span></a>
+      <a href="design/meme-generator.html" class="card"><div class="card-header"><span class="card-emoji">😂</span><span class="card-badge b-des">Design</span></div><div class="card-name">Meme Generator</div><div class="card-desc">Add text to images, make memes</div><span class="card-arrow">Open →</span></a>
+      <a href="design/fake-tweet.html" class="card"><div class="card-header"><span class="card-emoji">🐦</span><span class="card-badge b-des">Design</span></div><div class="card-name">Fake Tweet Generator</div><div class="card-desc">Create a fun fake tweet screenshot</div><span class="card-arrow">Open →</span></a>
+      <a href="design/love-calculator.html" class="card"><div class="card-header"><span class="card-emoji">❤️</span><span class="card-badge b-des">Design</span></div><div class="card-name">Love Calculator</div><div class="card-desc">How compatible are you? 😄</div><span class="card-arrow">Open →</span></a>
+      <a href="design/name-generator.html" class="card"><div class="card-header"><span class="card-emoji">✨</span><span class="card-badge b-des">Design</span></div><div class="card-name">Name Generator</div><div class="card-desc">Generate random creative names</div><span class="card-arrow">Open →</span></a>
+      <a href="design/dice-roller.html" class="card"><div class="card-header"><span class="card-emoji">🎲</span><span class="card-badge b-des">Design</span></div><div class="card-name">Dice Roller</div><div class="card-desc">Roll dice or flip a coin</div><span class="card-arrow">Open →</span></a>
     </div>
   </div>
 
-  <!-- SOCIAL -->
-  <div class="section" data-section="social">
-    <div class="section-head">
-      <div class="section-icon si-social">📱</div>
-      <h2 class="section-title">Social Media Tools</h2>
-      <span class="section-count">6 tools</span>
+  <!-- ── SOCIAL ── -->
+  <div class="section" id="social" data-section="social">
+    <div class="section-header">
+      <div class="section-title-group">
+        <div class="section-icon si-soc" aria-hidden="true">📱</div>
+        <h2 class="section-name">Social Media Tools</h2>
+        <span class="section-count">6 tools</span>
+      </div>
     </div>
+    <div class="section-divider"></div>
     <div class="grid">
-      <a href="social/yt-thumbnail.html"      class="card"><div class="card-top"><span class="card-emoji">▶️</span><span class="card-tag tag-social">Social</span></div><div class="card-name">YT Thumbnail Downloader</div><div class="card-desc">Download any YouTube thumbnail</div></a>
-      <a href="social/instagram-dp.html"      class="card"><div class="card-top"><span class="card-emoji">📸</span><span class="card-tag tag-social">Social</span></div><div class="card-name">Instagram DP Viewer</div><div class="card-desc">View full-size Instagram profile pics</div></a>
-      <a href="social/hashtag-generator.html" class="card"><div class="card-top"><span class="card-emoji">#️⃣</span><span class="card-tag tag-social">Social</span></div><div class="card-name">Hashtag Generator</div><div class="card-desc">Generate hashtags for your posts</div></a>
-      <a href="social/bio-generator.html"     class="card"><div class="card-top"><span class="card-emoji">✍️</span><span class="card-tag tag-social">Social</span></div><div class="card-name">Bio Generator</div><div class="card-desc">Create cool social media bios</div></a>
-      <a href="social/emoji-picker.html"      class="card"><div class="card-top"><span class="card-emoji">😊</span><span class="card-tag tag-social">Social</span></div><div class="card-name">Emoji Picker</div><div class="card-desc">Find and copy any emoji fast</div></a>
-      <a href="social/fancy-font.html"        class="card"><div class="card-top"><span class="card-emoji">𝓐</span><span class="card-tag tag-social">Social</span></div><div class="card-name">Fancy Font Generator</div><div class="card-desc">Unicode fonts for bios and posts</div></a>
+      <a href="social/yt-thumbnail.html" class="card"><div class="card-header"><span class="card-emoji">▶️</span><span class="card-badge b-soc">Social</span></div><div class="card-name">YT Thumbnail Downloader</div><div class="card-desc">Download any YouTube thumbnail</div><span class="card-arrow">Open →</span></a>
+      <a href="social/instagram-dp.html" class="card"><div class="card-header"><span class="card-emoji">📸</span><span class="card-badge b-soc">Social</span></div><div class="card-name">Instagram DP Viewer</div><div class="card-desc">View full-size Instagram profile pics</div><span class="card-arrow">Open →</span></a>
+      <a href="social/hashtag-generator.html" class="card"><div class="card-header"><span class="card-emoji">#️⃣</span><span class="card-badge b-soc">Social</span></div><div class="card-name">Hashtag Generator</div><div class="card-desc">Generate hashtags for your posts</div><span class="card-arrow">Open →</span></a>
+      <a href="social/bio-generator.html" class="card"><div class="card-header"><span class="card-emoji">✍️</span><span class="card-badge b-soc">Social</span></div><div class="card-name">Bio Generator</div><div class="card-desc">Create cool social media bios</div><span class="card-arrow">Open →</span></a>
+      <a href="social/emoji-picker.html" class="card"><div class="card-header"><span class="card-emoji">😊</span><span class="card-badge b-soc">Social</span></div><div class="card-name">Emoji Picker</div><div class="card-desc">Find and copy any emoji fast</div><span class="card-arrow">Open →</span></a>
+      <a href="social/fancy-font.html" class="card"><div class="card-header"><span class="card-emoji">𝓐</span><span class="card-badge b-soc">Social</span></div><div class="card-name">Fancy Font Generator</div><div class="card-desc">Unicode fonts for bios and posts</div><span class="card-arrow">Open →</span></a>
     </div>
   </div>
 
-  <!-- PRODUCTIVITY -->
-  <div class="section" data-section="productivity">
-    <div class="section-head">
-      <div class="section-icon si-prod">⏱️</div>
-      <h2 class="section-title">Productivity</h2>
-      <span class="section-count">6 tools</span>
+  <!-- ── PRODUCTIVITY ── -->
+  <div class="section" id="productivity" data-section="productivity">
+    <div class="section-header">
+      <div class="section-title-group">
+        <div class="section-icon si-prod" aria-hidden="true">⏱️</div>
+        <h2 class="section-name">Productivity</h2>
+        <span class="section-count">6 tools</span>
+      </div>
     </div>
+    <div class="section-divider"></div>
     <div class="grid">
-      <a href="productivity/pomodoro.html"   class="card"><div class="card-top"><span class="card-emoji">🍅</span><span class="card-tag tag-prod">Productivity</span></div><div class="card-name">Pomodoro Timer</div><div class="card-desc">Focus in 25-min work sessions</div></a>
-      <a href="productivity/countdown.html"  class="card"><div class="card-top"><span class="card-emoji">⏳</span><span class="card-tag tag-prod">Productivity</span></div><div class="card-name">Countdown Timer</div><div class="card-desc">Set a custom countdown timer</div></a>
-      <a href="productivity/todo.html"       class="card"><div class="card-top"><span class="card-emoji">✅</span><span class="card-tag tag-prod">Productivity</span></div><div class="card-name">To-Do List</div><div class="card-desc">Simple tasks, saved in browser</div></a>
-      <a href="productivity/notes.html"      class="card"><div class="card-top"><span class="card-emoji">📓</span><span class="card-tag tag-prod">Productivity</span></div><div class="card-name">Quick Notes</div><div class="card-desc">Instant notes, auto-saved locally</div></a>
-      <a href="productivity/stopwatch.html"  class="card"><div class="card-top"><span class="card-emoji">⏱️</span><span class="card-tag tag-prod">Productivity</span></div><div class="card-name">Stopwatch</div><div class="card-desc">Lap timer and stopwatch</div></a>
-      <a href="productivity/world-clock.html" class="card"><div class="card-top"><span class="card-emoji">🌍</span><span class="card-tag tag-prod">Productivity</span></div><div class="card-name">World Clock</div><div class="card-desc">Current time in any timezone</div></a>
+      <a href="productivity/pomodoro.html" class="card"><div class="card-header"><span class="card-emoji">🍅</span><span class="card-badge b-prod">Productivity</span></div><div class="card-name">Pomodoro Timer</div><div class="card-desc">Focus in 25-min work sessions</div><span class="card-arrow">Open →</span></a>
+      <a href="productivity/countdown.html" class="card"><div class="card-header"><span class="card-emoji">⏳</span><span class="card-badge b-prod">Productivity</span></div><div class="card-name">Countdown Timer</div><div class="card-desc">Set a custom countdown timer</div><span class="card-arrow">Open →</span></a>
+      <a href="productivity/todo.html" class="card"><div class="card-header"><span class="card-emoji">✅</span><span class="card-badge b-prod">Productivity</span></div><div class="card-name">To-Do List</div><div class="card-desc">Simple tasks, saved in browser</div><span class="card-arrow">Open →</span></a>
+      <a href="productivity/notes.html" class="card"><div class="card-header"><span class="card-emoji">📓</span><span class="card-badge b-prod">Productivity</span></div><div class="card-name">Quick Notes</div><div class="card-desc">Instant notes, auto-saved locally</div><span class="card-arrow">Open →</span></a>
+      <a href="productivity/stopwatch.html" class="card"><div class="card-header"><span class="card-emoji">⏱️</span><span class="card-badge b-prod">Productivity</span></div><div class="card-name">Stopwatch</div><div class="card-desc">Lap timer and stopwatch</div><span class="card-arrow">Open →</span></a>
+      <a href="productivity/world-clock.html" class="card"><div class="card-header"><span class="card-emoji">🌍</span><span class="card-badge b-prod">Productivity</span></div><div class="card-name">World Clock</div><div class="card-desc">Current time in any timezone</div><span class="card-arrow">Open →</span></a>
     </div>
   </div>
 
   <!-- No results -->
-  <div id="no-results">
-    <p>🔍</p>
-    <span>No tools found. Try a different search.</span>
+  <div id="no-results" role="status" aria-live="polite">
+    <span class="nr-icon">🔍</span>
+    <p class="nr-title">Nothing found</p>
+    <p class="nr-sub">Try a different keyword — there are 70+ tools hiding in here.</p>
   </div>
 
 </main>
 
-<!-- ── FOOTER ─────────────────────────────────────────────── -->
-<footer class="footer">
-  <div class="footer-container">
-
-    <!-- Logo & About -->
-    <div class="footer-section">
-      <h2 class="footer-logo">Fix<span>-</span>Kit</h2>
-      <p class="footer-desc">
-        Free online tools to simplify your daily tasks. No login required,
-        no data stored — fast, secure, and 100% free.
+<!-- ─────────────────── FOOTER ─────────────────── -->
+<footer class="footer" role="contentinfo">
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">Fix-Kit</div>
+      <p class="footer-brand-desc">
+        Free online tools built for humans. No login, no data stored,
+        no hidden fees. Just tools that work, right in your browser.
       </p>
     </div>
-
-    <!-- Navigation -->
-    <div class="footer-section">
-      <h3>Quick Links</h3>
-      <ul>
+    <div>
+      <p class="footer-col-title">Navigate</p>
+      <ul class="footer-links">
         <li><a href="https://fix-kit.vercel.app/">Home</a></li>
-        <li><a href="https://fix-kit.vercel.app/about.html/">About</a></li>
-        <li><a href="https://fix-kit.vercel.app/privacy.html/">Privacy Policy</a></li>
+        <li><a href="https://fix-kit.vercel.app/about.html">About</a></li>
+        <li><a href="https://fix-kit.vercel.app/privacy.html">Privacy Policy</a></li>
         <li><a href="mailto:rohitkhanal321@email.com">Contact</a></li>
       </ul>
     </div>
-
-    <!-- Tools (Optional but good for SEO + UX) -->
-    <div class="footer-section">
-      <h3>Popular Tools</h3>
-      <ul>
+    <div>
+      <p class="footer-col-title">Popular Tools</p>
+      <ul class="footer-links">
         <li><a href="/text/word-counter.html">Word Counter</a></li>
         <li><a href="/text/whitespace-remover.html">Whitespace Remover</a></li>
-        <li><a href="/text/vowel-counter.html">Vowel Counter</a></li>
+        <li><a href="/dev-tool/json-formatter.html">JSON Formatter</a></li>
         <li><a href="/productivity/stopwatch.html">Stopwatch</a></li>
       </ul>
     </div>
-
-    <!-- Social / Personal Branding -->
-    <div class="footer-section">
-      <h3>Connect</h3>
-      <div class="social-links">
-        <a href="https://www.linkedin.com/in/rohit-khanal-17b892379/" target="_blank">LinkedIn</a>
-        <a href="https://github.com/1rohitkhanal" target="_blank">GitHub</a>
-        <a href="https://khanalrohit.com.np" target="_blank">Portfolio</a>
+    <div>
+      <p class="footer-col-title">Connect</p>
+      <ul class="footer-links">
+        <li><a href="https://www.linkedin.com/in/rohit-khanal-17b892379/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://github.com/1rohitkhanal" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://khanalrohit.com.np" target="_blank" rel="noopener">Portfolio</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <p class="footer-copy">
+        © <span id="year"></span> <strong>Fix-Kit</strong> · Built by Rohit Khanal
+      </p>
+      <div class="footer-pills-sm">
+        <span class="footer-pill-sm">No login</span>
+        <span class="footer-pill-sm">No uploads</span>
+        <span class="footer-pill-sm">Free forever</span>
       </div>
     </div>
-
   </div>
-
-  <!-- Bottom Line -->
-  <div class="footer-bottom">
-    <p>
-      © <span id="year"></span> <strong>Fix-Kit</strong> · Built by Rohit Khanal · 
-      No login required · No data stored · 100% free forever
-    </p>
-  </div>
-
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
 </footer>
 
+<!-- ─────────────────── SCRIPTS ─────────────────── -->
 <script>
-  // ── THEME TOGGLE ────────────────────────────────────────
-  const html = document.documentElement;
-  const btn  = document.getElementById('themeToggle');
-  const saved = localStorage.getItem('fk-theme') || 'light';
+  /* ── YEAR ── */
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* ── THEME ── */
+  const html     = document.documentElement;
+  const themeBtn = document.getElementById('themeToggle');
+  const saved    = localStorage.getItem('fk-theme') || 'light';
   html.setAttribute('data-theme', saved);
 
-  btn.addEventListener('click', () => {
+  themeBtn.addEventListener('click', () => {
     const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
     html.setAttribute('data-theme', next);
     localStorage.setItem('fk-theme', next);
   });
 
-  // ── LIVE SEARCH ─────────────────────────────────────────
+  /* ── KEYBOARD SHORTCUT: / to focus search ── */
+  document.addEventListener('keydown', e => {
+    if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
+      e.preventDefault();
+      document.getElementById('search').focus();
+    }
+    if (e.key === 'Escape') {
+      const s = document.getElementById('search');
+      s.value = '';
+      s.dispatchEvent(new Event('input'));
+      s.blur();
+    }
+  });
+
+  /* ── LIVE SEARCH ── */
   const searchInput = document.getElementById('search');
   const sections    = document.querySelectorAll('.section');
   const noResults   = document.getElementById('no-results');
@@ -709,22 +1061,37 @@
     sections.forEach(sec => {
       const cards = sec.querySelectorAll('.card');
       let secVisible = 0;
-
       cards.forEach(card => {
-        const name = card.querySelector('.card-name').textContent.toLowerCase();
-        const desc = card.querySelector('.card-desc').textContent.toLowerCase();
-        const tag  = card.querySelector('.card-tag').textContent.toLowerCase();
-        const match = !q || name.includes(q) || desc.includes(q) || tag.includes(q);
+        const name  = card.querySelector('.card-name').textContent.toLowerCase();
+        const desc  = card.querySelector('.card-desc').textContent.toLowerCase();
+        const badge = card.querySelector('.card-badge').textContent.toLowerCase();
+        const match = !q || name.includes(q) || desc.includes(q) || badge.includes(q);
         card.classList.toggle('hidden', !match);
         if (match) secVisible++;
       });
-
       sec.classList.toggle('empty', secVisible === 0);
       totalVisible += secVisible;
     });
 
     noResults.style.display = totalVisible === 0 ? 'block' : 'none';
   });
+
+  /* ── ACTIVE JUMP LINK on scroll ── */
+  const jumpLinks = document.querySelectorAll('.jump-link');
+  const sectionEls = document.querySelectorAll('.section[id]');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        jumpLinks.forEach(l => {
+          l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-120px 0px -60% 0px', threshold: 0 });
+
+  sectionEls.forEach(s => observer.observe(s));
 </script>
 </body>
 </html>
