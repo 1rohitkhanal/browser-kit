@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do List — Fix-Kit</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #fff;
+            --bg2: #f7f7f5;
+            --border: #e5e5e3;
+            --text: #1a1a18;
+            --text2: #6b6b67;
+        }
+
+        [data-theme="dark"] {
+            --bg: #111110;
+            --bg2: #1a1a18;
+            --border: #2e2e2c;
+            --text: #ededeb;
+            --text2: #9b9b97;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            height: 100vh
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .back {
+            padding: 6px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg2);
+            cursor: pointer
+        }
+
+        .container {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 20px;
+            padding: 20px
+        }
+
+        .tool {
+            display: flex;
+            flex-direction: column;
+            gap: 20px
+        }
+
+        .box {
+            border: 1px solid var(--border);
+            background: var(--bg2);
+            padding: 20px;
+            border-radius: 10px
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #fff
+        }
+
+        button {
+            padding: 10px 14px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: #fff;
+            cursor: pointer
+        }
+
+        .secondary {
+            background: #475569
+        }
+
+        .list {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #fff
+        }
+
+        .item.completed {
+            opacity: .6;
+            text-decoration: line-through
+        }
+
+        .item button {
+            padding: 6px 10px;
+            font-size: 12px
+        }
+
+        .ad {
+            border: 1px dashed var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            color: var(--text2)
+        }
+
+        .top-ad {
+            height: 90px
+        }
+
+        .side-ad {
+            height: 250px
+        }
+
+        .bottom-ad {
+            height: 90px
+        }
+
+
+        .back {
+            padding: 6px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg2);
+            cursor: pointer;
+            color: var(--text) !important;
+            /* Forces the text to be visible */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back:hover {
+            filter: brightness(0.9);
+        }
+
+        @media(max-width:900px) {
+            .container {
+                grid-template-columns: 1fr
+            }
+
+            .side-ad {
+                display: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <!-- Added explicit pointer cursor and z-index to ensure it is clickable -->
+        <button class="back" onclick="window.history.back()" style="cursor: pointer; position: relative; z-index: 10;">←
+            Back</button>
+        <h3>World Clock</h3>
+        <button class="back" onclick="toggleTheme()" style="cursor: pointer;">🌓</button>
+    </nav>
+
+    <div class="container">
+        <div>
+            <div class="ad top-ad">728x90 Ad</div>
+
+            <div class="tool">
+                <div class="box">
+                    <div class="input-row">
+                        <input id="taskInput" placeholder="Add a new task...">
+                        <button onclick="addTask()">Add</button>
+                    </div>
+
+                    <div class="list" id="list"></div>
+
+                    <div style="margin-top:10px;display:flex;gap:10px">
+                        <button class="secondary" onclick="clearAll()">Clear All</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ad bottom-ad">Bottom Ad</div>
+        </div>
+
+        <div class="ad side-ad">300x250 Ad</div>
+    </div>
+
+    <script>
+        const listEl = document.getElementById('list');
+        const input = document.getElementById('taskInput');
+
+        let tasks = JSON.parse(localStorage.getItem('fk-tasks') || '[]');
+
+        function save() { localStorage.setItem('fk-tasks', JSON.stringify(tasks)); }
+
+        function render() {
+            listEl.innerHTML = '';
+            tasks.forEach((t, i) => {
+                const div = document.createElement('div');
+                div.className = 'item' + (t.done ? ' completed' : '');
+
+                const text = document.createElement('span');
+                text.textContent = t.text;
+                text.style.flex = '1';
+
+                const doneBtn = document.createElement('button');
+                doneBtn.textContent = '✓';
+                doneBtn.onclick = () => { tasks[i].done = !tasks[i].done; save(); render(); };
+
+                const delBtn = document.createElement('button');
+                delBtn.textContent = '✕';
+                delBtn.onclick = () => { tasks.splice(i, 1); save(); render(); };
+
+                div.append(text, doneBtn, delBtn);
+                listEl.appendChild(div);
+            });
+        }
+
+        function addTask() {
+            const val = input.value.trim();
+            if (!val) return;
+            tasks.push({ text: val, done: false });
+            input.value = '';
+            save();
+            render();
+        }
+
+        function clearAll() {
+            if (confirm('Clear all tasks?')) {
+                tasks = []; save(); render();
+            }
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('fk-theme', next);
+        }
+
+        // load theme
+        const saved = localStorage.getItem('fk-theme') || 'light';
+        document.documentElement.setAttribute('data-theme', saved);
+
+        render();
+    </script>
+
+</body>
+
+</html>
