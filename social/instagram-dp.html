@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instagram DP & Profile Viewer — HD Download</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#0f0f0f;--surface:#1a1a1a;--surface2:#242424;
+  --border:#333;--accent:#e1306c;--text:#f0f0f0;--muted:#888
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text)}
+
+.container{max-width:800px;margin:auto;padding:2rem}
+h1{text-align:center;margin-bottom:1rem}
+h1 span{color:#e1306c}
+
+.card{background:var(--surface);padding:1.5rem;border-radius:14px;border:1px solid var(--border)}
+
+.input-wrap{display:flex;gap:10px;margin-bottom:1rem}
+input{
+  flex:1;padding:12px;border-radius:10px;border:2px solid var(--border);
+  background:var(--surface2);color:white;outline:none
+}
+button{
+  padding:12px 18px;border:none;border-radius:10px;
+  background:#e1306c;color:white;font-weight:bold;cursor:pointer
+}
+
+.profile{display:none;text-align:center;margin-top:1rem}
+.profile img{
+  width:180px;height:180px;border-radius:50%;
+  border:3px solid var(--border);margin-bottom:1rem
+}
+
+.name{font-size:1.2rem;font-weight:700}
+.username{color:var(--muted);margin-bottom:0.5rem}
+.bio{font-size:0.9rem;margin-bottom:1rem}
+
+.stats{display:flex;justify-content:center;gap:20px;margin-bottom:1rem}
+.stats div{font-size:0.85rem}
+
+.download{
+  display:inline-block;padding:10px 16px;
+  background:#e1306c;color:white;border-radius:8px;text-decoration:none
+}
+
+.error{
+  display:none;color:#ff6b6b;margin-top:10px;text-align:center
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>📸 <span>Instagram</span> Profile Viewer</h1>
+
+  <div class="card">
+    <div class="input-wrap">
+      <input id="username" placeholder="Enter username (e.g. cristiano)">
+      <button onclick="getProfile()">Search</button>
+    </div>
+
+    <div class="error" id="error"></div>
+
+    <div class="profile" id="profile">
+      <img id="dp">
+      <div class="name" id="name"></div>
+      <div class="username" id="user"></div>
+      <div class="bio" id="bio"></div>
+
+      <div class="stats">
+        <div><b id="posts"></b><br>Posts</div>
+        <div><b id="followers"></b><br>Followers</div>
+        <div><b id="following"></b><br>Following</div>
+      </div>
+
+      <a id="download" class="download" target="_blank">Download HD DP</a>
+    </div>
+  </div>
+</div>
+
+<script>
+async function getProfile() {
+  const username = document.getElementById('username').value.trim();
+  const error = document.getElementById('error');
+  const profile = document.getElementById('profile');
+
+  error.style.display = "none";
+  profile.style.display = "none";
+
+  if (!username) {
+    error.textContent = "❌ Enter username";
+    error.style.display = "block";
+    return;
+  }
+
+  try {
+    // CALL YOUR BACKEND API
+    const res = await fetch(`api.php?user=${username}`);
+    const data = await res.json();
+
+    if (!data.success) throw new Error();
+
+    document.getElementById('dp').src = data.dp;
+    document.getElementById('name').textContent = data.name;
+    document.getElementById('user').textContent = "@" + data.username;
+    document.getElementById('bio').textContent = data.bio || "";
+    document.getElementById('posts').textContent = data.posts;
+    document.getElementById('followers').textContent = data.followers;
+    document.getElementById('following').textContent = data.following;
+
+    document.getElementById('download').href = data.dp;
+
+    profile.style.display = "block";
+
+  } catch {
+    error.textContent = "❌ User not found / private / blocked";
+    error.style.display = "block";
+  }
+}
+
+document.getElementById('username').addEventListener('keydown', e=>{
+  if(e.key==='Enter') getProfile();
+});
+</script>
+
+</body>
+</html>
