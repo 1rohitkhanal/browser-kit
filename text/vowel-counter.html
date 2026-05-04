@@ -1,205 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vowel Counter</title>
-
-  <style>
-    :root {
-      --bg: #f5f7fb;
-      --card: #ffffff;
-      --accent: #4f46e5;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --border: #e5e7eb;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: "Segoe UI", sans-serif;
-    }
-
-    body {
-      background: var(--bg);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-    }
-
-    .app {
-      width: 100%;
-      max-width: 640px;
-      background: var(--card);
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .title {
-      font-size: 18px;
-      color: var(--text);
-    }
-
-    .back-btn {
-      padding: 8px 12px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: #fff;
-      cursor: pointer;
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 140px;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      resize: vertical;
-      font-size: 14px;
-      outline: none;
-    }
-
-    textarea:focus {
-      border-color: var(--accent);
-    }
-
-    .controls {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 8px;
-    }
-
-    .btn {
-      padding: 10px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-
-    .primary {
-      background: var(--accent);
-      color: #fff;
-    }
-
-    .secondary {
-      background: #111827;
-      color: #fff;
-    }
-
-    .ghost {
-      background: #fff;
-      border: 1px solid var(--border);
-    }
-
-    .output {
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px;
-      background: #fafafa;
-      min-height: 80px;
-      white-space: pre-wrap;
-      word-break: break-word;
-      color: var(--text);
-    }
-
-    @media (max-width: 480px) {
-      .app {
-        padding: 12px;
-      }
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Vowel Counter — FIX-KIT</title>
+<style>
+:root{--bg:#0f0f13;--surface:#1a1a24;--surface2:#22222f;--border:#2e2e3e;--accent:#6c63ff;--accent-soft:rgba(108,99,255,0.12);--text:#e8e8f0;--muted:#8888a4;--radius:12px;--radius-sm:8px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;}
+nav{padding:14px 20px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;gap:16px;}
+.back{color:var(--muted);text-decoration:none;font-size:14px;}.back:hover{color:var(--text);}
+.brand{font-weight:800;font-size:18px;color:var(--text);text-decoration:none;}.brand span{color:var(--accent);}
+.wrap{max-width:760px;margin:0 auto;padding:28px 16px 60px;}
+.ad{background:#161620;border:1px dashed #2a2a3a;border-radius:var(--radius-sm);padding:10px;text-align:center;color:var(--muted);font-size:11px;margin-bottom:24px;}
+.ad span{display:block;font-size:9px;opacity:.5;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;}
+.ad-inner{min-height:60px;display:flex;align-items:center;justify-content:center;opacity:.4;font-size:12px;}
+.hero{text-align:center;margin-bottom:28px;}
+.badge{display:inline-block;background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:100px;border:1px solid rgba(108,99,255,.25);margin-bottom:12px;}
+.hero h1{font-size:clamp(22px,5vw,30px);font-weight:800;margin-bottom:8px;}
+.hero p{color:var(--muted);font-size:14px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:18px;}
+.card h2{font-size:15px;font-weight:700;margin-bottom:16px;}
+textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;color:var(--text);font-size:14px;resize:vertical;min-height:140px;outline:none;font-family:inherit;line-height:1.7;}
+textarea:focus{border-color:var(--accent);}textarea::placeholder{color:var(--muted);}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:18px;}
+.stat-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;text-align:center;}
+.stat-box .num{font-size:28px;font-weight:800;color:var(--accent);}
+.stat-box .lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-top:4px;}
+.vowel-breakdown{margin-top:16px;}
+.vowel-breakdown h3{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px;}
+.vowel-row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+.vowel-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px;text-align:center;}
+.vowel-box .letter{font-size:22px;font-weight:800;color:var(--text);}
+.vowel-box .count{font-size:14px;font-weight:700;color:var(--accent);margin-top:2px;}
+.highlight{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;margin-top:14px;font-size:14px;line-height:1.8;word-break:break-word;min-height:50px;}
+.v{color:#6c63ff;font-weight:700;}
+.c{color:var(--muted);}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.btn{padding:9px 18px;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:var(--surface2);color:var(--text);transition:all .2s;}
+.btn:hover{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent);}
+.btn-primary:hover{background:#7b74ff;color:#fff;}
+.related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:8px;}
+.rel{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;text-decoration:none;color:var(--text);font-size:12px;font-weight:600;display:flex;align-items:center;gap:8px;transition:all .2s;}
+.rel:hover{border-color:var(--accent);background:var(--accent-soft);}
+.rel .tag{font-size:9px;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:2px 5px;border-radius:3px;}
+footer{border-top:1px solid var(--border);padding:18px;text-align:center;color:var(--muted);font-size:12px;}
+footer a{color:var(--muted);text-decoration:none;margin:0 8px;}footer a:hover{color:var(--text);}
+</style>
 </head>
 <body>
-
-<div class="app">
-  <div class="header">
-    <button class="back-btn" onclick="goBack()">← Back</button>
-    <div class="title">Vowel Counter</div>
-    <div></div>
+<nav>
+  <a class="back" href="../index.html">← Back</a>
+  <a class="brand" href="../index.html">FIX<span>-</span>KIT</a>
+</nav>
+<div class="wrap">
+  <div class="ad"><span>Advertisement</span><div class="ad-inner">📢 728×90 Leaderboard Ad</div></div>
+  <div class="hero">
+    <div class="badge">Text Tool</div>
+    <h1>🔤 Vowel Counter</h1>
+    <p>Count vowels, consonants and every character in your text with a live breakdown.</p>
   </div>
-
-  <textarea id="input" placeholder="Type or paste text here..."></textarea>
-
-  <div class="controls">
-    <button class="btn primary" onclick="countVowels()">Count Vowels</button>
-    <button class="btn ghost" onclick="clearAll()">Clear</button>
-    <button class="btn secondary" onclick="copyText()">Copy Result</button>
+  <div class="card">
+    <h2>✏️ Enter Your Text</h2>
+    <textarea id="input" placeholder="Type or paste your text here to count vowels and consonants…" oninput="analyze()"></textarea>
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-box"><div class="num" id="sVowels">0</div><div class="lbl">Vowels</div></div>
+      <div class="stat-box"><div class="num" id="sCons">0</div><div class="lbl">Consonants</div></div>
+      <div class="stat-box"><div class="num" id="sLetters">0</div><div class="lbl">Letters</div></div>
+      <div class="stat-box"><div class="num" id="sWords">0</div><div class="lbl">Words</div></div>
+      <div class="stat-box"><div class="num" id="sChars">0</div><div class="lbl">Characters</div></div>
+      <div class="stat-box"><div class="num" id="sSpaces">0</div><div class="lbl">Spaces</div></div>
+    </div>
+    <div class="vowel-breakdown">
+      <h3>Vowel Breakdown</h3>
+      <div class="vowel-row" id="vowelRow">
+        <div class="vowel-box"><div class="letter">A</div><div class="count" id="va">0</div></div>
+        <div class="vowel-box"><div class="letter">E</div><div class="count" id="ve">0</div></div>
+        <div class="vowel-box"><div class="letter">I</div><div class="count" id="vi">0</div></div>
+        <div class="vowel-box"><div class="letter">O</div><div class="count" id="vo">0</div></div>
+        <div class="vowel-box"><div class="letter">U</div><div class="count" id="vu">0</div></div>
+      </div>
+    </div>
+    <div style="margin-top:16px;font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;">Highlighted Text <span style="font-weight:400;color:var(--accent);">■</span> = vowels</div>
+    <div class="highlight" id="highlighted">Start typing to see highlighted vowels…</div>
+    <div class="actions">
+      <button class="btn" onclick="clearAll()">✕ Clear</button>
+    </div>
   </div>
-
-  <div id="output" class="output"></div>
+  <div class="ad"><span>Advertisement</span><div class="ad-inner">📢 336×280 Rectangle Ad</div></div>
+  <div class="card">
+    <h2>🔗 Related Tools</h2>
+    <div class="related-grid">
+      <a class="rel" href="word-counter.html">🔢 Word Counter<span class="tag">TEXT</span></a>
+      <a class="rel" href="case-converter.html">🔡 Case Converter<span class="tag">TEXT</span></a>
+      <a class="rel" href="reverse-text.html">↩️ Reverse Text<span class="tag">TEXT</span></a>
+      <a class="rel" href="whitespace-remover.html">🧹 Whitespace<span class="tag">TEXT</span></a>
+    </div>
+  </div>
 </div>
-
+<footer>
+  <a href="../index.html">Home</a><a href="#">Privacy Policy</a><a href="#">Contact</a>
+  <div style="margin-top:6px;">© 2025 FIX-KIT · 100% free · No data stored</div>
+</footer>
 <script>
-  const input = document.getElementById('input');
-  const output = document.getElementById('output');
-
-  function goBack() {
-    if (history.length > 1) {
-      history.back();
-    } else {
-      window.location.href = 'index.html';
-    }
+const VOWELS='aeiouAEIOU';
+function analyze(){
+  const t=document.getElementById('input').value;
+  if(!t.trim()){
+    ['sVowels','sCons','sLetters','sWords','sChars','sSpaces','va','ve','vi','vo','vu'].forEach(id=>document.getElementById(id).textContent='0');
+    document.getElementById('highlighted').textContent='Start typing to see highlighted vowels…';
+    return;
   }
-
-  function countVowels() {
-    const text = (input.value || '').toLowerCase();
-
-    const vowels = ['a', 'e', 'i', 'o', 'u'];
-    let count = 0;
-
-    for (let char of text) {
-      if (vowels.includes(char)) {
-        count++;
-      }
-    }
-
-    const a = (text.match(/a/g) || []).length;
-    const e = (text.match(/e/g) || []).length;
-    const i = (text.match(/i/g) || []).length;
-    const o = (text.match(/o/g) || []).length;
-    const u = (text.match(/u/g) || []).length;
-
-    output.textContent =
-      `Total Vowels: ${count}\n\n` +
-      `A: ${a}\n` +
-      `E: ${e}\n` +
-      `I: ${i}\n` +
-      `O: ${o}\n` +
-      `U: ${u}`;
+  let vowels=0,cons=0,letters=0,spaces=0;
+  const vc={a:0,e:0,i:0,o:0,u:0};
+  for(const c of t){
+    if(/[a-zA-Z]/.test(c)){
+      letters++;
+      if(VOWELS.includes(c)){vowels++;vc[c.toLowerCase()]++;}
+      else cons++;
+    } else if(c===' ')spaces++;
   }
-
-  function clearAll() {
-    input.value = '';
-    output.textContent = '';
-  }
-
-  function copyText() {
-    const text = output.textContent;
-    if (!text) return;
-
-    navigator.clipboard.writeText(text);
-
-    const btn = event.target;
-    const prev = btn.textContent;
-    btn.textContent = 'Copied!';
-    setTimeout(() => (btn.textContent = prev), 1200);
-  }
+  const words=t.trim()?t.trim().split(/\s+/).length:0;
+  document.getElementById('sVowels').textContent=vowels;
+  document.getElementById('sCons').textContent=cons;
+  document.getElementById('sLetters').textContent=letters;
+  document.getElementById('sWords').textContent=words;
+  document.getElementById('sChars').textContent=t.length;
+  document.getElementById('sSpaces').textContent=spaces;
+  Object.entries(vc).forEach(([k,v])=>document.getElementById('v'+k).textContent=v);
+  // Highlight
+  const hl=t.slice(0,2000).split('').map(c=>{
+    if(VOWELS.includes(c))return`<span class="v">${c}</span>`;
+    if(/[a-zA-Z]/.test(c))return`<span class="c">${c}</span>`;
+    return c==='<'?'&lt;':c==='>'?'&gt;':c==='&'?'&amp;':c;
+  }).join('');
+  document.getElementById('highlighted').innerHTML=hl+(t.length>2000?'…':'');
+}
+function clearAll(){document.getElementById('input').value='';analyze();}
 </script>
-
 </body>
 </html>
