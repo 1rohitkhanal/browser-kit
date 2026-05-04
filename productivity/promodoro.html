@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pomodoro Timer — Fix-Kit</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root { --bg:#fff; --bg2:#f7f7f5; --border:#e5e5e3; --text:#1a1a18; --text2:#6b6b67; }
+    [data-theme="dark"]{ --bg:#111110; --bg2:#1a1a18; --border:#2e2e2c; --text:#ededeb; --text2:#9b9b97; }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);display:flex;flex-direction:column;height:100vh}
+
+    nav{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--border)}
+    .back{padding:6px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg2);cursor:pointer}
+
+    .container{flex:1;display:grid;grid-template-columns:1fr 300px;gap:20px;padding:20px}
+    .tool{display:flex;flex-direction:column;gap:20px}
+
+    .box{border:1px solid var(--border);background:var(--bg2);padding:30px;border-radius:10px;text-align:center}
+
+    .time{font-size:50px;font-family:'Instrument Serif',serif;margin:20px 0}
+
+    .controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+    button{padding:10px 16px;border:none;border-radius:8px;background:#2563eb;color:#fff;cursor:pointer}
+    .secondary{background:#475569}
+
+    .modes{display:flex;gap:10px;justify-content:center}
+    .mode-btn{background:#e5e7eb;color:#111;padding:6px 12px;border-radius:20px;cursor:pointer}
+
+    .ad{border:1px dashed var(--border);display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--text2)}
+    .top-ad{height:90px}
+    .side-ad{height:250px}
+    .bottom-ad{height:90px}
+
+    @media(max-width:900px){.container{grid-template-columns:1fr}.side-ad{display:none}}
+  </style>
+</head>
+<body>
+
+<nav>
+  <button class="back" onclick="history.back()">← Back</button>
+  <h3>Pomodoro Timer</h3>
+  <button onclick="toggleTheme()">🌙</button>
+</nav>
+
+<div class="container">
+  <div>
+    <div class="ad top-ad">728x90 Ad</div>
+
+    <div class="tool">
+      <div class="box">
+        <div class="modes">
+          <div class="mode-btn" onclick="setMode(25)">Work</div>
+          <div class="mode-btn" onclick="setMode(5)">Break</div>
+        </div>
+
+        <div class="time" id="display">25:00</div>
+
+        <div class="controls">
+          <button onclick="start()">Start</button>
+          <button class="secondary" onclick="pause()">Pause</button>
+          <button class="secondary" onclick="reset()">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ad bottom-ad">Bottom Ad</div>
+  </div>
+
+  <div class="ad side-ad">300x250 Ad</div>
+</div>
+
+<script>
+let time = 25 * 60;
+let timer;
+let running = false;
+
+function updateDisplay(){
+  const m = Math.floor(time / 60);
+  const s = time % 60;
+  document.getElementById('display').innerText =
+    String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+
+function start(){
+  if(running) return;
+  running = true;
+  timer = setInterval(()=>{
+    if(time > 0){
+      time--;
+      updateDisplay();
+    } else {
+      clearInterval(timer);
+      running = false;
+      alert("Session done!");
+    }
+  },1000);
+}
+
+function pause(){
+  clearInterval(timer);
+  running = false;
+}
+
+function reset(){
+  pause();
+  time = 25 * 60;
+  updateDisplay();
+}
+
+function setMode(minutes){
+  pause();
+  time = minutes * 60;
+  updateDisplay();
+}
+
+function toggleTheme(){
+  const html = document.documentElement;
+  const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('fk-theme', next);
+}
+
+// load theme
+const saved = localStorage.getItem('fk-theme') || 'light';
+document.documentElement.setAttribute('data-theme', saved);
+
+updateDisplay();
+</script>
+
+</body>
+</html>
