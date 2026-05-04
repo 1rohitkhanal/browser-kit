@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Fix-Kit</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --text-main: #1f2937;
+            --text-muted: #4b5563;
+            --bg-body: #f3f4f6;
+            --bg-card: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            margin-top: 0;
+            border-bottom: 2px solid #eff6ff;
+            padding-bottom: 8px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .contact-link {
+            display: inline-block;
+            margin-top: 10px;
+            background: #eff6ff;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .contact-link:hover {
+            background: #dbeafe;
+            text-decoration: none;
+        }
+
+        @media (max-width: 640px) {
+            h1 { font-size: 2rem; }
+            .container { margin: 30px auto; }
+            .card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>About Fix-Kit</h1>
+
+    <div class="card">
+        <p>
+            <strong>Fix-Kit</strong> is a free online platform that offers simple, fast, and useful tools 
+            to solve everyday digital problems. Whether it's counting words, removing whitespace, or using productivity tools,
+            everything is designed to work instantly in your browser.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>Our Mission</h2>
+        <p>
+            Our mission is to make powerful digital tools <span class="highlight">accessible to everyone</span> — 
+            without requiring downloads, logins, or payments. We believe that useful tools should be simple, fast, and free.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>What Makes Fix-Kit Different?</h2>
+        <p>
+            ✔ No login required <br>
+            ✔ No data stored on servers <br>
+            ✔ 100% free forever <br>
+            ✔ Fast and lightweight tools <br>
+            ✔ Works globally on any device
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>Who Created Fix-Kit?</h2>
+        <p>
+            Fix-Kit was created by <strong>Rohit Khanal</strong>, a developer passionate about building useful tools 
+            and helping people simplify their digital work.
+        </p>
+        <p>
+            Connect or learn more:
+            <br><br>
+            🔗 Portfolio: <a href="https://khanalrohit.com.np" target="_blank">khanalrohit.com.np</a><br>
+            💼 LinkedIn: <a href="https://www.linkedin.com/in/rohit-khanal-17b892379/" target="_blank">View Profile</a><br>
+            💻 GitHub: <a href="https://github.com/1rohitkhanal" target="_blank">1rohitkhanal</a>
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>Future Goals</h2>
+        <p>
+            We aim to continuously add more tools, improve performance, and provide a better experience 
+            for users worldwide. Fix-Kit is constantly evolving to meet user needs.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>Contact</h2>
+        <p>
+            Have suggestions or feedback? We'd love to hear from you.
+            <br><br>
+            <a href="mailto:rohitkhanal321@gmail.com" class="contact-link">📧 rohitkhanal321@gmail.com</a>
+        </p>
+    </div>
+</div>
+
+</body>
+</html>
