@@ -1,190 +1,394 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add Text to Image</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <title>Add Text to Image Online Free — Captions & Meme Text | Fix-Kit</title>
+  <meta name="description" content="Add text, captions or meme text to JPG, PNG and WebP images for free online. No upload to server — works 100% in your browser. Fast and private.">
+  <link rel="canonical" href="https://1rohitkhanal.github.io/Fix-kit/image/text.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Add Text to Image Free Online | Fix-Kit">
+  <meta property="og:description" content="Add captions or text to images instantly in your browser. Free, no login, no server upload.">
+  <meta property="og:url" content="https://1rohitkhanal.github.io/Fix-kit/image/text.html">
+  <meta property="og:site_name" content="Fix-Kit">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Add Text to Image — Fix-Kit",
+    "url": "https://1rohitkhanal.github.io/Fix-kit/image/text.html",
+    "description": "Add text, captions or meme text to images in your browser. No login required.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "publisher": { "@type": "Organization", "name": "Fix-Kit", "url": "https://1rohitkhanal.github.io/Fix-kit/" }
+  }
+  </script>
+
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #f4f6f9;
-      margin: 0;
-      padding: 40px;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; color: #111827; min-height: 100vh; }
 
-    .page-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 24px;
-    }
+    .navbar { display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; height: 56px; background: #fff; border-bottom: 1px solid #e5e7eb; position: sticky; top: 0; z-index: 100; }
+    .navbar-brand { font-weight: 700; font-size: 1.15rem; text-decoration: none; color: #111827; letter-spacing: -0.02em; }
+    .navbar-brand span { color: #6366f1; }
+    .back-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 13px; font-weight: 500; text-decoration: none; color: #374151; background: #fff; transition: background 0.15s, border-color 0.15s; }
+    .back-btn:hover { background: #f3f4f6; border-color: #9ca3af; }
 
-    .back-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 16px;
-      border-radius: 12px;
-      border: 1px solid #ccc;
-      background: #fff;
-      color: #333;
-      text-decoration: none;
-      font-weight: 600;
-      transition: background .2s ease, transform .2s ease;
-    }
+    .ad-slot { background: #f3f4f6; border: 1px dashed #d1d5db; border-radius: 8px; text-align: center; color: #9ca3af; font-size: 12px; display: flex; align-items: center; justify-content: center; }
+    .ad-top { width: 100%; height: 90px; border-radius: 0; border-left: none; border-right: none; border-top: none; background: #fafafa; }
+    .ad-mid { height: 120px; margin: 1.5rem 0; }
+    .ad-bottom { height: 90px; margin: 1.5rem 0; }
 
-    .back-button:hover {
-      background: #eee;
-      transform: translateY(-1px);
-    }
+    .breadcrumb { padding: 10px 1.5rem; font-size: 13px; color: #6b7280; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .breadcrumb a { color: #6b7280; text-decoration: none; } .breadcrumb a:hover { color: #4f46e5; }
+    .breadcrumb-sep { color: #d1d5db; }
 
-    .tool-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
+    .page-wrap { max-width: 820px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem; }
+    .page-header { margin-bottom: 1.5rem; }
+    .page-header h1 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.03em; color: #111827; }
+    .page-header p { margin-top: 6px; color: #6b7280; font-size: 15px; line-height: 1.6; }
 
-    .panel {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 16px;
-      padding: 24px;
-      display: grid;
-      gap: 20px;
-    }
+    .tool-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .tool-card h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: #111827; }
 
-    label {
-      font-size: 13px;
-      font-weight: 600;
-      color: #555;
-      margin-bottom: 6px;
-      display: block;
-    }
+    .upload-area { border: 2px dashed #d1d5db; border-radius: 10px; padding: 2rem 1rem; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; background: #f9fafb; margin-bottom: 1.25rem; }
+    .upload-area:hover, .upload-area.drag-over { border-color: #6366f1; background: #eef2ff; }
+    .upload-area input[type="file"] { display: none; }
+    .upload-area .upload-icon { font-size: 2rem; margin-bottom: 8px; }
+    .upload-area p { color: #6b7280; font-size: 14px; }
+    .upload-area strong { color: #4f46e5; }
 
-    input, textarea {
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      font-size: 14px;
-      box-sizing: border-box;
-    }
+    .text-layers { display: flex; flex-direction: column; gap: 12px; margin-bottom: 1.25rem; }
+    .text-layer { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 10px; padding: 14px; position: relative; }
+    .layer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .layer-title { font-size: 13px; font-weight: 600; color: #374151; }
+    .remove-btn { background: none; border: none; color: #9ca3af; cursor: pointer; font-size: 16px; line-height: 1; padding: 2px 6px; border-radius: 4px; transition: color 0.15s; }
+    .remove-btn:hover { color: #ef4444; }
 
-    button {
-      background: #0078d7;
-      color: #fff;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 600;
-      transition: background .2s ease;
+    .layer-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; }
+    @media(max-width:480px){ .layer-row { grid-template-columns: 1fr; } }
+    .layer-group { display: flex; flex-direction: column; gap: 4px; }
+    .layer-group label { font-size: 12px; font-weight: 500; color: #6b7280; }
+    .layer-group input[type="text"], .layer-group select {
+      padding: 7px 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; color: #111827; outline: none;
     }
+    .layer-group input:focus, .layer-group select:focus { border-color: #6366f1; }
+    .layer-group input[type="range"] { accent-color: #6366f1; cursor: pointer; }
+    .layer-group input[type="color"] { width: 40px; height: 32px; border: 1px solid #d1d5db; border-radius: 6px; cursor: pointer; padding: 2px; }
 
-    button:hover {
-      background: #005a9e;
-    }
+    .position-grid-sm { display: grid; grid-template-columns: repeat(3,1fr); gap: 4px; margin-top: 4px; }
+    .pos-btn-sm { padding: 5px; border: 1px solid #d1d5db; border-radius: 4px; font-size: 10px; cursor: pointer; background: #fff; color: #374151; text-align: center; transition: all 0.15s; }
+    .pos-btn-sm:hover { border-color: #6366f1; color: #4f46e5; }
+    .pos-btn-sm.active { background: #6366f1; color: #fff; border-color: #6366f1; }
 
-    canvas {
-      max-width: 100%;
-      border-radius: 12px;
-      border: 1px solid #ddd;
-    }
+    .add-layer-btn { width: 100%; padding: 10px; border: 2px dashed #d1d5db; border-radius: 8px; background: transparent; color: #6b7280; font-size: 14px; cursor: pointer; transition: all 0.15s; margin-bottom: 1.25rem; }
+    .add-layer-btn:hover { border-color: #6366f1; color: #4f46e5; }
 
-    @media (max-width: 768px) {
-      .tool-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn-primary { padding: 10px 24px; background: #6366f1; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.15s; }
+    .btn-primary:hover { background: #4f46e5; }
+    .btn-secondary { padding: 10px 20px; background: #fff; color: #374151; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.15s; }
+    .btn-secondary:hover { background: #f3f4f6; }
+
+    #result-section { display: none; margin-top: 1.25rem; }
+    .result-box { border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden; background: #f9fafb; margin-bottom: 1rem; }
+    .result-box img { width: 100%; max-height: 400px; object-fit: contain; display: block; background: #f3f4f6; }
+    .savings-badge { background: #dcfce7; color: #15803d; font-size: 13px; font-weight: 600; padding: 4px 12px; border-radius: 20px; }
+
+    .how-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .how-section h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: #111827; }
+    .steps { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .steps li { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: #374151; line-height: 1.5; }
+    .step-num { background: #eef2ff; color: #4f46e5; font-weight: 700; font-size: 12px; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+
+    .related-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; }
+    .related-section h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: #111827; }
+    .related-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+    .related-link { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; text-decoration: none; color: #374151; background: #f9fafb; transition: border-color 0.15s, background 0.15s; }
+    .related-link:hover { border-color: #6366f1; background: #eef2ff; color: #4f46e5; }
+
+    .site-footer { border-top: 1px solid #e5e7eb; background: #fff; padding: 1.5rem; text-align: center; font-size: 13px; color: #9ca3af; margin-top: 2rem; }
+    .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 10px; }
+    .footer-links a { color: #6b7280; text-decoration: none; } .footer-links a:hover { color: #4f46e5; }
   </style>
 </head>
 <body>
-  <div class="page-header">
-    <a class="back-button" href="../index.html">← Back</a>
-    <h1>Add Text to Image</h1>
+
+  <nav class="navbar">
+    <a class="navbar-brand" href="https://1rohitkhanal.github.io/Fix-kit/index.html">Fix<span>-Kit</span></a>
+    <a class="back-btn" href="https://1rohitkhanal.github.io/Fix-kit/index.html">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to All Tools
+    </a>
+  </nav>
+
+  <div class="ad-slot ad-top">
+    Advertisement
+    <!-- ✏️ Paste your Google AdSense 728×90 leaderboard code here -->
   </div>
 
-  <div class="tool-grid">
-    <div class="panel">
-      <div>
-        <label for="imageUpload">Upload Image</label>
-        <input type="file" id="imageUpload" accept="image/*">
-      </div>
-
-      <div>
-        <label for="textInput">Text to Add</label>
-        <input type="text" id="textInput" placeholder="Enter text...">
-      </div>
-
-      <div>
-        <label for="colorInput">Text Color</label>
-        <input type="color" id="colorInput" value="#000000">
-      </div>
-
-      <div>
-        <label for="sizeInput">Font Size (px)</label>
-        <input type="number" id="sizeInput" value="24" min="10" max="100">
-      </div>
-
-      <button onclick="addText()">Add Text</button>
-      <button onclick="downloadImage()">Download Image</button>
-    </div>
-
-    <div class="panel">
-      <label>Preview</label>
-      <canvas id="canvas"></canvas>
-    </div>
+  <div class="breadcrumb">
+    <a href="https://1rohitkhanal.github.io/Fix-kit/index.html">Home</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="https://1rohitkhanal.github.io/Fix-kit/index.html#image">Image Tools</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>Add Text to Image</span>
   </div>
+
+  <div class="page-wrap">
+
+    <div class="page-header">
+      <h1>📝 Add Text to Image</h1>
+      <p>Add captions, meme text, or any text overlay to JPG, PNG and WebP images directly in your browser. Multiple text layers, custom fonts, colors and positions.</p>
+    </div>
+
+    <div class="ad-slot ad-mid">
+      Advertisement (300×250)
+      <!-- ✏️ Paste your Google AdSense 300×250 rectangle code here -->
+    </div>
+
+    <div class="tool-card">
+      <h2>Upload Image</h2>
+
+      <div class="upload-area" id="dropZone" onclick="document.getElementById('fileInput').click()">
+        <div class="upload-icon">📝</div>
+        <p><strong>Click to upload</strong> or drag and drop</p>
+        <p style="margin-top:4px; font-size:12px;">JPG, PNG, WebP supported · Max 10MB</p>
+        <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp">
+      </div>
+
+      <div id="textLayers" class="text-layers"></div>
+      <button class="add-layer-btn" onclick="addLayer()">+ Add Text Layer</button>
+
+      <div class="btn-row">
+        <button class="btn-primary" onclick="applyText()">📝 Apply Text</button>
+        <button class="btn-secondary" onclick="resetTool()">✕ Clear</button>
+      </div>
+
+      <div id="result-section">
+        <div class="result-box"><img id="resultImg" src="" alt="Result"></div>
+        <div class="btn-row">
+          <button class="btn-primary" onclick="downloadImage()">⬇ Download Image</button>
+          <span class="savings-badge">Text applied ✓</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="how-section">
+      <h2>How to use</h2>
+      <ol class="steps">
+        <li><span class="step-num">1</span>Click <strong>Upload Image</strong> or drag your file into the box</li>
+        <li><span class="step-num">2</span>Click <strong>Add Text Layer</strong> and type your text</li>
+        <li><span class="step-num">3</span>Customize <strong>font size, color, position</strong> and style for each layer</li>
+        <li><span class="step-num">4</span>Click <strong>Apply Text</strong>, then <strong>Download</strong> your image</li>
+      </ol>
+    </div>
+
+    <div class="ad-slot ad-bottom">
+      Advertisement (728×90)
+      <!-- ✏️ Paste your Google AdSense 728×90 leaderboard code here -->
+    </div>
+
+    <div class="related-section">
+      <h2>Related image tools</h2>
+      <div class="related-grid">
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/compressor.html">🗜️ Image Compressor</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/resizer.html">↔️ Image Resizer</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/watermark.html">💧 Add Watermark</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/crop.html">✂️ Crop Image</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/blur.html">🌫️ Blur / Pixelate</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/converter.html">🔄 Convert Image</a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="https://1rohitkhanal.github.io/Fix-kit/index.html">Home</a>
+      <a href="https://1rohitkhanal.github.io/Fix-kit/about.html">About</a>
+      <a href="https://1rohitkhanal.github.io/Fix-kit/privacy.html">Privacy Policy</a>
+      <a href="mailto:your@email.com">Contact</a>
+    </div>
+    <p>© <span id="yr"></span> Fix-Kit · No login required · No data stored on servers · 100% free forever</p>
+  </footer>
 
   <script>
-    const canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d");
-    let uploadedImage = null;
+    document.getElementById('yr').textContent = new Date().getFullYear();
 
-    document.getElementById("imageUpload").addEventListener("change", function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
+    let originalFile = null;
+    let layerCount = 0;
+    let resultBlob = null;
 
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        const img = new Image();
-        img.onload = function() {
-          canvas.width = img.width;
-          canvas.height = img.height;
-          ctx.drawImage(img, 0, 0);
-          uploadedImage = img;
-        };
-        img.src = event.target.result;
-      };
-      reader.readAsDataURL(file);
+    const dropZone = document.getElementById('dropZone');
+    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault(); dropZone.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) { originalFile = file; if (layerCount === 0) addLayer(); }
+    });
+    document.getElementById('fileInput').addEventListener('change', e => {
+      if (e.target.files[0]) { originalFile = e.target.files[0]; if (layerCount === 0) addLayer(); }
     });
 
-    function addText() {
-      if (!uploadedImage) {
-        alert("Please upload an image first.");
-        return;
-      }
+    function addLayer() {
+      layerCount++;
+      const id = 'layer-' + layerCount;
+      const positions = ['top-left','top-center','top-right','mid-left','center','mid-right','bot-left','bot-center','bot-right'];
+      const posLabels = ['↖','↑','↗','←','⊕','→','↙','↓','↘'];
+      const posHtml = positions.map((p,i) => `<button class="pos-btn-sm${i===4?' active':''}" data-layer="${id}" data-pos="${p}" onclick="setLayerPos(this,'${id}','${p}')">${posLabels[i]}</button>`).join('');
 
-      const text = document.getElementById("textInput").value;
-      const color = document.getElementById("colorInput").value;
-      const size = parseInt(document.getElementById("sizeInput").value, 10);
+      const div = document.createElement('div');
+      div.className = 'text-layer'; div.id = id;
+      div.innerHTML = `
+        <div class="layer-header">
+          <span class="layer-title">Text Layer ${layerCount}</span>
+          <button class="remove-btn" onclick="removeLayer('${id}')">✕</button>
+        </div>
+        <div class="layer-row">
+          <div class="layer-group" style="grid-column:1/-1;">
+            <label>Text</label>
+            <input type="text" id="${id}-text" placeholder="Enter your text here" value="Your text here">
+          </div>
+        </div>
+        <div class="layer-row">
+          <div class="layer-group">
+            <label>Font</label>
+            <select id="${id}-font">
+              <option value="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">System Sans</option>
+              <option value="Impact,Charcoal,sans-serif">Impact (Meme)</option>
+              <option value="Georgia,serif">Georgia</option>
+              <option value="'Courier New',monospace">Courier New</option>
+              <option value="Arial,sans-serif">Arial</option>
+            </select>
+          </div>
+          <div class="layer-group">
+            <label>Style</label>
+            <select id="${id}-style">
+              <option value="bold">Bold</option>
+              <option value="normal">Normal</option>
+              <option value="italic">Italic</option>
+              <option value="bold italic">Bold Italic</option>
+            </select>
+          </div>
+        </div>
+        <div class="layer-row">
+          <div class="layer-group">
+            <label>Size: <span id="${id}-size-val">48px</span></label>
+            <input type="range" id="${id}-size" min="10" max="200" value="48" oninput="document.getElementById('${id}-size-val').textContent=this.value+'px'">
+          </div>
+          <div class="layer-group">
+            <label>Color</label>
+            <input type="color" id="${id}-color" value="#ffffff">
+          </div>
+        </div>
+        <div class="layer-row">
+          <div class="layer-group">
+            <label>Outline Color</label>
+            <input type="color" id="${id}-outline" value="#000000">
+          </div>
+          <div class="layer-group">
+            <label>Outline Size: <span id="${id}-osize-val">2px</span></label>
+            <input type="range" id="${id}-osize" min="0" max="20" value="2" oninput="document.getElementById('${id}-osize-val').textContent=this.value+'px'">
+          </div>
+        </div>
+        <div class="layer-group">
+          <label>Position</label>
+          <div class="position-grid-sm" id="${id}-pos">${posHtml}</div>
+          <input type="hidden" id="${id}-posval" value="center">
+        </div>`;
+      document.getElementById('textLayers').appendChild(div);
+    }
 
-      // Redraw image first
-      ctx.drawImage(uploadedImage, 0, 0);
+    function removeLayer(id) {
+      document.getElementById(id).remove();
+    }
 
-      // Add text
-      ctx.fillStyle = color;
-      ctx.font = `${size}px Inter, sans-serif`;
-      ctx.fillText(text, 20, size + 20); // position: top-left
+    function setLayerPos(btn, layerId, pos) {
+      document.getElementById(layerId).querySelectorAll('.pos-btn-sm').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(layerId + '-posval').value = pos;
+    }
+
+    function getTextXY(pos, canvas, lineW) {
+      const W = canvas.width, H = canvas.height, pad = 30;
+      const map = {
+        'top-left': [pad, pad], 'top-center': [W/2, pad], 'top-right': [W - pad, pad],
+        'mid-left': [pad, H/2], 'center': [W/2, H/2], 'mid-right': [W - pad, H/2],
+        'bot-left': [pad, H - pad], 'bot-center': [W/2, H - pad], 'bot-right': [W - pad, H - pad]
+      };
+      return map[pos] || [W/2, H/2];
+    }
+
+    function applyText() {
+      if (!originalFile) { alert('Please upload an image first.'); return; }
+      const layers = document.querySelectorAll('.text-layer');
+      if (layers.length === 0) { alert('Please add at least one text layer.'); return; }
+
+      const reader = new FileReader();
+      reader.onload = ev => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.naturalWidth; canvas.height = img.naturalHeight;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+
+          layers.forEach(layer => {
+            const id = layer.id;
+            const text = document.getElementById(id + '-text').value || '';
+            if (!text) return;
+            const font = document.getElementById(id + '-font').value;
+            const style = document.getElementById(id + '-style').value;
+            const size = parseInt(document.getElementById(id + '-size').value);
+            const color = document.getElementById(id + '-color').value;
+            const outline = document.getElementById(id + '-outline').value;
+            const outlineSize = parseInt(document.getElementById(id + '-osize').value);
+            const pos = document.getElementById(id + '-posval').value;
+
+            ctx.font = `${style} ${size}px ${font}`;
+            ctx.textBaseline = pos.includes('top') ? 'top' : pos.includes('bot') ? 'bottom' : 'middle';
+            ctx.textAlign = pos.includes('left') ? 'left' : pos.includes('right') ? 'right' : 'center';
+
+            const [x, y] = getTextXY(pos, canvas);
+
+            if (outlineSize > 0) {
+              ctx.strokeStyle = outline;
+              ctx.lineWidth = outlineSize * 2;
+              ctx.lineJoin = 'round';
+              ctx.strokeText(text, x, y);
+            }
+            ctx.fillStyle = color;
+            ctx.fillText(text, x, y);
+          });
+
+          canvas.toBlob(blob => {
+            resultBlob = blob;
+            document.getElementById('resultImg').src = URL.createObjectURL(blob);
+            document.getElementById('result-section').style.display = 'block';
+          }, originalFile.type || 'image/jpeg', 0.95);
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(originalFile);
     }
 
     function downloadImage() {
-      const link = document.createElement("a");
-      link.download = "image-with-text.png";
-      link.href = canvas.toDataURL("image/png");
-      link.click();
+      if (!resultBlob) return;
+      const ext = originalFile.type === 'image/png' ? 'png' : originalFile.type === 'image/webp' ? 'webp' : 'jpg';
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(resultBlob);
+      a.download = `text-image.${ext}`;
+      a.click();
+    }
+
+    function resetTool() {
+      originalFile = null; resultBlob = null; layerCount = 0;
+      document.getElementById('fileInput').value = '';
+      document.getElementById('textLayers').innerHTML = '';
+      document.getElementById('result-section').style.display = 'none';
     }
   </script>
 </body>
