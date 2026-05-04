@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bio Generator — Instagram, Twitter & TikTok Bio Creator | ToolSite</title>
+<meta name="description" content="Generate creative bios for Instagram, Twitter, TikTok, and LinkedIn. Free AI-powered bio generator — create the perfect profile bio instantly.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#080b14;--surface:#0f1220;--surface2:#161b2e;--border:#222840;--accent:#8b5cf6;--accent2:#ec4899;--text:#f0f4ff;--muted:#6b7a9e;--success:#10b981}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:1px solid var(--border);background:var(--surface)}
+  .logo{font-size:1.4rem;font-weight:800;background:linear-gradient(135deg,#8b5cf6,#ec4899);-fix-kit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
+  nav a{color:var(--muted);text-decoration:none;font-size:0.85rem}nav a:hover{color:var(--text)}
+  .ad-banner{background:var(--surface);border:1px dashed var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.75rem;margin:1rem auto}
+  .ad-top{width:100%;max-width:728px;height:90px}.ad-bottom{width:100%;max-width:728px;height:90px}.ad-side{width:300px;height:250px;flex-shrink:0}
+  .container{max-width:900px;margin:0 auto;padding:2rem}
+  .tool-header{text-align:center;margin-bottom:2.5rem}
+  .tool-header h1{font-size:2.2rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-fix-kit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem}
+  .tool-header p{color:var(--muted);font-size:1rem}
+  .main-layout{display:flex;gap:2rem}.tool-area{flex:1}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem}
+  .section-label{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:0.75rem;display:block}
+  input[type=text]{width:100%;background:var(--surface2);border:2px solid var(--border);border-radius:10px;padding:0.8rem 1rem;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.92rem;outline:none;transition:border-color 0.2s;margin-bottom:0.75rem}
+  input:focus{border-color:var(--accent)}
+  select{background:var(--surface2);border:1.5px solid var(--border);color:var(--text);padding:7px 12px;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.85rem;outline:none}
+  .platform-chips{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem}
+  .pchip{padding:6px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--surface2);color:var(--muted);font-size:0.8rem;cursor:pointer;transition:all 0.2s;font-weight:600}
+  .pchip.active{border-color:var(--accent);background:rgba(139,92,246,0.15);color:var(--accent)}
+  .gen-btn{width:100%;padding:1rem;font-size:1rem;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;border:none;border-radius:12px;cursor:pointer;transition:all 0.25s;margin-top:0.5rem}
+  .gen-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(139,92,246,0.4)}
+  .bio-card{background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;padding:1.2rem;margin-bottom:0.75rem;position:relative;transition:border-color 0.2s;cursor:pointer}
+  .bio-card:hover{border-color:var(--accent)}
+  .bio-text{font-size:0.95rem;line-height:1.7;margin-bottom:0.5rem;white-space:pre-line}
+  .bio-meta{display:flex;gap:1rem;font-size:0.75rem;color:var(--muted)}
+  .copy-bio{position:absolute;top:0.75rem;right:0.75rem;background:var(--surface);border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:3px 10px;font-size:0.73rem;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s}
+  .copy-bio:hover{border-color:var(--accent);color:var(--accent)}
+  .opt-row{display:flex;justify-content:space-between;align-items:center;padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.88rem}
+  .opt-row:last-child{border-bottom:none}
+  .related{margin-top:2rem}.related h2{font-size:0.8rem;font-weight:700;margin-bottom:1rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+  .related-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.75rem}
+  .related-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1rem;text-decoration:none;color:var(--text);transition:all 0.2s;display:flex;align-items:center;gap:0.6rem;font-size:0.88rem}
+  .related-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+  footer{border-top:1px solid var(--border);background:var(--surface);padding:1.5rem 2rem;margin-top:3rem;text-align:center;color:var(--muted);font-size:0.8rem}
+  footer a{color:var(--muted);text-decoration:none;margin:0 0.5rem}footer a:hover{color:var(--text)}
+  @media(max-width:700px){.main-layout{flex-direction:column}.ad-side{width:100%;height:100px}.related-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav><a class="logo" href="../index.html">ToolSite</a><a href="../index.html">← All Tools</a></nav>
+
+<div class="container">
+  <div style="display:flex;justify-content:center"><div class="ad-banner ad-top">Advertisement (728×90)</div></div>
+
+  <div class="tool-header">
+    <h1>✍️ Bio Generator</h1>
+    <p>Create an engaging profile bio for any social platform. Tell the world who you are — in style.</p>
+  </div>
+
+  <div class="main-layout">
+    <div class="tool-area">
+      <div class="card">
+        <span class="section-label">About You</span>
+        <input type="text" id="nameInput" placeholder="Your name or username">
+        <input type="text" id="professionInput" placeholder="Your profession or role (e.g. Photographer, CEO, Student)">
+        <input type="text" id="interestInput" placeholder="Your interests or hobbies (e.g. travel, coffee, coding)">
+        <input type="text" id="locationInput" placeholder="Your location (optional, e.g. NYC | Nepal)">
+        <input type="text" id="ctaInput" placeholder="Call to action or link (e.g. DM for collabs, link in bio)">
+
+        <div class="opt-row">
+          <span>Platform</span>
+          <select id="platform">
+            <option value="instagram">Instagram (150 chars)</option>
+            <option value="twitter">Twitter / X (160 chars)</option>
+            <option value="tiktok">TikTok (80 chars)</option>
+            <option value="linkedin">LinkedIn (220 chars)</option>
+          </select>
+        </div>
+        <div class="opt-row">
+          <span>Tone</span>
+          <select id="tone">
+            <option value="casual">Casual & fun</option>
+            <option value="professional">Professional</option>
+            <option value="creative">Creative & quirky</option>
+            <option value="minimalist">Minimalist</option>
+            <option value="inspiring">Inspiring</option>
+          </select>
+        </div>
+        <div class="opt-row">
+          <span>Include emojis</span>
+          <select id="useEmoji"><option value="yes">Yes</option><option value="no">No</option></select>
+        </div>
+
+        <button class="gen-btn" onclick="generateBios()">✨ Generate Bios</button>
+      </div>
+
+      <div id="biosSection" style="display:none">
+        <div style="font-size:0.85rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.75rem">5 Bio Options — Click to Copy</div>
+        <div id="biosContainer"></div>
+      </div>
+    </div>
+
+    <div class="ad-banner ad-side">Ad (300×250)</div>
+  </div>
+
+  <div style="display:flex;justify-content:center"><div class="ad-banner ad-bottom">Advertisement (728×90)</div></div>
+
+  <div class="related">
+    <h2>Related Social Media Tools</h2>
+    <div class="related-grid">
+      <a class="related-card" href="hashtag-generator.html">#️⃣ Hashtag Generator</a>
+      <a class="related-card" href="emoji-picker.html">😀 Emoji Picker</a>
+      <a class="related-card" href="fancy-font-generator.html">𝓕 Fancy Font Generator</a>
+      <a class="related-card" href="youtube-thumbnail-downloader.html">▶️ YouTube Thumbnail Downloader</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div style="margin-bottom:0.5rem"><a href="../index.html">Home</a> | <a href="../index.html">All Tools</a> | <a href="#">About</a> | <a href="#">Privacy Policy</a></div>
+  © 2025 ToolSite — No login required. No data stored on servers.
+</footer>
+
+<script>
+const BIO_TEMPLATES = {
+  casual: [
+    "{emoji_work} {profession} by day, {interest} lover by night 🌙\n{location_line}{cta}",
+    "hey i'm {name}! 👋 {profession} who's obsessed with {interest}\n{location_line}✨ {cta}",
+    "just a {profession} who really loves {interest} ☕\n{location_line}{cta}",
+    "{interest} addict 🎯 | {profession} 💼 | based in {location}\n{cta}",
+    "✌️ {name} | {profession} | {interest} enthusiast\n{location_line}{cta}"
+  ],
+  professional: [
+    "{profession} | Passionate about {interest}\n{location_line}📩 {cta}",
+    "{name} — {profession}\nSpecializing in {interest} | {location}\n🔗 {cta}",
+    "Experienced {profession} with a focus on {interest}.\n{location_line}Let's connect: {cta}",
+    "{profession} based in {location}\nHelping people through {interest}\n{cta}",
+    "| {profession} | {interest} | {location} |\n{cta}"
+  ],
+  creative: [
+    "making things with {interest} ✨ | {profession} by trade 🛠️\n{location_line}🔮 {cta}",
+    "{name} ≠ ordinary 🌀\n{profession} | {interest} collector\n{location_line}{cta}",
+    "☁️ dreamer. 🎨 {profession}. {interest} is my language.\n{location_line}{cta}",
+    "part {profession}, part {interest} addict, 100% chaotic good 🌈\n{location_line}{cta}",
+    "if {interest} was a person, it'd be me 🔥\n{profession} | {location}\n{cta}"
+  ],
+  minimalist: [
+    "{profession}\n{interest}\n{location}",
+    "{name}. {profession}. {interest}.\n{cta}",
+    "{location} · {profession} · {interest}",
+    "{profession}\n{location_line}{cta}",
+    "→ {profession} | {interest}"
+  ],
+  inspiring: [
+    "Turning {interest} into impact 🚀 | {profession}\n{location_line}✨ {cta}",
+    "Believe in {interest} 💫 | {profession} on a mission\n{location_line}{cta}",
+    "Living proof that {interest} changes lives ❤️\n{profession} | {location}\n{cta}",
+    "Chasing dreams through {interest} 🌟 | {profession}\n{location_line}{cta}",
+    "Building something beautiful with {interest} ✨\n{profession} | {location}\n{cta}"
+  ]
+
+  funny: [
+  "professional overthinker 🤯 | {profession}\nloves {interest} more than sleep 😴\n{location_line}{cta}",
+  "{name} here 👀 probably doing {interest} instead of working\n{profession} by title tho\n{location_line}{cta}",
+  "i do {profession}... sometimes 😅\nmostly just {interest}\n{location_line}{cta}",
+  "{interest} > everything else 🤷‍♂️\n{profession} (on paper)\n{location_line}{cta}",
+  "trying to be a {profession} but keep getting distracted by {interest} 😂\n{location_line}{cta}"
+],
+
+genz: [
+  "{profession} era 💼 | {interest} era 🎯\n{location_line}no thoughts just vibes ✨ {cta}",
+  "lowkey obsessed with {interest} ngl 😮‍💨\n{profession} things happening too\n{location_line}{cta}",
+  "{name} just vibing ✌️\n{profession} + {interest} combo\n{location_line}{cta}",
+  "{interest} hits different 🔥 | {profession}\n{location_line}{cta}",
+  "main character energy 🎬\n{profession} | {interest}\n{location_line}{cta}"
+],
+
+techy: [
+  "{profession} | building with {interest}\n{location_line}⚡ {cta}",
+  "code. create. repeat. 💻\n{profession} into {interest}\n{location_line}{cta}",
+  "{interest}-driven {profession}\n{location_line}🚀 {cta}",
+  "debugging life & doing {profession}\nobsessed with {interest}\n{location_line}{cta}",
+  "{profession} crafting solutions with {interest}\n{location_line}{cta}"
+],
+
+aesthetic: [
+  "soft life 🌿 | {profession}\n{interest} + calm vibes\n{location_line}{cta}",
+  "{interest} & sunsets 🌅\n{profession}\n{location_line}{cta}",
+  "minimal chaos, maximum {interest} ✨\n{profession}\n{location_line}{cta}",
+  "golden hour + {interest} 🌞\n{profession}\n{location_line}{cta}",
+  "just vibes & {interest} 🎶\n{profession}\n{location_line}{cta}"
+],
+
+bold: [
+  "I AM {profession} ⚡\nI LIVE FOR {interest}\n{location_line}{cta}",
+  "{interest} is not a hobby, it's a lifestyle 🔥\n{profession}\n{location_line}{cta}",
+  "{profession} with a vision 👁️\n{interest} is the fuel\n{location_line}{cta}",
+  "no limits 🚫 | {profession}\nall in on {interest}\n{location_line}{cta}",
+  "born to do {interest} 💥\nforced to be {profession}\n{location_line}{cta}"
+],
+
+mysterious: [
+  "unknown but evolving 🌓\n{profession}? maybe.\n{interest}? always.\n{location_line}{cta}",
+  "not everything needs explaining...\n{profession} | {interest}\n{location_line}{cta}",
+  "just passing through 🌌\n{profession} & {interest}\n{location_line}{cta}",
+  "{name} is just a story being written ✍️\n{profession} | {interest}\n{location_line}{cta}",
+  "seen but not known 👀\n{profession}\n{location_line}{cta}"
+],
+
+entrepreneur: [
+  "building with {interest} 💰 | {profession}\n{location_line}📈 {cta}",
+  "{profession} | turning {interest} into income\n{location_line}{cta}",
+  "hustle + {interest} = results 🚀\n{profession}\n{location_line}{cta}",
+  "{interest}-driven mindset 💡\n{profession} | {location}\n{cta}",
+  "creating value through {interest}\n{profession}\n{location_line}{cta}"
+]
+};
+
+const EMOJIS_WORK = ['💼','🚀','⚡','🎯','🌟','💡','🔥','✨','🛠️','🎨'];
+const EMOJIS_INTEREST = ['❤️','🌿','📸','🎵','✈️','🍕','🎮','📚','🌊','🏔️'];
+
+function generateBios() {
+  const name = document.getElementById('nameInput').value || 'Your Name';
+  const profession = document.getElementById('professionInput').value || 'Content Creator';
+  const interest = document.getElementById('interestInput').value || 'life';
+  const location = document.getElementById('locationInput').value || 'Worldwide';
+  const cta = document.getElementById('ctaInput').value || 'DM for collabs';
+  const tone = document.getElementById('tone').value;
+  const useEmoji = document.getElementById('useEmoji').value === 'yes';
+  const platform = document.getElementById('platform').value;
+  const limits = { instagram: 150, twitter: 160, tiktok: 80, linkedin: 220 };
+  const limit = limits[platform];
+
+  const templates = BIO_TEMPLATES[tone];
+  const emoji_work = useEmoji ? EMOJIS_WORK[Math.floor(Math.random() * EMOJIS_WORK.length)] : '';
+  const location_line = location ? `📍 ${location}\n` : '';
+
+  const bios = templates.map(t => {
+    return t
+      .replace(/{name}/g, name)
+      .replace(/{profession}/g, profession)
+      .replace(/{interest}/g, interest)
+      .replace(/{location}/g, location || 'Worldwide')
+      .replace(/{location_line}/g, location_line)
+      .replace(/{cta}/g, cta)
+      .replace(/{emoji_work}/g, emoji_work)
+      .trim();
+  });
+
+  const container = document.getElementById('biosContainer');
+  container.innerHTML = bios.map((bio, i) => {
+    const chars = bio.length;
+    const over = chars > limit;
+    return `
+      <div class="bio-card" onclick="copyBio(this, ${JSON.stringify(bio)})">
+        <button class="copy-bio" onclick="event.stopPropagation();copyBio(null, ${JSON.stringify(bio)}, this)">Copy</button>
+        <div class="bio-text">${bio.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+        <div class="bio-meta">
+          <span style="color:${over ? '#ef4444' : 'var(--success)'}">${chars}/${limit} chars ${over ? '⚠️ too long' : '✓'}</span>
+          <span>Option ${i + 1}</span>
+        </div>
+      </div>`;
+  }).join('');
+
+  document.getElementById('biosSection').style.display = 'block';
+}
+
+function copyBio(card, bio, btn) {
+  navigator.clipboard.writeText(bio);
+  if (btn) { btn.textContent = '✓'; btn.style.color = '#10b981'; setTimeout(() => { btn.textContent = 'Copy'; btn.style.color = ''; }, 1500); }
+}
+</script>
+</body>
+</html>
