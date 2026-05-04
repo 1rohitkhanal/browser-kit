@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Crop Tool</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 40px;
+    }
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      background: #fff;
+      color: #333;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background .2s ease, transform .2s ease;
+    }
+
+    .back-button:hover {
+      background: #eee;
+      transform: translateY(-1px);
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .panel {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 16px;
+      padding: 24px;
+      display: grid;
+      gap: 20px;
+    }
+
+    label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    input[type="file"] {
+      width: 100%;
+    }
+
+    button {
+      background: #0078d7;
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background .2s ease;
+    }
+
+    button:hover {
+      background: #005a9e;
+    }
+
+    canvas {
+      max-width: 100%;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      cursor: crosshair;
+    }
+
+    @media (max-width: 768px) {
+      .tool-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-header">
+    <a class="back-button" href="../index.html">← Back</a>
+    <h1>Image Crop Tool</h1>
+  </div>
+
+  <div class="tool-grid">
+    <div class="panel">
+      <div>
+        <label for="imageUpload">Upload Image</label>
+        <input type="file" id="imageUpload" accept="image/*">
+      </div>
+
+      <button onclick="downloadCropped()">Download Cropped Image</button>
+    </div>
+
+    <div class="panel">
+      <label>Preview & Crop</label>
+      <canvas id="canvas"></canvas>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    let uploadedImage = null;
+    let startX, startY, endX, endY, isDragging = false;
+
+    document.getElementById("imageUpload").addEventListener("change", function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const img = new Image();
+        img.onload = function() {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+          uploadedImage = img;
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    canvas.addEventListener("mousedown", e => {
+      if (!uploadedImage) return;
+      const rect = canvas.getBoundingClientRect();
+      startX = e.clientX - rect.left;
+      startY = e.clientY - rect.top;
+      isDragging = true;
+    });
+
+    canvas.addEventListener("mousemove", e => {
+      if (!isDragging) return;
+      const rect = canvas.getBoundingClientRect();
+      endX = e.clientX - rect.left;
+      endY = e.clientY - rect.top;
+
+      // Redraw image
+      ctx.drawImage(uploadedImage, 0, 0);
+
+      // Draw selection rectangle
+      ctx.strokeStyle = "red";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(startX, startY, endX - startX, endY - startY);
+    });
+
+    canvas.addEventListener("mouseup", () => {
+      isDragging = false;
+    });
+
+    function downloadCropped() {
+      if (!uploadedImage || startX === undefined || endX === undefined) {
+        alert("Please select a crop area first.");
+        return;
+      }
+
+      const width = endX - startX;
+      const height = endY - startY;
+
+      if (width <= 0 || height <= 0) {
+        alert("Invalid crop area.");
+        return;
+      }
+
+      const cropCanvas = document.createElement("canvas");
+      const cropCtx = cropCanvas.getContext("2d");
+      cropCanvas.width = width;
+      cropCanvas.height = height;
+
+      cropCtx.drawImage(uploadedImage, startX, startY, width, height, 0, 0, width, height);
+
+      const link = document.createElement("a");
+      link.download = "cropped-image.png";
+      link.href = cropCanvas.toDataURL("image/png");
+      link.click();
+    }
+  </script>
+</body>
+</html>
