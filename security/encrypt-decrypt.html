@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encrypt / Decrypt Text Online — AES Encryption Tool | ToolSite</title>
+<meta name="description" content="Encrypt and decrypt text using AES encryption online. Secure, client-side encryption — your data never leaves your browser. Free tool.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0a0f;--surface:#13131a;--surface2:#1c1c28;--border:#2a2a3d;--accent:#7c3aed;--accent2:#06b6d4;--text:#e2e8f0;--muted:#64748b;--success:#10b981;--danger:#ef4444}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:1px solid var(--border);background:var(--surface)}
+  .logo{font-size:1.4rem;font-weight:800;color:var(--accent);text-decoration:none}.logo span{color:var(--accent2)}
+  nav a{color:var(--muted);text-decoration:none;font-size:0.85rem}nav a:hover{color:var(--text)}
+  .ad-banner{background:var(--surface);border:1px dashed var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.75rem;margin:1rem auto}
+  .ad-top{width:100%;max-width:728px;height:90px}.ad-bottom{width:100%;max-width:728px;height:90px}.ad-side{width:300px;height:250px;flex-shrink:0}
+  .container{max-width:900px;margin:0 auto;padding:2rem}
+  .tool-header{text-align:center;margin-bottom:2.5rem}
+  .tool-header h1{font-size:2.2rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-fix-kit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem}
+  .tool-header p{color:var(--muted);font-size:1rem}
+  .main-layout{display:flex;gap:2rem}.tool-area{flex:1}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem}
+  textarea{width:100%;background:var(--surface2);border:2px solid var(--border);border-radius:12px;padding:1rem;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:0.92rem;resize:vertical;outline:none;transition:border-color 0.2s}
+  textarea:focus{border-color:var(--accent)}
+  input[type=text],input[type=password]{width:100%;background:var(--surface2);border:2px solid var(--border);border-radius:10px;padding:0.75rem 1rem;color:var(--text);font-family:'Syne',sans-serif;font-size:0.95rem;outline:none;transition:border-color 0.2s}
+  input:focus{border-color:var(--accent)}
+  .section-label{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:0.5rem;display:block}
+  .mode-tabs{display:flex;gap:0.5rem;margin-bottom:1.5rem}
+  .tab{flex:1;padding:0.75rem;text-align:center;border-radius:10px;border:2px solid var(--border);cursor:pointer;font-weight:700;font-size:0.9rem;transition:all 0.2s}
+  .tab.encrypt{border-color:var(--accent);color:var(--accent);background:rgba(124,58,237,0.1)}
+  .tab.encrypt.active{background:var(--accent);color:white}
+  .tab.decrypt{border-color:var(--accent2);color:var(--accent2);background:rgba(6,182,212,0.1)}
+  .tab.decrypt.active{background:var(--accent2);color:#0a0a0f}
+  .pw-wrap{position:relative}
+  .pw-wrap input{padding-right:3rem}
+  .show-pw{position:absolute;right:0.75rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem}
+  .algo-select{width:100%;background:var(--surface2);border:2px solid var(--border);border-radius:10px;padding:0.75rem 1rem;color:var(--text);font-family:'Syne',sans-serif;font-size:0.9rem;outline:none}
+  .action-btn{width:100%;padding:1rem;font-size:1rem;font-weight:700;font-family:'Syne',sans-serif;border:none;border-radius:12px;cursor:pointer;transition:all 0.25s;margin-top:1rem}
+  .encrypt-btn{background:linear-gradient(135deg,var(--accent),#4f46e5);color:white}
+  .decrypt-btn{background:linear-gradient(135deg,var(--accent2),#0891b2);color:#0a0a0f}
+  .action-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(124,58,237,0.3)}
+  .result-box{background:var(--surface2);border:2px solid var(--border);border-radius:12px;padding:1rem;font-family:'JetBrains Mono',monospace;font-size:0.85rem;word-break:break-all;min-height:80px;position:relative;margin-top:0.5rem}
+  .result-box.success{border-color:var(--success)}
+  .result-box.error{border-color:var(--danger);color:var(--danger)}
+  .copy-result{position:absolute;top:0.5rem;right:0.5rem;background:var(--surface);border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:3px 10px;font-size:0.75rem;cursor:pointer;font-family:'Syne',sans-serif}
+  .copy-result:hover{border-color:var(--accent);color:var(--accent)}
+  .info-box{background:rgba(6,182,212,0.05);border:1px solid rgba(6,182,212,0.2);border-radius:10px;padding:0.85rem 1rem;font-size:0.82rem;color:var(--muted);margin-top:1rem;line-height:1.6}
+  .info-box strong{color:var(--accent2)}
+  .related{margin-top:2rem}.related h2{font-size:0.8rem;font-weight:700;margin-bottom:1rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+  .related-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.75rem}
+  .related-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1rem;text-decoration:none;color:var(--text);transition:all 0.2s;display:flex;align-items:center;gap:0.6rem;font-size:0.88rem}
+  .related-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+  footer{border-top:1px solid var(--border);background:var(--surface);padding:1.5rem 2rem;margin-top:3rem;text-align:center;color:var(--muted);font-size:0.8rem}
+  footer a{color:var(--muted);text-decoration:none;margin:0 0.5rem}footer a:hover{color:var(--text)}
+  @media(max-width:700px){.main-layout{flex-direction:column}.ad-side{width:100%;height:100px}.related-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav><a class="logo" href="../index.html">Tool<span>Site</span></a><a href="../index.html">← All Tools</a></nav>
+
+<div class="container">
+  <div style="display:flex;justify-content:center"><div class="ad-banner ad-top">Advertisement (728×90)</div></div>
+
+  <div class="tool-header">
+    <h1>🔐 Encrypt / Decrypt Text</h1>
+    <p>Secure AES encryption in your browser. Your data never leaves your device.</p>
+  </div>
+
+  <div class="main-layout">
+    <div class="tool-area">
+      <div class="card">
+        <div class="mode-tabs">
+          <div class="tab encrypt active" id="tabEncrypt" onclick="setMode('encrypt')">🔒 Encrypt</div>
+          <div class="tab decrypt" id="tabDecrypt" onclick="setMode('decrypt')">🔓 Decrypt</div>
+        </div>
+
+        <div style="margin-bottom:1rem">
+          <span class="section-label" id="inputLabel">Plain Text to Encrypt</span>
+          <textarea id="inputText" placeholder="Enter the text you want to encrypt…" rows="5"></textarea>
+        </div>
+
+        <div style="margin-bottom:1rem">
+          <span class="section-label">Secret Key / Password</span>
+          <div class="pw-wrap">
+            <input type="password" id="secretKey" placeholder="Enter your secret key…">
+            <button class="show-pw" onclick="toggleKey()" id="keyVisBtn">👁️</button>
+          </div>
+        </div>
+
+        <div style="margin-bottom:1rem">
+          <span class="section-label">Algorithm</span>
+          <select class="algo-select" id="algorithm">
+            <option value="AES">AES-256 (Recommended)</option>
+            <option value="TripleDES">Triple DES</option>
+            <option value="Rabbit">Rabbit</option>
+            <option value="RC4">RC4</option>
+          </select>
+        </div>
+
+        <button class="action-btn encrypt-btn" id="actionBtn" onclick="processText()">🔒 Encrypt Text</button>
+      </div>
+
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem">
+          <span class="section-label" id="outputLabel" style="margin:0">Encrypted Output</span>
+          <button class="copy-result" onclick="copyOutput()">Copy</button>
+        </div>
+        <div class="result-box" id="outputBox">Your encrypted/decrypted result will appear here…</div>
+
+        <div class="info-box" id="infoBox">
+          <strong>AES-256</strong> is the industry standard for symmetric encryption. It uses your key to scramble the text so only someone with the same key can read it. This tool runs 100% in your browser — <strong>no data is sent to any server</strong>.
+        </div>
+      </div>
+    </div>
+
+    <div class="ad-banner ad-side">Ad (300×250)</div>
+  </div>
+
+  <div style="display:flex;justify-content:center"><div class="ad-banner ad-bottom">Advertisement (728×90)</div></div>
+
+  <div class="related">
+    <h2>Related Security Tools</h2>
+    <div class="related-grid">
+      <a class="related-card" href="password-generator.html">🔑 Password Generator</a>
+      <a class="related-card" href="hash-generator.html"># Hash Generator</a>
+      <a class="related-card" href="password-checker.html">🔍 Password Strength Checker</a>
+      <a class="related-card" href="token-generator.html">🎲 Random Token Generator</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div style="margin-bottom:0.5rem"><a href="../index.html">Home</a> | <a href="../index.html">All Tools</a> | <a href="#">About</a> | <a href="#">Privacy Policy</a></div>
+  © 2025 ToolSite — No login required. No data stored on servers.
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script>
+let mode = 'encrypt';
+
+function setMode(m) {
+  mode = m;
+  document.getElementById('tabEncrypt').classList.toggle('active', m === 'encrypt');
+  document.getElementById('tabDecrypt').classList.toggle('active', m === 'decrypt');
+  document.getElementById('actionBtn').textContent = m === 'encrypt' ? '🔒 Encrypt Text' : '🔓 Decrypt Text';
+  document.getElementById('actionBtn').className = 'action-btn ' + (m === 'encrypt' ? 'encrypt-btn' : 'decrypt-btn');
+  document.getElementById('inputLabel').textContent = m === 'encrypt' ? 'Plain Text to Encrypt' : 'Encrypted Text to Decrypt';
+  document.getElementById('inputText').placeholder = m === 'encrypt' ? 'Enter the text you want to encrypt…' : 'Paste the encrypted text here…';
+  document.getElementById('outputLabel').textContent = m === 'encrypt' ? 'Encrypted Output' : 'Decrypted Output';
+  document.getElementById('outputBox').textContent = 'Your result will appear here…';
+  document.getElementById('outputBox').className = 'result-box';
+}
+
+function toggleKey() {
+  const inp = document.getElementById('secretKey');
+  const btn = document.getElementById('keyVisBtn');
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+  btn.textContent = inp.type === 'password' ? '👁️' : '🙈';
+}
+
+function processText() {
+  const text = document.getElementById('inputText').value.trim();
+  const key = document.getElementById('secretKey').value;
+  const algo = document.getElementById('algorithm').value;
+  const outBox = document.getElementById('outputBox');
+
+  if (!text) { outBox.textContent = 'Please enter text to process.'; outBox.className = 'result-box error'; return; }
+  if (!key) { outBox.textContent = 'Please enter a secret key.'; outBox.className = 'result-box error'; return; }
+
+  try {
+    let result = '';
+    if (mode === 'encrypt') {
+      result = CryptoJS[algo].encrypt(text, key).toString();
+      outBox.className = 'result-box success';
+    } else {
+      const bytes = CryptoJS[algo].decrypt(text, key);
+      result = bytes.toString(CryptoJS.enc.Utf8);
+      if (!result) throw new Error('Decryption failed — wrong key or corrupted data.');
+      outBox.className = 'result-box success';
+    }
+    outBox.textContent = result;
+  } catch (e) {
+    outBox.textContent = '❌ ' + (e.message || 'Operation failed. Check your key and input.');
+    outBox.className = 'result-box error';
+  }
+}
+
+function copyOutput() {
+  const text = document.getElementById('outputBox').textContent;
+  navigator.clipboard.writeText(text);
+}
+</script>
+</body>
+</html>
