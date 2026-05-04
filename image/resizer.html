@@ -1,193 +1,364 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image Resizer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <title>Image Resizer Online Free — Resize Images to Any Size | Fix-Kit</title>
+  <meta name="description" content="Resize JPG, PNG and WebP images for free online. Set custom width and height. No upload to server — works 100% in your browser. Fast and private.">
+  <link rel="canonical" href="https://1rohitkhanal.github.io/Fix-kit/image/resizer.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Image Resizer Free Online | Fix-Kit">
+  <meta property="og:description" content="Resize images instantly in your browser. Free, no login, no server upload.">
+  <meta property="og:url" content="https://1rohitkhanal.github.io/Fix-kit/image/resizer.html">
+  <meta property="og:site_name" content="Fix-Kit">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Image Resizer Free Online | Fix-Kit">
+  <meta name="twitter:description" content="Resize JPG, PNG and WebP images for free. No login, no upload to server.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Image Resizer — Fix-Kit",
+    "url": "https://1rohitkhanal.github.io/Fix-kit/image/resizer.html",
+    "description": "Resize JPG, PNG and WebP images for free in your browser. No login required.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "publisher": { "@type": "Organization", "name": "Fix-Kit", "url": "https://1rohitkhanal.github.io/Fix-kit/" }
+  }
+  </script>
+
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #f4f6f9;
-      margin: 0;
-      padding: 40px;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; color: #111827; min-height: 100vh; }
 
-    .page-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 24px;
+    .navbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 1.5rem; height: 56px;
+      background: #fff; border-bottom: 1px solid #e5e7eb;
+      position: sticky; top: 0; z-index: 100;
     }
+    .navbar-brand { font-weight: 700; font-size: 1.15rem; text-decoration: none; color: #111827; letter-spacing: -0.02em; }
+    .navbar-brand span { color: #6366f1; }
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border: 1px solid #d1d5db; border-radius: 8px;
+      font-size: 13px; font-weight: 500; text-decoration: none; color: #374151;
+      background: #fff; transition: background 0.15s, border-color 0.15s; cursor: pointer;
+    }
+    .back-btn:hover { background: #f3f4f6; border-color: #9ca3af; }
+    .back-btn svg { flex-shrink: 0; }
 
-    .back-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 16px;
-      border-radius: 12px;
-      border: 1px solid #ccc;
-      background: #fff;
-      color: #333;
-      text-decoration: none;
-      font-weight: 600;
-      transition: background .2s ease, transform .2s ease;
+    .ad-slot {
+      background: #f3f4f6; border: 1px dashed #d1d5db; border-radius: 8px;
+      text-align: center; color: #9ca3af; font-size: 12px;
+      display: flex; align-items: center; justify-content: center;
     }
+    .ad-top { width: 100%; height: 90px; border-radius: 0; border-left: none; border-right: none; border-top: none; background: #fafafa; }
+    .ad-mid { height: 120px; margin: 1.5rem 0; }
+    .ad-bottom { height: 90px; margin: 1.5rem 0; }
 
-    .back-button:hover {
-      background: #eee;
-      transform: translateY(-1px);
-    }
+    .breadcrumb { padding: 10px 1.5rem; font-size: 13px; color: #6b7280; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .breadcrumb a { color: #6b7280; text-decoration: none; } .breadcrumb a:hover { color: #4f46e5; }
+    .breadcrumb-sep { color: #d1d5db; }
 
-    .tool-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
+    .page-wrap { max-width: 820px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem; }
+    .page-header { margin-bottom: 1.5rem; }
+    .page-header h1 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.03em; color: #111827; }
+    .page-header p { margin-top: 6px; color: #6b7280; font-size: 15px; line-height: 1.6; }
 
-    .panel {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 16px;
-      padding: 24px;
-      display: grid;
-      gap: 20px;
-    }
+    .tool-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .tool-card h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: #111827; }
 
-    label {
-      font-size: 13px;
-      font-weight: 600;
-      color: #555;
-      margin-bottom: 6px;
-      display: block;
+    .upload-area {
+      border: 2px dashed #d1d5db; border-radius: 10px; padding: 2rem 1rem;
+      text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s;
+      background: #f9fafb; margin-bottom: 1.25rem;
     }
+    .upload-area:hover, .upload-area.drag-over { border-color: #6366f1; background: #eef2ff; }
+    .upload-area input[type="file"] { display: none; }
+    .upload-area .upload-icon { font-size: 2rem; margin-bottom: 8px; }
+    .upload-area p { color: #6b7280; font-size: 14px; }
+    .upload-area strong { color: #4f46e5; }
 
-    input[type="file"], input[type="number"] {
-      width: 100%;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      font-size: 14px;
-      box-sizing: border-box;
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+    @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label { font-size: 14px; font-weight: 500; color: #374151; }
+    .form-group input[type="number"] {
+      padding: 9px 12px; border: 1px solid #d1d5db; border-radius: 8px;
+      font-size: 14px; color: #111827; outline: none; transition: border-color 0.15s;
     }
+    .form-group input[type="number"]:focus { border-color: #6366f1; box-shadow: 0 0 0 3px #eef2ff; }
 
-    button {
-      background: #0078d7;
-      color: #fff;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 600;
-      transition: background .2s ease;
-    }
+    .checkbox-row { display: flex; align-items: center; gap: 8px; margin-bottom: 1.25rem; font-size: 14px; color: #374151; cursor: pointer; }
+    .checkbox-row input[type="checkbox"] { accent-color: #6366f1; width: 16px; height: 16px; cursor: pointer; }
 
-    button:hover {
-      background: #005a9e;
-    }
+    .info-bar { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #15803d; margin-bottom: 1.25rem; display: none; }
 
-    canvas {
-      max-width: 100%;
-      border-radius: 12px;
-      border: 1px solid #ddd;
-    }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn-primary { padding: 10px 24px; background: #6366f1; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.15s; }
+    .btn-primary:hover { background: #4f46e5; }
+    .btn-secondary { padding: 10px 20px; background: #fff; color: #374151; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.15s; }
+    .btn-secondary:hover { background: #f3f4f6; }
 
-    @media (max-width: 768px) {
-      .tool-grid {
-        grid-template-columns: 1fr;
-      }
+    .preview-area { margin-top: 1.25rem; }
+    .preview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 560px) { .preview-grid { grid-template-columns: 1fr; } }
+    .preview-box { border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden; background: #f9fafb; }
+    .preview-box img { width: 100%; height: 160px; object-fit: contain; display: block; background: #f3f4f6; }
+    .preview-label { padding: 8px 12px; font-size: 12px; color: #6b7280; display: flex; justify-content: space-between; }
+    .preview-label strong { color: #111827; }
+    .download-row { margin-top: 1rem; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .savings-badge { background: #dbeafe; color: #1d4ed8; font-size: 13px; font-weight: 600; padding: 4px 12px; border-radius: 20px; }
+    #preview-section { display: none; }
+
+    .how-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .how-section h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: #111827; }
+    .steps { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .steps li { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: #374151; line-height: 1.5; }
+    .step-num { background: #eef2ff; color: #4f46e5; font-weight: 700; font-size: 12px; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+
+    .related-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; }
+    .related-section h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: #111827; }
+    .related-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+    .related-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px;
+      font-size: 13px; text-decoration: none; color: #374151;
+      background: #f9fafb; transition: border-color 0.15s, background 0.15s;
     }
+    .related-link:hover { border-color: #6366f1; background: #eef2ff; color: #4f46e5; }
+
+    .site-footer { border-top: 1px solid #e5e7eb; background: #fff; padding: 1.5rem; text-align: center; font-size: 13px; color: #9ca3af; margin-top: 2rem; }
+    .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 10px; }
+    .footer-links a { color: #6b7280; text-decoration: none; } .footer-links a:hover { color: #4f46e5; }
   </style>
 </head>
 <body>
-  <div class="page-header">
-    <a class="back-button" href="../index.html">← Back</a>
-    <h1>Image Resizer</h1>
+
+  <nav class="navbar">
+    <a class="navbar-brand" href="https://1rohitkhanal.github.io/Fix-kit/index.html">Fix<span>-Kit</span></a>
+    <a class="back-btn" href="https://1rohitkhanal.github.io/Fix-kit/index.html">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to All Tools
+    </a>
+  </nav>
+
+  <div class="ad-slot ad-top">
+    Advertisement
+    <!-- ✏️ Paste your Google AdSense 728×90 leaderboard code here -->
   </div>
 
-  <div class="tool-grid">
-    <div class="panel">
-      <div>
-        <label for="imageUpload">Upload Image</label>
-        <input type="file" id="imageUpload" accept="image/*">
-      </div>
-
-      <div>
-        <label for="widthInput">Width (px)</label>
-        <input type="number" id="widthInput" placeholder="Enter width">
-      </div>
-
-      <div>
-        <label for="heightInput">Height (px)</label>
-        <input type="number" id="heightInput" placeholder="Enter height">
-      </div>
-
-      <button onclick="resizeImage()">Resize</button>
-      <button onclick="downloadImage()">Download</button>
-    </div>
-
-    <div class="panel">
-      <label>Preview</label>
-      <canvas id="canvas"></canvas>
-    </div>
+  <div class="breadcrumb">
+    <a href="https://1rohitkhanal.github.io/Fix-kit/index.html">Home</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="https://1rohitkhanal.github.io/Fix-kit/index.html#image">Image Tools</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>Image Resizer</span>
   </div>
+
+  <div class="page-wrap">
+
+    <div class="page-header">
+      <h1>↔️ Image Resizer</h1>
+      <p>Resize JPG, PNG and WebP images to any custom dimension directly in your browser. No upload to any server — fast, free and completely private.</p>
+    </div>
+
+    <div class="ad-slot ad-mid">
+      Advertisement (300×250)
+      <!-- ✏️ Paste your Google AdSense 300×250 rectangle code here -->
+    </div>
+
+    <div class="tool-card">
+      <h2>Upload Image</h2>
+
+      <div class="upload-area" id="dropZone" onclick="document.getElementById('fileInput').click()">
+        <div class="upload-icon">🖼️</div>
+        <p><strong>Click to upload</strong> or drag and drop</p>
+        <p style="margin-top:4px; font-size:12px;">JPG, PNG, WebP supported · Max 10MB</p>
+        <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp">
+      </div>
+
+      <div id="infoBar" class="info-bar"></div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="widthInput">Width (px)</label>
+          <input type="number" id="widthInput" placeholder="e.g. 800" min="1" max="8000">
+        </div>
+        <div class="form-group">
+          <label for="heightInput">Height (px)</label>
+          <input type="number" id="heightInput" placeholder="e.g. 600" min="1" max="8000">
+        </div>
+      </div>
+
+      <label class="checkbox-row">
+        <input type="checkbox" id="aspectLock" checked>
+        Lock aspect ratio
+      </label>
+
+      <div class="btn-row">
+        <button class="btn-primary" onclick="resizeImage()">⚡ Resize Image</button>
+        <button class="btn-secondary" onclick="resetTool()">✕ Clear</button>
+      </div>
+
+      <div id="preview-section" class="preview-area">
+        <div class="preview-grid">
+          <div class="preview-box">
+            <img id="originalPreview" src="" alt="Original image preview">
+            <div class="preview-label"><span>Original</span><strong id="originalInfo">—</strong></div>
+          </div>
+          <div class="preview-box">
+            <img id="resizedPreview" src="" alt="Resized image preview">
+            <div class="preview-label"><span>Resized</span><strong id="resizedInfo">—</strong></div>
+          </div>
+        </div>
+        <div class="download-row">
+          <button class="btn-primary" onclick="downloadImage()">⬇ Download Resized</button>
+          <span class="savings-badge" id="dimBadge"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="how-section">
+      <h2>How to use</h2>
+      <ol class="steps">
+        <li><span class="step-num">1</span>Click <strong>Upload Image</strong> or drag your JPG, PNG or WebP file into the box</li>
+        <li><span class="step-num">2</span>Enter your desired <strong>Width</strong> and/or <strong>Height</strong> in pixels</li>
+        <li><span class="step-num">3</span>Keep <strong>Lock aspect ratio</strong> checked to avoid stretching</li>
+        <li><span class="step-num">4</span>Click <strong>Resize Image</strong>, preview the result, then <strong>Download</strong></li>
+      </ol>
+    </div>
+
+    <div class="ad-slot ad-bottom">
+      Advertisement (728×90)
+      <!-- ✏️ Paste your Google AdSense 728×90 leaderboard code here -->
+    </div>
+
+    <div class="related-section">
+      <h2>Related image tools</h2>
+      <div class="related-grid">
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/compressor.html">🗜️ Image Compressor</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/converter.html">🔄 Convert Image</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/crop.html">✂️ Crop Image</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/watermark.html">💧 Add Watermark</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/blur.html">🌫️ Blur / Pixelate</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/image/ocr.html">📷 Screenshot to Text</a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="https://1rohitkhanal.github.io/Fix-kit/index.html">Home</a>
+      <a href="https://1rohitkhanal.github.io/Fix-kit/about.html">About</a>
+      <a href="https://1rohitkhanal.github.io/Fix-kit/privacy.html">Privacy Policy</a>
+      <a href="mailto:your@email.com">Contact</a>
+    </div>
+    <p>© <span id="yr"></span> Fix-Kit · No login required · No data stored on servers · 100% free forever</p>
+  </footer>
 
   <script>
-    const canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d");
-    let uploadedImage = null;
-    let resizedDataUrl = null;
+    document.getElementById('yr').textContent = new Date().getFullYear();
 
-    document.getElementById("imageUpload").addEventListener("change", function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
+    let originalFile = null;
+    let resizedBlob = null;
+    let origW = 0, origH = 0;
 
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        const img = new Image();
-        img.onload = function() {
-          uploadedImage = img;
-          canvas.width = img.width;
-          canvas.height = img.height;
-          ctx.drawImage(img, 0, 0);
-        };
-        img.src = event.target.result;
-      };
-      reader.readAsDataURL(file);
+    const dropZone = document.getElementById('dropZone');
+    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault(); dropZone.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) loadFile(file);
+    });
+    document.getElementById('fileInput').addEventListener('change', e => {
+      if (e.target.files[0]) loadFile(e.target.files[0]);
     });
 
+    document.getElementById('widthInput').addEventListener('input', function () {
+      if (document.getElementById('aspectLock').checked && origW && origH) {
+        document.getElementById('heightInput').value = Math.round(this.value * origH / origW) || '';
+      }
+    });
+    document.getElementById('heightInput').addEventListener('input', function () {
+      if (document.getElementById('aspectLock').checked && origW && origH) {
+        document.getElementById('widthInput').value = Math.round(this.value * origW / origH) || '';
+      }
+    });
+
+    function loadFile(file) {
+      originalFile = file;
+      const reader = new FileReader();
+      reader.onload = ev => {
+        const img = new Image();
+        img.onload = () => {
+          origW = img.width; origH = img.height;
+          document.getElementById('widthInput').value = origW;
+          document.getElementById('heightInput').value = origH;
+          document.getElementById('originalPreview').src = ev.target.result;
+          document.getElementById('originalInfo').textContent = `${origW}×${origH} · ${formatBytes(file.size)}`;
+          document.getElementById('infoBar').style.display = 'block';
+          document.getElementById('infoBar').textContent = `Original: ${origW}×${origH} px · ${formatBytes(file.size)}`;
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
     function resizeImage() {
-      if (!uploadedImage) {
-        alert("Please upload an image first.");
-        return;
-      }
-
-      const width = parseInt(document.getElementById("widthInput").value, 10);
-      const height = parseInt(document.getElementById("heightInput").value, 10);
-
-      if (!width || !height) {
-        alert("Please enter valid width and height.");
-        return;
-      }
-
-      canvas.width = width;
-      canvas.height = height;
-      ctx.clearRect(0, 0, width, height);
-      ctx.drawImage(uploadedImage, 0, 0, width, height);
-
-      resizedDataUrl = canvas.toDataURL("image/png");
+      if (!originalFile) { alert('Please upload an image first.'); return; }
+      const w = parseInt(document.getElementById('widthInput').value);
+      const h = parseInt(document.getElementById('heightInput').value);
+      if (!w || !h || w < 1 || h < 1) { alert('Please enter valid width and height values.'); return; }
+      const reader = new FileReader();
+      reader.onload = ev => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = w; canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          canvas.toBlob(blob => {
+            resizedBlob = blob;
+            const url = URL.createObjectURL(blob);
+            document.getElementById('resizedPreview').src = url;
+            document.getElementById('resizedInfo').textContent = `${w}×${h} · ${formatBytes(blob.size)}`;
+            document.getElementById('dimBadge').textContent = `${w} × ${h} px`;
+            document.getElementById('preview-section').style.display = 'block';
+          }, originalFile.type, 0.92);
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(originalFile);
     }
 
     function downloadImage() {
-      if (!resizedDataUrl) {
-        alert("Please resize the image first.");
-        return;
-      }
-      const link = document.createElement("a");
-      link.download = "resized-image.png";
-      link.href = resizedDataUrl;
-      link.click();
+      if (!resizedBlob) return;
+      const ext = originalFile.type === 'image/png' ? 'png' : originalFile.type === 'image/webp' ? 'webp' : 'jpg';
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(resizedBlob);
+      a.download = `resized.${ext}`;
+      a.click();
+    }
+
+    function resetTool() {
+      originalFile = null; resizedBlob = null; origW = 0; origH = 0;
+      document.getElementById('fileInput').value = '';
+      document.getElementById('widthInput').value = '';
+      document.getElementById('heightInput').value = '';
+      document.getElementById('originalPreview').src = '';
+      document.getElementById('resizedPreview').src = '';
+      document.getElementById('infoBar').style.display = 'none';
+      document.getElementById('preview-section').style.display = 'none';
+    }
+
+    function formatBytes(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / 1048576).toFixed(2) + ' MB';
     }
   </script>
 </body>
