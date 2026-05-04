@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hashtag Generator — Instagram, Twitter & TikTok Hashtags | ToolSite</title>
+<meta name="description" content="Generate trending hashtags for Instagram, Twitter, TikTok, and more. Free hashtag generator tool — grow your social media reach instantly.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#080b14;--surface:#0f1220;--surface2:#161b2e;--border:#222840;--accent:#8b5cf6;--accent2:#ec4899;--accent3:#06b6d4;--text:#f0f4ff;--muted:#6b7a9e;--success:#10b981}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:1px solid var(--border);background:var(--surface)}
+  .logo{font-size:1.4rem;font-weight:800;background:linear-gradient(135deg,#8b5cf6,#ec4899);-fix-kit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
+  nav a{color:var(--muted);text-decoration:none;font-size:0.85rem}nav a:hover{color:var(--text)}
+  .ad-banner{background:var(--surface);border:1px dashed var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.75rem;margin:1rem auto}
+  .ad-top{width:100%;max-width:728px;height:90px}.ad-bottom{width:100%;max-width:728px;height:90px}.ad-side{width:300px;height:250px;flex-shrink:0}
+  .container{max-width:900px;margin:0 auto;padding:2rem}
+  .tool-header{text-align:center;margin-bottom:2.5rem}
+  .tool-header h1{font-size:2.2rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-fix-kit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem}
+  .tool-header p{color:var(--muted);font-size:1rem}
+  .main-layout{display:flex;gap:2rem}.tool-area{flex:1}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem}
+  .section-label{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:0.75rem;display:block}
+
+  input[type=text],textarea{width:100%;background:var(--surface2);border:2px solid var(--border);border-radius:12px;padding:0.9rem 1.2rem;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.95rem;outline:none;transition:border-color 0.2s}
+  input:focus,textarea:focus{border-color:var(--accent)}
+
+  .platform-chips{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem}
+  .platform-chip{padding:6px 16px;border-radius:20px;border:1.5px solid var(--border);background:var(--surface2);color:var(--muted);font-size:0.82rem;cursor:pointer;transition:all 0.2s;font-weight:600}
+  .platform-chip:hover{border-color:var(--muted)}
+  .platform-chip.instagram.active{border-color:#e1306c;background:rgba(225,48,108,0.1);color:#e1306c}
+  .platform-chip.twitter.active{border-color:#1da1f2;background:rgba(29,161,242,0.1);color:#1da1f2}
+  .platform-chip.tiktok.active{border-color:#fe2c55;background:rgba(254,44,85,0.1);color:#fe2c55}
+  .platform-chip.linkedin.active{border-color:#0077b5;background:rgba(0,119,181,0.1);color:#0077b5}
+  .platform-chip.youtube.active{border-color:#ff0000;background:rgba(255,0,0,0.1);color:#ff0000}
+
+  .count-row{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+  .count-row label{font-size:0.85rem;color:var(--muted)}
+  select{background:var(--surface2);border:1.5px solid var(--border);color:var(--text);padding:7px 12px;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.85rem;outline:none}
+
+  .gen-btn{width:100%;padding:1rem;font-size:1rem;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;border:none;border-radius:12px;cursor:pointer;transition:all 0.25s;margin-top:0.5rem;letter-spacing:0.3px}
+  .gen-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(139,92,246,0.4)}
+
+  /* HASHTAG OUTPUT */
+  .hashtag-output{min-height:100px;line-height:2;font-size:1rem;word-break:break-word;background:var(--surface2);border:2px solid var(--border);border-radius:12px;padding:1rem 1.2rem}
+  .tag{display:inline-block;background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.3);color:var(--accent);border-radius:20px;padding:3px 12px;margin:3px;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.2s;user-select:none}
+  .tag:hover{background:rgba(139,92,246,0.3);transform:scale(1.05)}
+  .tag.copied{background:rgba(16,185,129,0.2);border-color:var(--success);color:var(--success)}
+
+  .output-actions{display:flex;gap:0.5rem;margin-top:0.75rem;flex-wrap:wrap}
+  .out-btn{padding:0.55rem 1rem;border-radius:8px;border:1.5px solid var(--border);background:var(--surface2);color:var(--muted);font-size:0.82rem;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s}
+  .out-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .out-btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;border:none}
+  .out-btn.primary:hover{transform:scale(1.02)}
+
+  .count-info{display:flex;gap:1.5rem;font-size:0.8rem;color:var(--muted);margin-top:0.5rem}
+  .count-info strong{color:var(--text)}
+
+  .category-tabs{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1rem}
+  .cat-tab{padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:0.78rem;cursor:pointer;transition:all 0.2s;font-family:'Plus Jakarta Sans',sans-serif}
+  .cat-tab.active{border-color:var(--accent2);color:var(--accent2);background:rgba(236,72,153,0.1)}
+
+  .related{margin-top:2rem}.related h2{font-size:0.8rem;font-weight:700;margin-bottom:1rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+  .related-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.75rem}
+  .related-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1rem;text-decoration:none;color:var(--text);transition:all 0.2s;display:flex;align-items:center;gap:0.6rem;font-size:0.88rem}
+  .related-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+  footer{border-top:1px solid var(--border);background:var(--surface);padding:1.5rem 2rem;margin-top:3rem;text-align:center;color:var(--muted);font-size:0.8rem}
+  footer a{color:var(--muted);text-decoration:none;margin:0 0.5rem}footer a:hover{color:var(--text)}
+  @media(max-width:700px){.main-layout{flex-direction:column}.ad-side{width:100%;height:100px}.related-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav><a class="logo" href="../index.html">ToolSite</a><a href="../index.html">← All Tools</a></nav>
+
+<div class="container">
+  <div style="display:flex;justify-content:center"><div class="ad-banner ad-top">Advertisement (728×90)</div></div>
+
+  <div class="tool-header">
+    <h1>#️⃣ Hashtag Generator</h1>
+    <p>Generate trending hashtags for any topic or niche. Grow your reach on Instagram, TikTok, Twitter, and more.</p>
+  </div>
+
+  <div class="main-layout">
+    <div class="tool-area">
+      <div class="card">
+        <span class="section-label">Your Topic / Niche</span>
+        <input type="text" id="topicInput" placeholder="e.g. travel photography, fitness motivation, cooking recipes…" style="margin-bottom:1rem">
+
+        <span class="section-label">Platform</span>
+        <div class="platform-chips">
+          <div class="platform-chip instagram active" data-p="instagram" onclick="togglePlatform(this)">📸 Instagram</div>
+          <div class="platform-chip twitter" data-p="twitter" onclick="togglePlatform(this)">🐦 Twitter / X</div>
+          <div class="platform-chip tiktok" data-p="tiktok" onclick="togglePlatform(this)">🎵 TikTok</div>
+          <div class="platform-chip linkedin" data-p="linkedin" onclick="togglePlatform(this)">💼 LinkedIn</div>
+          <div class="platform-chip youtube" data-p="youtube" onclick="togglePlatform(this)">▶️ YouTube</div>
+        </div>
+
+        <div class="count-row">
+          <label>Number of hashtags:</label>
+          <select id="hashCount"><option>15</option><option>20</option><option>25</option><option>30</option></select>
+          <label style="margin-left:0.5rem">Mix:</label>
+          <select id="mixType"><option value="mixed">Mixed (Best)</option><option value="popular">Popular</option><option value="niche">Niche</option><option value="low">Low competition</option></select>
+        </div>
+
+        <span class="section-label">Quick Category</span>
+        <div class="category-tabs">
+          <div class="cat-tab active" onclick="setCategory('', this)">Custom</div>
+          <div class="cat-tab" onclick="setCategory('travel', this)">✈️ Travel</div>
+          <div class="cat-tab" onclick="setCategory('fitness', this)">💪 Fitness</div>
+          <div class="cat-tab" onclick="setCategory('food', this)">🍕 Food</div>
+          <div class="cat-tab" onclick="setCategory('photography', this)">📷 Photography</div>
+          <div class="cat-tab" onclick="setCategory('fashion', this)">👗 Fashion</div>
+          <div class="cat-tab" onclick="setCategory('business', this)">💼 Business</div>
+          <div class="cat-tab" onclick="setCategory('beauty', this)">💄 Beauty</div>
+          <div class="cat-tab" onclick="setCategory('gaming', this)">🎮 Gaming</div>
+          <div class="cat-tab" onclick="setCategory('music', this)">🎵 Music</div>
+          <div class="cat-tab" onclick="setCategory('nature', this)">🌿 Nature</div>
+        </div>
+
+        <button class="gen-btn" onclick="generateHashtags()">✨ Generate Hashtags</button>
+      </div>
+
+      <div class="card" id="resultsCard" style="display:none">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem">
+          <span class="section-label" style="margin:0">Generated Hashtags</span>
+          <span style="font-size:0.8rem;color:var(--muted)">Click any tag to copy it</span>
+        </div>
+        <div class="hashtag-output" id="hashtagOutput"></div>
+        <div class="count-info" id="countInfo"></div>
+        <div class="output-actions">
+          <button class="out-btn primary" onclick="copyAll()">📋 Copy All Hashtags</button>
+          <button class="out-btn" onclick="copyLine()">Copy as Line</button>
+          <button class="out-btn" onclick="generateHashtags()">🔄 Regenerate</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ad-banner ad-side">Ad (300×250)</div>
+  </div>
+
+  <div style="display:flex;justify-content:center"><div class="ad-banner ad-bottom">Advertisement (728×90)</div></div>
+
+  <div class="related">
+    <h2>Related Social Media Tools</h2>
+    <div class="related-grid">
+      <a class="related-card" href="youtube-thumbnail-downloader.html">▶️ YouTube Thumbnail Downloader</a>
+      <a class="related-card" href="bio-generator.html">✍️ Bio Generator</a>
+      <a class="related-card" href="emoji-picker.html">😀 Emoji Picker</a>
+      <a class="related-card" href="fancy-font-generator.html">𝓕 Fancy Font Generator</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div style="margin-bottom:0.5rem"><a href="../index.html">Home</a> | <a href="../index.html">All Tools</a> | <a href="#">About</a> | <a href="#">Privacy Policy</a></div>
+  © 2025 ToolSite — No login required. No data stored on servers.
+</footer>
+
+<script>
+const HASHTAG_DB = {
+  travel: { popular: ['travel','travelgram','wanderlust','explore','travelphotography','instatravel','traveling','travelblogger','adventure','vacation','holiday','backpacker','traveltheworld','goexplore','travellife'], niche: ['solotravel','budgettravel','sustainabletravel','slowtravel','digitalnomad','traveltips','hiddengems','offthebeatenpath','travelinspiration','worldexplorer'] },
+  fitness: { popular: ['fitness','gym','workout','fitnessmotivation','fit','health','training','bodybuilding','exercise','lifestyle','fitfam','nopainnogain','gains','grind','dedication'], niche: ['homeworkout','functionalfitness','hiit','strengthtraining','weightlifting','fitnessgoals','fitnesscommunity','workoutmotivation','bodygoals','wellnessjourney'] },
+  food: { popular: ['food','foodporn','foodie','instafood','yummy','delicious','homemade','cooking','recipe','foodlover','foodphotography','tasty','eat','dinner','lunch'], niche: ['mealprep','healthyfood','veganfood','foodblogger','foodiesofinstagram','foodstyling','cheflife','plantbased','comfortfood','foodinspiration'] },
+  photography: { popular: ['photography','photo','photographer','photooftheday','naturephotography','streetphotography','portrait','landscape','canon','nikon'], niche: ['mobilephotography','filmphotography','goldenhour','bokeh','shutterspeed','photographylovers','shootingfilm','leica','analogphotography','lightroom'] },
+  fashion: { popular: ['fashion','style','ootd','outfitoftheday','fashionista','streetstyle','clothing','fashionblogger','instafashion','trendy'], niche: ['sustainablefashion','vintagefashion','slowfashion','thrifted','capsulewardrobe','fashioninspiration','minimalfashion','luxuryfashion','fashionweek','wiwt'] },
+  business: { popular: ['business','entrepreneur','success','motivation','startup','marketing','hustle','entrepreneurship','businessowner','mindset'], niche: ['smallbusiness','businessgrowth','digitalmarketing','personaldevelopment','leadershipskills','businesstips','solopreneur','scalingup','b2b','businesscoach'] },
+  beauty: { popular: ['beauty','makeup','skincare','beautiful','glam','cosmetics','makeupartist','lipstick','eyeshadow','contour'], niche: ['beautyover40','naturalmakeup','skincareroutine','glassskin','k-beauty','crueltyfreebeauty','organicbeauty','makeuptutorial','beautyinfluencer','dewy'] },
+  gaming: { popular: ['gaming','gamer','videogames','twitch','gameplay','ps5','xbox','pcgaming','esports','gamingcommunity'], niche: ['retrogaming','indiegames','gamingsetup','streamer','rpg','fps','gaminglife','newgames','gamingmemes','mobilegaming'] },
+  music: { popular: ['music','newmusic','musician','singer','song','guitar','piano','hiphop','pop','indie'], niche: ['musicproduction','songwriting','livemusic','musicstudio','producer','beatmaker','musiclovers','unsignedartist','alternativemusic','acousticmusic'] },
+  nature: { popular: ['nature','naturephotography','outdoors','wildlife','forest','mountain','sunset','landscape','earth','greenlife'], niche: ['wildlifephotography','macrophotography','botanicalphotography','ecotourism','rewilding','conservationnature','birding','earthday','environmentalism','naturelover'] },
+};
+
+const GENERIC = ['instagood','photooftheday','love','beautiful','happy','follow','like','life','art','inspiration','motivation','positive','trending','viral','explore','grow','community','share','original','authentic'];
+
+function setCategory(cat, el) {
+  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  if (cat) document.getElementById('topicInput').value = cat;
+}
+
+function togglePlatform(el) {
+  el.classList.toggle('active');
+}
+
+let generatedTags = [];
+
+function generateHashtags() {
+  const topic = document.getElementById('topicInput').value.trim().toLowerCase().replace(/\s+/g, '');
+  const count = parseInt(document.getElementById('hashCount').value);
+  const mix = document.getElementById('mixType').value;
+
+  let allTags = [];
+
+  // Find matching category
+  const catKey = Object.keys(HASHTAG_DB).find(k => document.getElementById('topicInput').value.toLowerCase().includes(k));
+  if (catKey) {
+    allTags = [...HASHTAG_DB[catKey].popular, ...HASHTAG_DB[catKey].niche];
+  }
+
+  // Add topic-based tags
+  if (topic) {
+    const topicVariants = [topic, topic + 'life', topic + 'lover', topic + 'gram', topic + 'community', topic + 'daily', topic + 'oftheday', topic + 'tips', 'love' + topic, topic + 'inspiration', topic + 'goals', topic + 'world', topic + 'photography', topic + 'blog', 'my' + topic];
+    allTags = [...new Set([...topicVariants, ...allTags])];
+  }
+
+  // Add generic
+  allTags = [...new Set([...allTags, ...GENERIC])];
+
+  // Shuffle
+  for (let i = allTags.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [allTags[i], allTags[j]] = [allTags[j], allTags[i]];
+  }
+
+  generatedTags = allTags.slice(0, count).map(t => '#' + t);
+
+  const out = document.getElementById('hashtagOutput');
+  out.innerHTML = generatedTags.map(tag => `<span class="tag" onclick="copyTag(this, '${tag}')">${tag}</span>`).join(' ');
+
+  document.getElementById('countInfo').innerHTML = `<span><strong>${generatedTags.length}</strong> hashtags generated</span><span><strong>${generatedTags.join(' ').length}</strong> characters</span>`;
+  document.getElementById('resultsCard').style.display = 'block';
+}
+
+function copyTag(el, tag) {
+  navigator.clipboard.writeText(tag);
+  el.classList.add('copied');
+  const orig = el.textContent;
+  el.textContent = '✓ ' + orig;
+  setTimeout(() => { el.classList.remove('copied'); el.textContent = orig; }, 1200);
+}
+
+function copyAll() {
+  const text = generatedTags.join('\n');
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.out-btn.primary');
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => btn.textContent = '📋 Copy All Hashtags', 1500);
+  });
+}
+
+function copyLine() {
+  navigator.clipboard.writeText(generatedTags.join(' '));
+}
+
+document.getElementById('topicInput').addEventListener('keydown', e => { if (e.key === 'Enter') generateHashtags(); });
+</script>
+</body>
+</html>
