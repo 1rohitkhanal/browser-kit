@@ -1,193 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Whitespaces Remover</title>
-
-  <style>
-    :root {
-      --bg: #f5f7fb;
-      --card: #ffffff;
-      --accent: #4f46e5;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --border: #e5e7eb;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: "Segoe UI", sans-serif;
-    }
-
-    body {
-      background: var(--bg);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-    }
-
-    .app {
-      width: 100%;
-      max-width: 640px;
-      background: var(--card);
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .title {
-      font-size: 18px;
-      color: var(--text);
-    }
-
-    .back-btn {
-      padding: 8px 12px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: #fff;
-      cursor: pointer;
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 140px;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      resize: vertical;
-      font-size: 14px;
-      outline: none;
-    }
-
-    textarea:focus {
-      border-color: var(--accent);
-    }
-
-    .controls {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 8px;
-    }
-
-    .btn {
-      padding: 10px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-
-    .primary {
-      background: var(--accent);
-      color: #fff;
-    }
-
-    .secondary {
-      background: #111827;
-      color: #fff;
-    }
-
-    .ghost {
-      background: #fff;
-      border: 1px solid var(--border);
-    }
-
-    .output {
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px;
-      background: #fafafa;
-      min-height: 80px;
-      white-space: pre-wrap;
-      word-break: break-word;
-      color: var(--text);
-    }
-
-    @media (max-width: 480px) {
-      .app {
-        padding: 12px;
-      }
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Whitespace Remover — FIX-KIT</title>
+<style>
+:root{--bg:#0f0f13;--surface:#1a1a24;--surface2:#22222f;--border:#2e2e3e;--accent:#6c63ff;--accent-soft:rgba(108,99,255,0.12);--text:#e8e8f0;--muted:#8888a4;--radius:12px;--radius-sm:8px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;}
+nav{padding:14px 20px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;gap:16px;}
+.back{color:var(--muted);text-decoration:none;font-size:14px;}.back:hover{color:var(--text);}
+.brand{font-weight:800;font-size:18px;color:var(--text);text-decoration:none;}.brand span{color:var(--accent);}
+.wrap{max-width:760px;margin:0 auto;padding:28px 16px 60px;}
+.ad{background:#161620;border:1px dashed #2a2a3a;border-radius:var(--radius-sm);padding:10px;text-align:center;color:var(--muted);font-size:11px;margin-bottom:24px;}
+.ad span{display:block;font-size:9px;opacity:.5;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;}
+.ad-inner{min-height:60px;display:flex;align-items:center;justify-content:center;opacity:.4;font-size:12px;}
+.hero{text-align:center;margin-bottom:28px;}
+.badge{display:inline-block;background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:100px;border:1px solid rgba(108,99,255,.25);margin-bottom:12px;}
+.hero h1{font-size:clamp(22px,5vw,30px);font-weight:800;margin-bottom:8px;}
+.hero p{color:var(--muted);font-size:14px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:18px;}
+.card h2{font-size:15px;font-weight:700;margin-bottom:16px;}
+textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;color:var(--text);font-size:14px;resize:vertical;min-height:140px;outline:none;font-family:monospace;line-height:1.6;}
+textarea:focus{border-color:var(--accent);}textarea::placeholder{color:var(--muted);}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin:14px 0;}
+.opt{display:flex;align-items:flex-start;gap:8px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;cursor:pointer;transition:border-color .2s;}
+.opt:hover{border-color:var(--accent);}
+.opt input{accent-color:var(--accent);margin-top:2px;flex-shrink:0;}
+.opt-text{font-size:13px;}
+.opt-text small{display:block;font-size:11px;color:var(--muted);margin-top:2px;}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0;}
+.stat{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:7px 12px;font-size:12px;color:var(--muted);}
+.stat strong{color:var(--text);font-size:14px;display:block;}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.btn{padding:9px 18px;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:var(--surface2);color:var(--text);transition:all .2s;}
+.btn:hover{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent);}
+.btn-primary:hover{background:#7b74ff;color:#fff;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:540px){.two-col{grid-template-columns:1fr;}}
+.col-label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;}
+.related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:8px;}
+.rel{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;text-decoration:none;color:var(--text);font-size:12px;font-weight:600;display:flex;align-items:center;gap:8px;transition:all .2s;}
+.rel:hover{border-color:var(--accent);background:var(--accent-soft);}
+.rel .tag{font-size:9px;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:2px 5px;border-radius:3px;}
+footer{border-top:1px solid var(--border);padding:18px;text-align:center;color:var(--muted);font-size:12px;}
+footer a{color:var(--muted);text-decoration:none;margin:0 8px;}footer a:hover{color:var(--text);}
+</style>
 </head>
 <body>
-
-<div class="app">
-  <div class="header">
-    <button class="back-btn" onclick="goBack()">← Back</button>
-    <div class="title">Whitespaces Remover</div>
-    <div></div>
+<nav>
+  <a class="back" href="../index.html">← Back</a>
+  <a class="brand" href="../index.html">FIX<span>-</span>KIT</a>
+</nav>
+<div class="wrap">
+  <div class="ad"><span>Advertisement</span><div class="ad-inner">📢 728×90 Leaderboard Ad</div></div>
+  <div class="hero">
+    <div class="badge">Text Tool</div>
+    <h1>🧹 Whitespace Remover</h1>
+    <p>Clean extra spaces, blank lines and tabs from your text instantly.</p>
   </div>
-
-  <textarea id="input" placeholder="Paste text with spaces, tabs, or extra lines..."></textarea>
-
-  <div class="controls">
-    <button class="btn primary" onclick="removeSpaces()">Remove Spaces</button>
-    <button class="btn ghost" onclick="clearAll()">Clear</button>
-    <button class="btn secondary" onclick="copyText()">Copy</button>
+  <div class="card">
+    <h2>⚙️ Options</h2>
+    <div class="opts">
+      <label class="opt"><input type="checkbox" id="o1" checked onchange="process()"/><div class="opt-text">Trim line edges<small>Remove leading/trailing spaces</small></div></label>
+      <label class="opt"><input type="checkbox" id="o2" checked onchange="process()"/><div class="opt-text">Collapse spaces<small>Multiple spaces → single space</small></div></label>
+      <label class="opt"><input type="checkbox" id="o3" onchange="process()"/><div class="opt-text">Remove blank lines<small>Delete empty lines</small></div></label>
+      <label class="opt"><input type="checkbox" id="o4" onchange="process()"/><div class="opt-text">Replace tabs<small>Convert tabs → single space</small></div></label>
+      <label class="opt"><input type="checkbox" id="o5" onchange="process()"/><div class="opt-text">Remove all spaces<small>Delete every space character</small></div></label>
+      <label class="opt"><input type="checkbox" id="o6" onchange="process()"/><div class="opt-text">Single blank line<small>Collapse multiple blank lines</small></div></label>
+    </div>
+    <div class="two-col">
+      <div>
+        <div class="col-label">Input</div>
+        <textarea id="input" placeholder="Paste text with extra spaces here…" oninput="process()"></textarea>
+      </div>
+      <div>
+        <div class="col-label">Cleaned Output</div>
+        <textarea id="output" placeholder="Cleaned text will appear here…" readonly></textarea>
+      </div>
+    </div>
+    <div class="stats" id="stats"></div>
+    <div class="actions">
+      <button class="btn btn-primary" onclick="copyOut()">📋 Copy Result</button>
+      <button class="btn" onclick="clearAll()">✕ Clear</button>
+    </div>
   </div>
-
-  <div id="output" class="output"></div>
+  <div class="ad"><span>Advertisement</span><div class="ad-inner">📢 336×280 Rectangle Ad</div></div>
+  <div class="card">
+    <h2>🔗 Related Tools</h2>
+    <div class="related-grid">
+      <a class="rel" href="remove-duplicates.html">🗑️ Remove Duplicates<span class="tag">TEXT</span></a>
+      <a class="rel" href="case-converter.html">🔡 Case Converter<span class="tag">TEXT</span></a>
+      <a class="rel" href="sort-lines.html">🔃 Sort Lines<span class="tag">TEXT</span></a>
+      <a class="rel" href="word-counter.html">🔢 Word Counter<span class="tag">TEXT</span></a>
+    </div>
+  </div>
 </div>
-
+<footer>
+  <a href="../index.html">Home</a><a href="#">Privacy Policy</a><a href="#">Contact</a>
+  <div style="margin-top:6px;">© 2025 FIX-KIT · 100% free · No data stored</div>
+</footer>
 <script>
-  const input = document.getElementById('input');
-  const output = document.getElementById('output');
-
-  function goBack() {
-    if (history.length > 1) {
-      history.back();
-    } else {
-      window.location.href = 'index.html';
-    }
+function process(){
+  let t=document.getElementById('input').value;
+  const before=t.length;
+  if(document.getElementById('o4').checked)t=t.replace(/\t/g,' ');
+  if(document.getElementById('o5').checked){t=t.replace(/ /g,'');}
+  else{
+    if(document.getElementById('o2').checked)t=t.replace(/ {2,}/g,' ');
+    if(document.getElementById('o1').checked)t=t.split('\n').map(l=>l.trim()).join('\n');
   }
-
-  function removeSpaces() {
-    let text = input.value || '';
-
-    const originalLength = text.length;
-
-    // remove all whitespace (spaces, tabs, new lines)
-    let cleaned = text.replace(/\s+/g, '');
-
-    const removed = originalLength - cleaned.length;
-
-    output.textContent =
-      `Cleaned Text:\n${cleaned}\n\n` +
-      `Removed Characters: ${removed}`;
-  }
-
-  function clearAll() {
-    input.value = '';
-    output.textContent = '';
-  }
-
-  function copyText() {
-    const text = output.textContent;
-    if (!text) return;
-
-    navigator.clipboard.writeText(text);
-
-    const btn = event.target;
-    const prev = btn.textContent;
-    btn.textContent = 'Copied!';
-    setTimeout(() => (btn.textContent = prev), 1200);
-  }
+  if(document.getElementById('o6').checked)t=t.replace(/\n{3,}/g,'\n\n');
+  if(document.getElementById('o3').checked)t=t.split('\n').filter(l=>l.trim().length>0).join('\n');
+  document.getElementById('output').value=t;
+  const after=t.length;
+  const removed=before-after;
+  document.getElementById('stats').innerHTML=before?
+    `<div class="stat"><strong>${before}</strong>Before</div><div class="stat"><strong>${after}</strong>After</div><div class="stat"><strong>${removed}</strong>Chars removed</div>`:'';
+}
+function copyOut(){const v=document.getElementById('output').value;if(v)navigator.clipboard.writeText(v);}
+function clearAll(){document.getElementById('input').value='';document.getElementById('output').value='';document.getElementById('stats').innerHTML='';}
 </script>
-
 </body>
 </html>
