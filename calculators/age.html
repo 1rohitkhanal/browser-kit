@@ -3,151 +3,219 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- ✏️ Change these 4 values per page -->
-  <title>Merge PDF Online Free — Combine PDFs Instantly | Fix-Kit</title>
-  <meta name="description" content="Merge multiple PDF files into one for free. No upload to server, no login, works entirely in your browser. Fast and secure.">
-  <meta property="og:url" content="https://1rohitkhanal.github.io/Fix-kit/pdf/merge.html">
-  <meta property="og:image" content="https://1rohitkhanal.github.io/Fix-kit/assets/og-merge-pdf.png">
-  <!-- ✏️ End of per-page changes -->
-
-  <!-- Open Graph (social sharing) -->
+  <title>Age Calculator Online Free — Find Your Exact Age from Date of Birth | Fix-Kit</title>
+  <meta name="description" content="Calculate your exact age in years, months and days from any date of birth. Free online age calculator — no login, works instantly in your browser.">
+  <link rel="canonical" href="https://1rohitkhanal.github.io/Fix-kit/calculators/age.html">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Merge PDF Online Free | Fix-Kit">
-  <meta property="og:description" content="Combine multiple PDFs into one instantly. Free, no login, runs in your browser.">
+  <meta property="og:title" content="Age Calculator Free Online | Fix-Kit">
+  <meta property="og:description" content="Find your exact age in years, months and days. Free, instant, no login needed.">
+  <meta property="og:url" content="https://1rohitkhanal.github.io/Fix-kit/calculators/age.html">
   <meta property="og:site_name" content="Fix-Kit">
-
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Merge PDF Online Free | Fix-Kit">
-  <meta name="twitter:description" content="Combine multiple PDFs into one. Free, no login, browser-based.">
-
-  <!-- Canonical URL (prevents duplicate content penalty) -->
-  <link rel="canonical" href="https://1rohitkhanal.github.io/Fix-kit/pdf/merge.html">
-
-  <!-- JSON-LD Structured Data (helps Google show rich results) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Merge PDF — Fix-Kit",
-    "url": "https://1rohitkhanal.github.io/Fix-kit/pdf/merge.html",
-    "description": "Merge multiple PDF files into one for free. No login required.",
+    "name": "Age Calculator — Fix-Kit",
+    "url": "https://1rohitkhanal.github.io/Fix-kit/calculators/age.html",
+    "description": "Calculate your exact age in years, months and days from any date of birth.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Fix-Kit",
-      "url": "https://1rohitkhanal.github.io/Fix-kit/"
-    }
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "publisher": { "@type": "Organization", "name": "Fix-Kit", "url": "https://1rohitkhanal.github.io/Fix-kit/" }
   }
   </script>
 
-  <!-- your existing CSS links below -->
   <style>
-    /* Clean and professional CSS */
-    body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: #f4f6f9;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; color: #111827; min-height: 100vh; }
 
-    .container {
-      background: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      text-align: center;
-      width: 320px;
-    }
+    .navbar { display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; height: 56px; background: #fff; border-bottom: 1px solid #e5e7eb; position: sticky; top: 0; z-index: 100; }
+    .navbar-brand { font-weight: 700; font-size: 1.15rem; text-decoration: none; color: #111827; letter-spacing: -0.02em; }
+    .navbar-brand span { color: #6366f1; }
+    .back-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 13px; font-weight: 500; text-decoration: none; color: #374151; background: #fff; transition: background 0.15s; }
+    .back-btn:hover { background: #f3f4f6; border-color: #9ca3af; }
 
-    h1 {
-      margin-bottom: 20px;
-      color: #333;
-    }
+    .ad-slot { background: #f3f4f6; border: 1px dashed #d1d5db; border-radius: 8px; text-align: center; color: #9ca3af; font-size: 12px; display: flex; align-items: center; justify-content: center; }
+    .ad-top { width: 100%; height: 90px; border-radius: 0; border-left: none; border-right: none; border-top: none; background: #fafafa; }
+    .ad-mid { height: 120px; margin: 1.5rem 0; }
+    .ad-bottom { height: 90px; margin: 1.5rem 0; }
 
-    input[type="date"] {
-      padding: 10px;
-      width: 100%;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      margin-bottom: 20px;
-      font-size: 14px;
-    }
+    .breadcrumb { padding: 10px 1.5rem; font-size: 13px; color: #6b7280; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: #6b7280; text-decoration: none; } .breadcrumb a:hover { color: #4f46e5; }
+    .breadcrumb-sep { color: #d1d5db; }
 
-    button {
-      background: #0078d7;
-      color: #fff;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: background 0.3s ease;
-    }
+    .page-wrap { max-width: 820px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem; }
+    .page-header h1 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.03em; color: #111827; }
+    .page-header p { margin-top: 6px; color: #6b7280; font-size: 15px; line-height: 1.6; margin-bottom: 1.5rem; }
 
-    button:hover {
-      background: #005a9e;
-    }
+    .tool-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .tool-card h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1.25rem; color: #111827; }
+    .field-group { margin-bottom: 1.25rem; }
+    .field-group label { display: block; font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px; }
+    .field-group input[type="date"] { width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; color: #111827; background: #f9fafb; font-family: inherit; }
+    .field-group input[type="date"]:focus { outline: none; border-color: #6366f1; background: #fff; }
+    .btn-primary { padding: 11px 28px; background: #6366f1; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.15s; width: 100%; }
+    .btn-primary:hover { background: #4f46e5; }
 
-    .result {
-      margin-top: 20px;
-      font-size: 16px;
-      color: #444;
-      font-weight: bold;
-    }
+    .result-box { display: none; margin-top: 1.25rem; background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 10px; padding: 1.25rem; }
+    .result-main { font-size: 1.5rem; font-weight: 700; color: #3730a3; text-align: center; margin-bottom: 1rem; }
+    .result-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .result-item { background: #fff; border-radius: 8px; padding: 12px; text-align: center; border: 1px solid #e0e7ff; }
+    .result-item .num { font-size: 1.5rem; font-weight: 700; color: #4f46e5; }
+    .result-item .lbl { font-size: 12px; color: #6b7280; margin-top: 2px; }
+    .result-extra { margin-top: 12px; font-size: 13px; color: #4338ca; text-align: center; }
+
+    .how-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .how-section h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: #111827; }
+    .steps { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .steps li { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: #374151; line-height: 1.5; }
+    .step-num { background: #eef2ff; color: #4f46e5; font-weight: 700; font-size: 12px; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+
+    .related-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; }
+    .related-section h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: #111827; }
+    .related-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+    .related-link { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; text-decoration: none; color: #374151; background: #f9fafb; transition: border-color 0.15s, background 0.15s; }
+    .related-link:hover { border-color: #6366f1; background: #eef2ff; color: #4f46e5; }
+
+    .site-footer { border-top: 1px solid #e5e7eb; background: #fff; padding: 1.5rem; text-align: center; font-size: 13px; color: #9ca3af; margin-top: 2rem; }
+    .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 10px; }
+    .footer-links a { color: #6b7280; text-decoration: none; } .footer-links a:hover { color: #4f46e5; }
   </style>
-  
 </head>
 <body>
-  <div class="container">
-    <h1>Age Calculator</h1>
-    <input type="date" id="dob">
-    <button onclick="calculateAge()">Calculate Age</button>
-    <div class="result" id="result"></div>
+
+  <!-- ═══ NAVBAR ═══ -->
+  <nav class="navbar">
+    <a class="navbar-brand" href="https://1rohitkhanal.github.io/Fix-kit/index.html">Fix<span>-Kit</span></a>
+    <a class="back-btn" href="https://1rohitkhanal.github.io/Fix-kit/index.html">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to All Tools
+    </a>
+  </nav>
+
+  <!-- ═══ AD — TOP ═══ -->
+  <div class="ad-slot ad-top">
+    Advertisement
+    <!-- ✏️ Paste your Google AdSense 728×90 code here -->
   </div>
 
+  <!-- ═══ BREADCRUMB ═══ -->
+  <div class="breadcrumb">
+    <a href="https://1rohitkhanal.github.io/Fix-kit/index.html">Home</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="https://1rohitkhanal.github.io/Fix-kit/index.html#calculators">Calculators</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>Age Calculator</span>
+  </div>
+
+  <div class="page-wrap">
+
+    <div class="page-header">
+      <h1>🎂 Age Calculator</h1>
+      <p>Find your exact age in years, months and days from any date of birth. Also shows total days lived and your next birthday countdown.</p>
+    </div>
+
+    <!-- ═══ AD — MID ═══ -->
+    <div class="ad-slot ad-mid">
+      Advertisement (300×250)
+      <!-- ✏️ Paste your Google AdSense 300×250 code here -->
+    </div>
+
+    <div class="tool-card">
+      <h2>Enter date of birth</h2>
+      <div class="field-group">
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" max="">
+      </div>
+      <div class="field-group">
+        <label for="calcDate">Calculate Age As Of</label>
+        <input type="date" id="calcDate">
+      </div>
+      <button class="btn-primary" onclick="calculateAge()">🎂 Calculate Age</button>
+
+      <div class="result-box" id="resultBox">
+        <div class="result-main" id="resultMain"></div>
+        <div class="result-grid">
+          <div class="result-item"><div class="num" id="resYears">—</div><div class="lbl">Years</div></div>
+          <div class="result-item"><div class="num" id="resMonths">—</div><div class="lbl">Months</div></div>
+          <div class="result-item"><div class="num" id="resDays">—</div><div class="lbl">Days</div></div>
+        </div>
+        <div class="result-extra" id="resultExtra"></div>
+      </div>
+    </div>
+
+    <div class="how-section">
+      <h2>How to use</h2>
+      <ol class="steps">
+        <li><span class="step-num">1</span>Enter your <strong>Date of Birth</strong> using the date picker</li>
+        <li><span class="step-num">2</span>The <strong>Calculate As Of</strong> field defaults to today — change it to calculate age on any past or future date</li>
+        <li><span class="step-num">3</span>Click <strong>Calculate Age</strong> to see your exact age in years, months and days</li>
+      </ol>
+    </div>
+
+    <!-- ═══ AD — BOTTOM ═══ -->
+    <div class="ad-slot ad-bottom">
+      Advertisement (728×90)
+      <!-- ✏️ Paste your Google AdSense 728×90 code here -->
+    </div>
+
+    <div class="related-section">
+      <h2>Related calculators</h2>
+      <div class="related-grid">
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/calculators/date-difference.html">📅 Date Difference</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/calculators/bmi.html">⚖️ BMI Calculator</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/calculators/percentage.html">💯 Percentage Calculator</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/calculators/gpa.html">🎓 GPA Calculator</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/calculators/loan-emi.html">🏦 Loan / EMI Calculator</a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="https://1rohitkhanal.github.io/Fix-kit/index.html">Home</a>
+      <a href="https://1rohitkhanal.github.io/Fix-kit/about.html">About</a>
+      <a href="https://1rohitkhanal.github.io/Fix-kit/privacy.html">Privacy Policy</a>
+      <a href="mailto:your@email.com">Contact</a>
+    </div>
+    <p>© <span id="yr"></span> Fix-Kit · No login required · No data stored on servers · 100% free forever</p>
+  </footer>
+
   <script>
-    // Clean JavaScript
+    document.getElementById('yr').textContent = new Date().getFullYear();
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('calcDate').value = today;
+    document.getElementById('dob').max = today;
+
     function calculateAge() {
-      const dobInput = document.getElementById("dob").value;
-      const result = document.getElementById("result");
+      const dob = new Date(document.getElementById('dob').value);
+      const calc = new Date(document.getElementById('calcDate').value);
+      if (!document.getElementById('dob').value) { alert('Please enter a date of birth.'); return; }
+      if (dob > calc) { alert('Date of birth cannot be after the calculation date.'); return; }
 
-      if (!dobInput) {
-        result.textContent = "Please select your date of birth.";
-        return;
-      }
+      let years = calc.getFullYear() - dob.getFullYear();
+      let months = calc.getMonth() - dob.getMonth();
+      let days = calc.getDate() - dob.getDate();
 
-      const dob = new Date(dobInput);
-      const today = new Date();
+      if (days < 0) { months--; const prev = new Date(calc.getFullYear(), calc.getMonth(), 0); days += prev.getDate(); }
+      if (months < 0) { years--; months += 12; }
 
-      let years = today.getFullYear() - dob.getFullYear();
-      let months = today.getMonth() - dob.getMonth();
-      let days = today.getDate() - dob.getDate();
+      const totalDays = Math.floor((calc - dob) / (1000 * 60 * 60 * 24));
 
-      // Adjust days if negative
-      if (days < 0) {
-        months--;
-        const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
-        days += prevMonth.getDate();
-      }
+      // Next birthday
+      let nextBday = new Date(calc.getFullYear(), dob.getMonth(), dob.getDate());
+      if (nextBday <= calc) nextBday.setFullYear(calc.getFullYear() + 1);
+      const daysToNext = Math.ceil((nextBday - calc) / (1000 * 60 * 60 * 24));
 
-      // Adjust months if negative
-      if (months < 0) {
-        years--;
-        months += 12;
-      }
-
-      result.textContent = `You are ${years} years, ${months} months, and ${days} days old.`;
+      document.getElementById('resYears').textContent = years;
+      document.getElementById('resMonths').textContent = months;
+      document.getElementById('resDays').textContent = days;
+      document.getElementById('resultMain').textContent = `You are ${years} years, ${months} months and ${days} days old`;
+      document.getElementById('resultExtra').textContent =
+        `Total days lived: ${totalDays.toLocaleString()} · Next birthday in ${daysToNext} day${daysToNext !== 1 ? 's' : ''}`;
+      document.getElementById('resultBox').style.display = 'block';
     }
   </script>
 </body>
