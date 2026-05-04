@@ -7,6 +7,12 @@
   <meta name="description" content="Free online tools for PDF, images, text, calculators, developer utilities and more. No login, no limits, no cost."/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <meta name="description" content="70+ free online tools for PDF, images, text, developers and more. No login. No limits. Runs entirely in your browser.">
+  <meta name="keywords" content="free online tools, PDF tools, image tools, developer tools, text tools">
+  <meta property="og:title" content="FIX-KIT — 70+ Free Online Tools">
+  <meta property="og:description" content="Every tool you need, completely free. No login, no uploads, no cost.">
+  <meta property="og:url" content="https://1rohitkhanal.github.io/Fix-kit/">
+  <meta name="twitter:card" content="summary_large_image">
   <style>
     /* ── TOKENS ─────────────────────────────────────────── */
     :root {
@@ -358,10 +364,25 @@
   <h1>Every tool you need,<br><em>completely free</em></h1>
   <p>70+ utilities for PDF, images, text, dev work and more. No login. No limits. No cost.</p>
   <div class="hero-stats">
-    <div class="stat"><span class="stat-num">70+</span><div class="stat-label">Free Tools</div></div>
-    <div class="stat"><span class="stat-num">9</span><div class="stat-label">Categories</div></div>
-    <div class="stat"><span class="stat-num">0</span><div class="stat-label">Sign-ups needed</div></div>
-    <div class="stat"><span class="stat-num">100%</span><div class="stat-label">Client-side</div></div>
+    <!-- Replace your stats section with this -->
+<div class="stats-grid">
+  <div class="stat">
+    <span class="stat-num">70+</span>
+    <span class="stat-label">Free Tools</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">9</span>
+    <span class="stat-label">Categories</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">0</span>
+    <span class="stat-label">Logins Required</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">100%</span>
+    <span class="stat-label">Runs in Browser</span>
+  </div>
+</div>
   </div>
 </section>
 
@@ -560,12 +581,18 @@
   <div class="footer-inner">
     <div class="footer-logo">Fix<span>-</span>Kit</div>
     <div class="footer-links">
-      <a href="index.html">Home</a>
-      <a href="#">About</a>
-      <a href="#">Privacy Policy</a>
-      <a href="#">Contact</a>
+     <nav>
+    <a href="/Fix-kit/index.html">Home</a>
+    <a href="/Fix-kit/about.html">About</a>
+    <a href="/Fix-kit/privacy.html">Privacy Policy</a>
+    <a href="mailto:your@email.com">Contact</a>
+  </nav>
     </div>
-    <p class="footer-copy">© 2025 FIX-KIT · No login required · No data stored on servers · 100% free forever</p>
+   <!-- Replace static © 2025 with this -->
+<p>© <span id="year"></span> FIX-KIT · No login required · No data stored · 100% free forever</p>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
   </div>
 </footer>
 
