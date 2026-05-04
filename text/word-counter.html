@@ -1,267 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Word Counter Pro</title>
-
-<style>
-  :root {
-    --bg: #f5f7fb;
-    --card: #ffffff;
-    --accent: #4f46e5;
-    --text: #1f2937;
-    --muted: #6b7280;
-    --border: #e5e7eb;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Counter Online Free — Count Words, Characters & Sentences | Fix-Kit</title>
+  <meta name="description" content="Count words, characters, sentences and paragraphs instantly online for free. Paste any text and get a full analysis. No login required, works in your browser.">
+  <link rel="canonical" href="https://1rohitkhanal.github.io/Fix-kit/text/word-counter.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Word Counter Online Free | Fix-Kit">
+  <meta property="og:description" content="Count words, characters, sentences and more instantly. Free, no login needed.">
+  <meta property="og:url" content="https://1rohitkhanal.github.io/Fix-kit/text/word-counter.html">
+  <meta property="og:site_name" content="Fix-Kit">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Word Counter — Fix-Kit",
+    "url": "https://1rohitkhanal.github.io/Fix-kit/text/word-counter.html",
+    "description": "Count words, characters, sentences and paragraphs for free online.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "publisher": { "@type": "Organization", "name": "Fix-Kit", "url": "https://1rohitkhanal.github.io/Fix-kit/" }
   }
+  </script>
 
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: "Segoe UI", sans-serif;
-  }
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; color: #111827; min-height: 100vh; }
 
-  body {
-    background: var(--bg);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-  }
+    .navbar { display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; height: 56px; background: #fff; border-bottom: 1px solid #e5e7eb; position: sticky; top: 0; z-index: 100; }
+    .navbar-brand { font-weight: 700; font-size: 1.15rem; text-decoration: none; color: #111827; letter-spacing: -0.02em; }
+    .navbar-brand span { color: #6366f1; }
+    .back-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 13px; font-weight: 500; text-decoration: none; color: #374151; background: #fff; transition: background 0.15s, border-color 0.15s; }
+    .back-btn:hover { background: #f3f4f6; border-color: #9ca3af; }
 
-  .app {
-    width: 100%;
-    max-width: 720px;
-    background: var(--card);
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
+    .ad-slot { background: #f3f4f6; border: 1px dashed #d1d5db; border-radius: 8px; text-align: center; color: #9ca3af; font-size: 12px; display: flex; align-items: center; justify-content: center; }
+    .ad-top { width: 100%; height: 90px; border-radius: 0; border-left: none; border-right: none; border-top: none; background: #fafafa; }
+    .ad-mid { height: 120px; margin: 1.5rem 0; }
+    .ad-bottom { height: 90px; margin: 1.5rem 0; }
 
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+    .breadcrumb { padding: 10px 1.5rem; font-size: 13px; color: #6b7280; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .breadcrumb a { color: #6b7280; text-decoration: none; } .breadcrumb a:hover { color: #4f46e5; }
+    .breadcrumb-sep { color: #d1d5db; }
 
-  .title {
-    font-size: 18px;
-    color: var(--text);
-    font-weight: 600;
-  }
+    .page-wrap { max-width: 820px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem; }
+    .page-header { margin-bottom: 1.5rem; }
+    .page-header h1 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.03em; color: #111827; }
+    .page-header p { margin-top: 6px; color: #6b7280; font-size: 15px; line-height: 1.6; }
 
-  .back-btn {
-    padding: 8px 12px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    background: #fff;
-    cursor: pointer;
-  }
+    /* Stats grid */
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 1.25rem; }
+    @media (max-width: 560px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+    .stat-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 1rem; text-align: center; }
+    .stat-num { display: block; font-size: 1.75rem; font-weight: 700; color: #4f46e5; letter-spacing: -0.03em; }
+    .stat-label { display: block; font-size: 12px; color: #6b7280; margin-top: 2px; }
 
-  textarea {
-    width: 100%;
-    min-height: 160px;
-    padding: 12px;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    resize: vertical;
-    font-size: 14px;
-    outline: none;
-  }
-
-  textarea:focus {
-    border-color: var(--accent);
-  }
-
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 10px;
-  }
-
-  .card {
-    background: #fafafa;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 12px;
-    text-align: center;
-  }
-
-  .num {
-    font-size: 20px;
-    font-weight: bold;
-    color: var(--accent);
-  }
-
-  .label {
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 4px;
-  }
-
-  .controls {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 8px;
-  }
-
-  .btn {
-    padding: 10px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-
-  .primary {
-    background: var(--accent);
-    color: #fff;
-  }
-
-  .secondary {
-    background: #111827;
-    color: #fff;
-  }
-
-  .ghost {
-    background: #fff;
-    border: 1px solid var(--border);
-  }
-
-  .output {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 12px;
-    background: #fafafa;
-    min-height: 80px;
-    white-space: pre-wrap;
-    word-break: break-word;
-    font-size: 13px;
-    color: var(--text);
-  }
-
-  @media (max-width: 480px) {
-    .app {
-      padding: 12px;
+    /* Tool card */
+    .tool-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .tool-card h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: #111827; }
+    textarea {
+      width: 100%; height: 220px; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px;
+      font-size: 14px; line-height: 1.6; resize: vertical; font-family: inherit;
+      color: #111827; background: #f9fafb; transition: border-color 0.15s;
     }
-  }
-</style>
-</head>
+    textarea:focus { outline: none; border-color: #6366f1; background: #fff; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 1rem; }
+    .btn-primary { padding: 10px 24px; background: #6366f1; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.15s; }
+    .btn-primary:hover { background: #4f46e5; }
+    .btn-secondary { padding: 10px 20px; background: #fff; color: #374151; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.15s; }
+    .btn-secondary:hover { background: #f3f4f6; }
 
+    /* Reading time */
+    .reading-time { margin-top: 12px; padding: 10px 14px; background: #eef2ff; border-radius: 8px; font-size: 13px; color: #4338ca; display: none; }
+
+    /* How to use */
+    .how-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .how-section h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: #111827; }
+    .steps { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .steps li { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: #374151; line-height: 1.5; }
+    .step-num { background: #eef2ff; color: #4f46e5; font-weight: 700; font-size: 12px; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+
+    /* Related */
+    .related-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; }
+    .related-section h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: #111827; }
+    .related-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+    .related-link { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; text-decoration: none; color: #374151; background: #f9fafb; transition: border-color 0.15s, background 0.15s; }
+    .related-link:hover { border-color: #6366f1; background: #eef2ff; color: #4f46e5; }
+
+    /* Footer */
+    .site-footer { border-top: 1px solid #e5e7eb; background: #fff; padding: 1.5rem; text-align: center; font-size: 13px; color: #9ca3af; margin-top: 2rem; }
+    .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 10px; }
+    .footer-links a { color: #6b7280; text-decoration: none; } .footer-links a:hover { color: #4f46e5; }
+  </style>
+</head>
 <body>
 
-<div class="app">
+  <!-- ═══ NAVBAR ═══ -->
+  <nav class="navbar">
+    <a class="navbar-brand" href="https://1rohitkhanal.github.io/Fix-kit/index.html">Fix<span>-Kit</span></a>
+    <a class="back-btn" href="https://1rohitkhanal.github.io/Fix-kit/index.html">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to All Tools
+    </a>
+  </nav>
 
-  <div class="header">
-    <button class="back-btn" onclick="goBack()">← Back</button>
-    <div class="title">Word Counter Pro</div>
-    <div></div>
+  <!-- ═══ AD — TOP ═══ -->
+  <div class="ad-slot ad-top">
+    Advertisement
+    <!-- ✏️ Paste your Google AdSense 728×90 code here -->
   </div>
 
-  <textarea id="input" placeholder="Type or paste your text here... live stats will update automatically"></textarea>
-
-  <div class="stats">
-    <div class="card">
-      <div id="words" class="num">0</div>
-      <div class="label">Words</div>
-    </div>
-
-    <div class="card">
-      <div id="chars" class="num">0</div>
-      <div class="label">Characters</div>
-    </div>
-
-    <div class="card">
-      <div id="charsNoSpace" class="num">0</div>
-      <div class="label">Chars (No Spaces)</div>
-    </div>
-
-    <div class="card">
-      <div id="sentences" class="num">0</div>
-      <div class="label">Sentences</div>
-    </div>
+  <!-- ═══ BREADCRUMB ═══ -->
+  <div class="breadcrumb">
+    <a href="https://1rohitkhanal.github.io/Fix-kit/index.html">Home</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="https://1rohitkhanal.github.io/Fix-kit/index.html#text">Text Tools</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>Word Counter</span>
   </div>
 
-  <div class="controls">
-    <button class="btn primary" onclick="analyze()">Analyze</button>
-    <button class="btn ghost" onclick="clearAll()">Clear</button>
-    <button class="btn secondary" onclick="copyText()">Copy Text</button>
+  <div class="page-wrap">
+
+    <div class="page-header">
+      <h1>🔢 Word Counter</h1>
+      <p>Count words, characters, sentences and paragraphs instantly. Paste or type any text and get a full analysis — free, no login required.</p>
+    </div>
+
+    <!-- ═══ AD — MID ═══ -->
+    <div class="ad-slot ad-mid">
+      Advertisement (300×250)
+      <!-- ✏️ Paste your Google AdSense 300×250 code here -->
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card"><span class="stat-num" id="wordCount">0</span><span class="stat-label">Words</span></div>
+      <div class="stat-card"><span class="stat-num" id="charCount">0</span><span class="stat-label">Characters</span></div>
+      <div class="stat-card"><span class="stat-num" id="charNoSpace">0</span><span class="stat-label">Chars (No Spaces)</span></div>
+      <div class="stat-card"><span class="stat-num" id="sentenceCount">0</span><span class="stat-label">Sentences</span></div>
+    </div>
+
+    <!-- Tool card -->
+    <div class="tool-card">
+      <h2>Enter your text</h2>
+      <textarea id="textInput" placeholder="Paste or type your text here…" oninput="analyzeText()"></textarea>
+      <div class="reading-time" id="readingTime"></div>
+      <div class="btn-row">
+        <button class="btn-primary" onclick="analyzeText()">📊 Analyze</button>
+        <button class="btn-secondary" onclick="copyText()">📋 Copy Text</button>
+        <button class="btn-secondary" onclick="clearText()">✕ Clear</button>
+      </div>
+    </div>
+
+    <!-- How to use -->
+    <div class="how-section">
+      <h2>How to use</h2>
+      <ol class="steps">
+        <li><span class="step-num">1</span>Paste or type your text into the box above</li>
+        <li><span class="step-num">2</span>Stats update <strong>live</strong> as you type — no button needed</li>
+        <li><span class="step-num">3</span>Click <strong>Analyze</strong> to also see estimated reading time</li>
+        <li><span class="step-num">4</span>Use <strong>Copy Text</strong> to copy your text back to clipboard</li>
+      </ol>
+    </div>
+
+    <!-- ═══ AD — BOTTOM ═══ -->
+    <div class="ad-slot ad-bottom">
+      Advertisement (728×90)
+      <!-- ✏️ Paste your Google AdSense 728×90 code here -->
+    </div>
+
+    <!-- Related tools -->
+    <div class="related-section">
+      <h2>Related text tools</h2>
+      <div class="related-grid">
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/text/case-converter.html">🔡 Case Converter</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/text/lorem-ipsum.html">📄 Lorem Ipsum Generator</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/text/remove-duplicates.html">🗑️ Remove Duplicates</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/text/sort-lines.html">🔃 Sort Lines</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/text/whitespace-remover.html">🧹 Whitespace Remover</a>
+        <a class="related-link" href="https://1rohitkhanal.github.io/Fix-kit/text/vowel-counter.html">🔤 Vowel Counter</a>
+      </div>
+    </div>
+
   </div>
 
-  <div id="output" class="output"></div>
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="https://1rohitkhanal.github.io/Fix-kit/index.html">Home</a>
+      <a href="https://1rohitkhanal.github.io/Fix-kit/about.html">About</a>
+      <a href="https://1rohitkhanal.github.io/Fix-kit/privacy.html">Privacy Policy</a>
+      <a href="mailto:your@email.com">Contact</a>
+    </div>
+    <p>© <span id="yr"></span> Fix-Kit · No login required · No data stored on servers · 100% free forever</p>
+  </footer>
 
-</div>
+  <script>
+    document.getElementById('yr').textContent = new Date().getFullYear();
 
-<script>
-  const input = document.getElementById('input');
-  const output = document.getElementById('output');
+    function analyzeText() {
+      const text = document.getElementById('textInput').value;
+      const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+      const chars = text.length;
+      const charsNoSpace = text.replace(/\s/g, '').length;
+      const sentences = text.trim() === '' ? 0 : (text.match(/[^.!?]*[.!?]/g) || []).length;
+      document.getElementById('wordCount').textContent = words;
+      document.getElementById('charCount').textContent = chars;
+      document.getElementById('charNoSpace').textContent = charsNoSpace;
+      document.getElementById('sentenceCount').textContent = sentences;
+      const readTime = Math.ceil(words / 200);
+      const rt = document.getElementById('readingTime');
+      if (words > 0) {
+        rt.style.display = 'block';
+        rt.textContent = `⏱ Estimated reading time: ${readTime} min${readTime !== 1 ? 's' : ''} (at 200 words/min)`;
+      } else {
+        rt.style.display = 'none';
+      }
+    }
 
-  function goBack() {
-    if (history.length > 1) history.back();
-    else window.location.href = 'index.html';
-  }
+    function copyText() {
+      const text = document.getElementById('textInput').value;
+      if (!text) return;
+      navigator.clipboard.writeText(text).then(() => alert('Text copied to clipboard!'));
+    }
 
-  function analyze() {
-    const text = input.value || '';
-
-    const words = text.trim().split(/\s+/).filter(w => w.length > 0).length;
-    const chars = text.length;
-    const charsNoSpace = text.replace(/\s/g, '').length;
-    const sentences = (text.match(/[.!?]+/g) || []).length;
-
-    document.getElementById('words').textContent = words;
-    document.getElementById('chars').textContent = chars;
-    document.getElementById('charsNoSpace').textContent = charsNoSpace;
-    document.getElementById('sentences').textContent = sentences;
-
-    // extra pro insights
-    let avgWordLength = words ? (charsNoSpace / words).toFixed(2) : 0;
-
-    output.textContent =
-`📊 Text Analysis Report
-
-Words: ${words}
-Characters: ${chars}
-Characters (no spaces): ${charsNoSpace}
-Sentences: ${sentences}
-Avg Word Length: ${avgWordLength}
-
-Tip: Longer words usually mean more complex writing.`;
-  }
-
-  // LIVE UPDATE (best UX feature)
-  input.addEventListener('input', analyze);
-
-  function clearAll() {
-    input.value = '';
-    output.textContent = '';
-
-    document.getElementById('words').textContent = 0;
-    document.getElementById('chars').textContent = 0;
-    document.getElementById('charsNoSpace').textContent = 0;
-    document.getElementById('sentences').textContent = 0;
-  }
-
-  function copyText() {
-    const text = input.value;
-    if (!text) return;
-
-    navigator.clipboard.writeText(text);
-
-    const btn = event.target;
-    const prev = btn.textContent;
-    btn.textContent = 'Copied!';
-    setTimeout(() => (btn.textContent = prev), 1200);
-  }
-
-  // initial run
-  analyze();
-</script>
-
+    function clearText() {
+      document.getElementById('textInput').value = '';
+      analyzeText();
+    }
+  </script>
 </body>
 </html>
