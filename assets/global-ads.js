@@ -1,5 +1,5 @@
 /**
- * Global AdSense Loader for FIX-KIT
+ * Global AdSense Loader for browser-kit
  * Uses Publisher ID: pub-4267064071274874
  */
 

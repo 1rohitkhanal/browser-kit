@@ -64,7 +64,7 @@ function renderFooter() {
       <a href="#">Privacy Policy</a>
       <a href="#">Contact</a>
     </div>
-    <p class="footer-copy">© 2025 FIX-KIT · No login required · No data stored on servers · 100% free forever</p>
+    <p class="footer-copy">© 2025 browser-kit · No login required · No data stored on servers · 100% free forever</p>
   </div>
 </footer>`;
 }
