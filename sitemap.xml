@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Homepage -->
+  <url>
+    <loc>https://browser-kit.vercel.app/</loc>
+    <lastmod>2026-05-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- PDF Tools -->
+  <url><loc>https://browser-kit.vercel.app/pdf/merge.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/pdf/split.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/pdf/compress.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/pdf/rotate.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/pdf/pdf-to-image.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/pdf/image-to-pdf.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/pdf/watermark.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/pdf/page-numbers.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/pdf/protect.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/pdf/unlock.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/pdf/extract-text.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Image Tools -->
+  <url><loc>https://browser-kit.vercel.app/image/compressor.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/image/resizer.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/image/crop.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/image/converter.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/image/watermark.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/image/add-text.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/image/color-picker.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/image/profile-picture.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/image/ocr.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/image/blur.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Text Tools -->
+  <url><loc>https://browser-kit.vercel.app/text/word-counter.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/text/case-converter.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/text/lorem-ipsum.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/text/text-to-slug.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/text/remove-duplicates.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/text/sort-lines.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/text/reverse-text.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/text/text-repeater.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/text/whitespace-remover.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/text/vowel-counter.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Calculators -->
+  <url><loc>https://browser-kit.vercel.app/calculators/age.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/calculators/percentage.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/calculators/discount.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/calculators/loan-emi.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/calculators/gpa.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/calculators/bmi.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/calculators/tip.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/calculators/scientific.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/calculators/compound-interest.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/calculators/date-difference.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Developer Tools -->
+  <url><loc>https://browser-kit.vercel.app/dev-tool/json-formatter.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/dev-tool/base-64.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/dev-tool/url-encoder.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/dev-tool/html-entity.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/dev-tool/color-converter.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/dev-tool/css-gradient.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/dev-tool/qr-generator.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/dev-tool/qr-scanner.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/dev-tool/regex-tester.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/dev-tool/markdown-preview.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/dev-tool/uuid-generator.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/dev-tool/jwt-decoder.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/dev-tool/cron-helper.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/dev-tool/code-minifier.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/dev-tool/diff-checker.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Security Tools -->
+  <url><loc>https://browser-kit.vercel.app/security/password-generator.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/security/password-checker.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/security/hash-generator.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/security/encrypt-decrypt.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://browser-kit.vercel.app/security/token-generator.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Design & Fun -->
+  <url><loc>https://browser-kit.vercel.app/design/color-palette.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://browser-kit.vercel.app/design/gradient-generator.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://browser-kit.vercel.app/design/meme-generator.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://browser-kit.vercel.app/design/fake-tweet.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://browser-kit.vercel.app/design/love-calculator.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://browser-kit.vercel.app/design/name-generator.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://browser-kit.vercel.app/design/dice-roller.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Social Media Tools -->
+  <url><loc>https://browser-kit.vercel.app/social/yt-thumbnail.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://browser-kit.vercel.app/social/instagram-dp.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://browser-kit.vercel.app/social/hashtag-generator.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://browser-kit.vercel.app/social/bio-generator.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://browser-kit.vercel.app/social/emoji-picker.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://browser-kit.vercel.app/social/fancy-font.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Productivity -->
+  <url><loc>https://browser-kit.vercel.app/productivity/pomodoro.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://browser-kit.vercel.app/productivity/countdown.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://browser-kit.vercel.app/productivity/todo.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://browser-kit.vercel.app/productivity/notes.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://browser-kit.vercel.app/productivity/stopwatch.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://browser-kit.vercel.app/productivity/world-clock.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Static pages -->
+  <url><loc>https://browser-kit.vercel.app/about.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://browser-kit.vercel.app/privacy.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
+
+</urlset>
