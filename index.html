@@ -49,6 +49,7 @@
   <!-- ── FONTS ────────────────────────────────────────── -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
 
   <style>
@@ -656,10 +657,27 @@
 <!-- ─────────────────── NAVBAR ─────────────────── -->
 <nav class="nav" role="banner">
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo" aria-label="browser-kit Home">
-      <div class="nav-logo-icon" aria-hidden="true">⚙</div>
-      <span class="nav-logo-text">browser-kit</span>
-    </a>
+    <a href="/index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+ <svg width="32" height="32" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="96" height="96" rx="22" fill="#1a1a2e"/>
+  <rect x="14" y="22" width="68" height="52" rx="6" fill="#16213e"/>
+  <rect x="14" y="22" width="68" height="14" rx="6" fill="#0f3460"/>
+  <rect x="14" y="28" width="68" height="8" fill="#0f3460"/>
+  <circle cx="24" cy="29" r="3" fill="#e24b4a"/>
+  <circle cx="34" cy="29" r="3" fill="#EF9F27"/>
+  <circle cx="44" cy="29" r="3" fill="#639922"/>
+  <rect x="54" y="25" width="22" height="8" rx="3" fill="#0a2744"/>
+  <g transform="translate(48,58) rotate(-35)">
+    <rect x="-4" y="-18" width="8" height="22" rx="3" fill="#378ADD"/>
+    <rect x="-6" y="-22" width="12" height="7" rx="2" fill="#85B7EB"/>
+    <rect x="-4" y="4" width="8" height="5" rx="1.5" fill="#185FA5"/>
+    <path d="M-8 8 L0 18 L8 8" fill="#185FA5"/>
+  </g>
+  <circle cx="48" cy="58" r="15" fill="none" stroke="#378ADD"
+    stroke-width="1.5" stroke-dasharray="3 2" opacity="0.35"/>
+</svg>
+  <span>browser-kit</span>
+</a>
 
     <div class="search-container">
       <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
