@@ -46,6 +46,7 @@ h1 em{font-style:normal;background:linear-gradient(100deg,var(--ig-a),var(--ig-c
 .go-btn:hover{opacity:.85}
 .go-btn:active{transform:scale(.97)}
 .go-btn svg{width:15px;height:15px}
+.go-btn:disabled{opacity:.5;cursor:not-allowed}
 .hint{margin-top:10px;font-size:11.5px;color:var(--muted2);display:flex;align-items:center;gap:6px}
 .hint-dot{width:4px;height:4px;border-radius:50%;background:var(--b3);flex-shrink:0}
 .hint code{font-size:11px;color:var(--muted);background:var(--s3);border:1px solid var(--b1);border-radius:4px;padding:1px 6px;font-family:monospace}
@@ -66,16 +67,7 @@ h1 em{font-style:normal;background:linear-gradient(100deg,var(--ig-a),var(--ig-c
 .ptop{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:1rem;flex-wrap:wrap}
 .pname{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:-.02em;line-height:1.2;display:flex;align-items:center;gap:5px}
 .phandle{font-size:12.5px;color:var(--muted);margin-top:3px}
-.stats{display:flex;gap:0;background:var(--s2);border:1px solid var(--b1);border-radius:var(--r12);overflow:hidden;margin-bottom:1rem}
-.stat{flex:1;padding:13px 8px;text-align:center;border-right:1px solid var(--b1)}
-.stat:last-child{border-right:none}
-.stat-n{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:800;letter-spacing:-.02em}
-.stat-l{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
-.bio{font-size:13px;color:var(--muted);line-height:1.65;padding:11px 13px;background:var(--s2);border-radius:var(--r8);border-left:2px solid var(--b3);margin-bottom:1rem}
-.website{display:none;align-items:center;gap:6px;font-size:12px;color:var(--pink);text-decoration:none;margin-bottom:1rem;width:fit-content}
-.website:hover{text-decoration:underline}
-.website svg{width:12px;height:12px;opacity:.7}
-.actions{display:flex;gap:10px;flex-wrap:wrap}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:1rem}
 .btn-dl{flex:1;min-width:140px;padding:13px 18px;background:linear-gradient(135deg,var(--ig-c),var(--ig-d),var(--ig-e));border:none;border-radius:var(--r12);color:#fff;font-size:13.5px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .15s,transform .1s}
 .btn-dl:hover{opacity:.85}
 .btn-dl:active{transform:scale(.97)}
@@ -130,7 +122,7 @@ footer a:hover{color:var(--pink)}
         </span>
         <input class="url-input" id="urlInput" type="url" placeholder="https://www.instagram.com/username/" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" />
       </div>
-      <button class="go-btn" onclick="lookup()">
+      <button class="go-btn" id="goBtn" onclick="lookup()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
         View DP
       </button>
@@ -165,20 +157,10 @@ footer a:hover{color:var(--pink)}
             <div class="phandle" id="pHandle"></div>
           </div>
         </div>
-        <div class="stats">
-          <div class="stat"><div class="stat-n" id="sPosts">—</div><div class="stat-l">Posts</div></div>
-          <div class="stat"><div class="stat-n" id="sFollowers">—</div><div class="stat-l">Followers</div></div>
-          <div class="stat"><div class="stat-n" id="sFollowing">—</div><div class="stat-l">Following</div></div>
-        </div>
-        <div class="bio" id="pBio"></div>
-        <a class="website" id="pWebsite" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-          <span id="pWebTxt"></span>
-        </a>
         <div class="actions">
           <button class="btn-dl" onclick="downloadDP()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Download HD DP
+            Download DP
           </button>
           <a class="btn-ghost" id="openBtn" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
@@ -197,8 +179,8 @@ footer a:hover{color:var(--pink)}
     <div class="eyebrow">How it works</div>
     <div class="steps">
       <div class="step"><div class="step-n">01</div><div class="step-t">Copy profile URL</div><div class="step-d">Open any public Instagram profile and copy the URL from your browser address bar.</div></div>
-      <div class="step"><div class="step-n">02</div><div class="step-t">Paste & search</div><div class="step-d">Paste the link above and hit "View DP" — we fetch the HD photo instantly.</div></div>
-      <div class="step"><div class="step-n">03</div><div class="step-t">Download</div><div class="step-d">Hit the download button to save the full-resolution profile picture to your device.</div></div>
+      <div class="step"><div class="step-n">02</div><div class="step-t">Paste & search</div><div class="step-d">Paste the link above and hit "View DP" — we fetch the photo instantly.</div></div>
+      <div class="step"><div class="step-n">03</div><div class="step-t">Download</div><div class="step-d">Hit the download button to save the profile picture to your device.</div></div>
     </div>
   </div>
 
@@ -210,216 +192,121 @@ footer a:hover{color:var(--pink)}
 <div class="toast" id="toast"><div class="toast-dot"></div><span id="toastTxt"></span></div>
 
 <script>
-let dpBase64=null,dpMime='image/jpeg',dpDirectUrl='',currentUsername='';
-function fmt(n){if(n==null||isNaN(Number(n)))return'—';n=Number(n);if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return n.toLocaleString()}
+/*
+  100% client-side — no backend, no serverless function, no API key.
+
+  How it gets the picture:
+  Browsers can't read cross-origin HTML directly (CORS blocks it), and
+  instagram.com doesn't allow that from arbitrary websites. So we route
+  the page fetch through api.allorigins.win, a free public CORS proxy
+  built specifically for use with browser fetch() — it adds the
+  Access-Control-Allow-Origin header browsers require. We then pull the
+  "og:image" meta tag out of the returned HTML — that tag is the profile
+  picture Instagram already shows to anyone, logged out or not.
+
+  Trade-off: relying on a free public proxy means occasional slowness or
+  downtime is possible if that proxy is having issues — there's no paid
+  fallback here since the whole point is zero cost / zero signup.
+*/
+
+let dpDirectUrl = '';
+let currentUsername = '';
+
 function showErr(m){const b=document.getElementById('errBox');document.getElementById('errMsg').textContent=m;b.style.display='flex'}
 function hideErr(){document.getElementById('errBox').style.display='none'}
 function toast(msg,ms=2600){const t=document.getElementById('toast');document.getElementById('toastTxt').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),ms)}
-function setLoader(on){document.getElementById('loader').style.display=on?'block':'none'}
+function setLoader(on){document.getElementById('loader').style.display=on?'block':'none';document.getElementById('goBtn').disabled=on}
 function setResult(on){document.getElementById('result').style.display=on?'block':'none'}
 
+function extractUsername(raw){
+  raw = raw.trim();
+  let username = '';
+  if (raw.includes('instagram.com')) {
+    if (!raw.startsWith('http')) raw = 'https://' + raw;
+    try {
+      const parsed = new URL(raw);
+      const parts = parsed.pathname.split('/').filter(Boolean);
+      username = parts[0] || '';
+    } catch { username = ''; }
+  } else {
+    username = raw.replace(/^@/, '');
+  }
+  return username.toLowerCase().replace(/[^a-z0-9._]/g, '');
+}
+
 async function lookup(){
-  const raw=document.getElementById('urlInput').value.trim();
-  hideErr();setResult(false);setLoader(false);
-  if(!raw){showErr('Paste an Instagram profile URL or username first.');return}
+  const raw = document.getElementById('urlInput').value.trim();
+  hideErr(); setResult(false); setLoader(false);
+  if (!raw) { showErr('Paste an Instagram profile URL or username first.'); return; }
+
+  const username = extractUsername(raw);
+  if (!username) { showErr('Could not read a username from that — check the link and try again.'); return; }
+
   setLoader(true);
-  try{
-    const res=await fetch('/api/instagram?url='+encodeURIComponent(raw));
-    const data=await res.json();
-    if(!res.ok||!data.success)throw new Error(data.error||'Profile not found or account is private.');
-    dpBase64=data.profile_pic_base64||null;
-    dpMime=data.profile_pic_mime||'image/jpeg';
-    dpDirectUrl=data.profile_pic_url||'';
-    currentUsername=data.username||'instagram_dp';
-    const imgSrc=dpBase64?`data:${dpMime};base64,${dpBase64}`:dpDirectUrl;
-    const avImg=document.getElementById('avImg');
-    avImg.src=imgSrc;
-    avImg.onerror=()=>{avImg.src=dpDirectUrl};
-    const nameEl=document.getElementById('pName');
-    nameEl.textContent=data.full_name||data.username;
-    if(data.is_verified){
-      const sv=document.createElementNS('http://www.w3.org/2000/svg','svg');
-      sv.setAttribute('viewBox','0 0 24 24');sv.setAttribute('width','15');sv.setAttribute('height','15');sv.setAttribute('fill','#3897f0');
-      sv.innerHTML='<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5l-4-4 1.41-1.41L10 13.67l6.59-6.59L18 8.5l-8 8z"/>';
-      nameEl.appendChild(sv);
-    }
-    document.getElementById('pHandle').textContent='@'+data.username;
-    document.getElementById('sPosts').textContent=fmt(data.media_count);
-    document.getElementById('sFollowers').textContent=fmt(data.follower_count);
-    document.getElementById('sFollowing').textContent=fmt(data.following_count);
-    const bio=data.biography||'';
-    const bioEl=document.getElementById('pBio');
-    bioEl.textContent=bio;bioEl.style.display=bio?'block':'none';
-    const web=data.external_url||'';
-    const webEl=document.getElementById('pWebsite');
-    if(web){webEl.href=web.startsWith('http')?web:'https://'+web;document.getElementById('pWebTxt').textContent=web.replace(/^https?:\/\//,'');webEl.style.display='flex'}
-    else webEl.style.display='none';
-    document.getElementById('openBtn').href=dpDirectUrl;
+  try {
+    const igUrl = `https://www.instagram.com/${encodeURIComponent(username)}/`;
+    // api.allorigins.win fetches a page server-side and returns it with
+    // an Access-Control-Allow-Origin header, so browser fetch() can read it.
+    const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(igUrl);
+
+    const res = await fetch(proxyUrl);
+    if (!res.ok) throw new Error('Could not reach that profile. It may be private or the username is wrong.');
+    const text = await res.text();
+
+    // Look for the og:image URL inside the fetched HTML
+    const metaMatch = text.match(/<meta property="og:image" content="([^"]+)"/);
+    const cdnMatch = text.match(/https:\/\/[^\s")]+?(?:cdninstagram|fbcdn)[^\s")]+?\.(?:jpg|jpeg|png)[^\s")]*/i);
+    const found = metaMatch ? metaMatch[1] : (cdnMatch ? cdnMatch[0] : null);
+    if (!found) throw new Error('Profile not found, private, or the picture could not be located.');
+
+    dpDirectUrl = found.replace(/&amp;/g, '&');
+    currentUsername = username;
+
+    const avImg = document.getElementById('avImg');
+    avImg.src = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(dpDirectUrl);
+    avImg.onerror = () => { avImg.src = dpDirectUrl; };
+
+    document.getElementById('pName').textContent = username;
+    document.getElementById('pHandle').textContent = '@' + username;
+    document.getElementById('openBtn').href = dpDirectUrl;
+
     setResult(true);
-    document.getElementById('result').scrollIntoView({behavior:'smooth',block:'nearest'});
-  }catch(err){
-    showErr(err.message||'Something went wrong. Check the URL and try again.');
-  }finally{setLoader(false)}
+    document.getElementById('result').scrollIntoView({behavior:'smooth', block:'nearest'});
+  } catch (err) {
+    showErr(err.message || 'Something went wrong. Check the URL and try again.');
+  } finally {
+    setLoader(false);
+  }
 }
 
 async function downloadDP(){
-  if(dpBase64){
-    try{
-      const b=atob(dpBase64),arr=new Uint8Array(b.length);
-      for(let i=0;i<b.length;i++)arr[i]=b.charCodeAt(i);
-      const blob=new Blob([arr],{type:dpMime});
-      const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=currentUsername+'_dp.jpg';
-      document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(a.href);
-      toast('Saved to downloads!');return;
-    }catch{}
-  }
-  if(dpDirectUrl){
-    try{
-      toast('Downloading…');
-      const r=await fetch('https://corsproxy.io/?'+encodeURIComponent(dpDirectUrl));
-      if(!r.ok)throw new Error();
-      const blob=await r.blob();
-      const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=currentUsername+'_dp.jpg';
-      document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(a.href);
-      toast('Saved to downloads!');
-    }catch{
-      window.open(dpDirectUrl,'_blank');
-      toast('Opened in new tab — right-click to save');
-    }
+  if (!dpDirectUrl) return;
+  try {
+    toast('Downloading…');
+    // Images load fine cross-origin in <img>, but saving as a file needs the
+    // actual bytes, which needs a CORS-friendly fetch — same proxy as above.
+    const r = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(dpDirectUrl));
+    if (!r.ok) throw new Error();
+    const blob = await r.blob();
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = currentUsername + '_dp.jpg';
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(a.href);
+    toast('Saved to downloads!');
+  } catch {
+    window.open(dpDirectUrl, '_blank');
+    toast('Opened in new tab — right-click to save');
   }
 }
 
 async function copyImgLink(){
-  if(!dpDirectUrl)return;
-  try{await navigator.clipboard.writeText(dpDirectUrl);toast('Image link copied!')}
-  catch{toast('Could not copy — try right-clicking the image.')}
+  if (!dpDirectUrl) return;
+  try { await navigator.clipboard.writeText(dpDirectUrl); toast('Image link copied!'); }
+  catch { toast('Could not copy — try right-clicking the image.'); }
 }
 
-document.getElementById('urlInput').addEventListener('keydown',e=>{if(e.key==='Enter')lookup()});
-// api/instagram.js — Vercel Serverless Function
-// FREE version — no API key, no RapidAPI account, no bank card required.
-// Reads Instagram's own public profile page and grabs the og:image meta tag,
-// which is the profile picture Instagram already serves to anyone (even logged out).
-//
-// Trade-off vs a paid scraper API:
-//  - You get: profile picture, display name
-//  - You do NOT get: follower/following/post counts, bio, verified badge
-//    (those require a logged-in session or a paid API — Instagram doesn't
-//    expose them publicly anymore)
-
-export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
-  if (req.method === 'OPTIONS') return res.status(200).end();
-  if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
-
-  const { url } = req.query;
-  if (!url) {
-    return res.status(400).json({ error: 'Missing url parameter' });
-  }
-
-  // ── Extract username ──────────────────────────────────────────────────
-  let username = '';
-  try {
-    let raw = url.trim();
-    if (raw.includes('instagram.com')) {
-      if (!raw.startsWith('http')) raw = 'https://' + raw;
-      const parsed = new URL(raw);
-      const parts = parsed.pathname.split('/').filter(Boolean);
-      username = parts[0] || '';
-    } else {
-      username = raw.replace(/^@/, '');
-    }
-    username = username.toLowerCase().replace(/[^a-z0-9._]/g, '');
-  } catch {
-    return res.status(400).json({ error: 'Invalid Instagram URL or username' });
-  }
-
-  if (!username) {
-    return res.status(400).json({ error: 'Could not extract username from URL' });
-  }
-
-  // ── Fetch the public profile page ─────────────────────────────────────
-  try {
-    const pageRes = await fetch(`https://www.instagram.com/${encodeURIComponent(username)}/`, {
-      headers: {
-        // A normal browser UA — Instagram serves a stripped logged-out HTML
-        // page to bots/no-UA requests, so this needs to look like a browser.
-        'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36',
-        'Accept-Language': 'en-US,en;q=0.9',
-      },
-    });
-
-    if (!pageRes.ok) {
-      return res.status(404).json({ error: 'Profile not found or account is private' });
-    }
-
-    const html = await pageRes.text();
-
-    // og:image → the profile picture Instagram exposes publicly
-    const imageMatch = html.match(/<meta property="og:image" content="([^"]+)"/);
-    // og:title → usually "Full Name (@username) • Instagram photos and videos"
-    const titleMatch = html.match(/<meta property="og:title" content="([^"]+)"/);
-
-    if (!imageMatch) {
-      return res.status(404).json({ error: 'Profile not found, private, or Instagram blocked this request' });
-    }
-
-    // Decode HTML entities Instagram sometimes includes (&amp; etc.)
-    const decode = (s) =>
-      s
-        .replace(/&amp;/g, '&')
-        .replace(/&quot;/g, '"')
-        .replace(/&#039;/g, "'")
-        .replace(/&lt;/g, '<')
-        .replace(/&gt;/g, '>');
-
-    const dpUrl = decode(imageMatch[1]);
-    let fullName = username;
-    if (titleMatch) {
-      // Strip the " (@username) • Instagram..." suffix, keep just the name
-      fullName = decode(titleMatch[1]).split(' (@')[0].trim() || username;
-    }
-
-    // ── Proxy-fetch the image so the frontend can download it directly ────
-    let dpBase64 = null;
-    let dpMime = 'image/jpeg';
-    try {
-      const imgRes = await fetch(dpUrl, {
-        headers: { 'User-Agent': 'Mozilla/5.0 (compatible; bot/1.0)' },
-      });
-      if (imgRes.ok) {
-        const buffer = await imgRes.arrayBuffer();
-        dpBase64 = Buffer.from(buffer).toString('base64');
-        dpMime = imgRes.headers.get('content-type') || 'image/jpeg';
-      }
-    } catch {
-      // If proxying fails, frontend falls back to the direct URL
-    }
-
-    return res.status(200).json({
-      success: true,
-      username,
-      full_name: fullName,
-      biography: '',
-      external_url: '',
-      is_verified: false,
-      is_private: false,
-      profile_pic_url: dpUrl,
-      profile_pic_base64: dpBase64,
-      profile_pic_mime: dpMime,
-      media_count: null,
-      follower_count: null,
-      following_count: null,
-    });
-  } catch (err) {
-    console.error('Handler error:', err);
-    return res.status(500).json({ error: 'Internal server error' });
-  }
-}
+document.getElementById('urlInput').addEventListener('keydown', e => { if (e.key === 'Enter') lookup(); });
 </script>
 </body>
 </html>
