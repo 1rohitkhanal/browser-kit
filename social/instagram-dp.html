@@ -211,9 +211,9 @@ footer a:hover{color:var(--pink)}
 
 <script>
 
-
 // api/instagram.js — Vercel Serverless Function
-// Place this file at /api/instagram.js in your browser-kit repo root
+// This file must live at /api/instagram.js in your repo root.
+// Vercel automatically turns it into a live endpoint at /api/instagram
 
 export default async function handler(req, res) {
   // CORS headers — allow your domain
@@ -238,14 +238,11 @@ export default async function handler(req, res) {
     let raw = url.trim();
 
     if (raw.includes('instagram.com')) {
-      // Parse as URL
       if (!raw.startsWith('http')) raw = 'https://' + raw;
       const parsed = new URL(raw);
-      // pathname is like /username or /username/
       const parts = parsed.pathname.split('/').filter(Boolean);
       username = parts[0] || '';
     } else {
-      // Plain username or @username
       username = raw.replace(/^@/, '');
     }
 
@@ -258,7 +255,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Could not extract username from URL' });
   }
 
-  // ── RapidAPI call ───────────────────────────────────────────────────────────
+  // ── RapidAPI call ───────────────────────────────────────────────────────
   // Set your key in Vercel Environment Variables as RAPIDAPI_KEY
   // Dashboard → Your Project → Settings → Environment Variables
   const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY;
@@ -291,7 +288,7 @@ export default async function handler(req, res) {
       return res.status(404).json({ error: 'Profile not found or account is private' });
     }
 
-    // ── Now proxy-fetch the DP image to avoid CORS on the frontend ────────────
+    // ── Proxy-fetch the DP image to avoid CORS on the frontend ────────────
     const dpUrl = d.profile_pic_url_hd || d.profile_pic_url || '';
     let dpBase64 = null;
     let dpMime = 'image/jpeg';
@@ -314,7 +311,7 @@ export default async function handler(req, res) {
       }
     }
 
-    // ── Return clean response ────────────────────────────────────────────────
+    // ── Return clean response ──────────────────────────────────────────────
     return res.status(200).json({
       success: true,
       username: d.username,
@@ -324,7 +321,7 @@ export default async function handler(req, res) {
       is_verified: d.is_verified || false,
       is_private: d.is_private || false,
       profile_pic_url: dpUrl,
-      profile_pic_base64: dpBase64,   // base64 image — use this for download
+      profile_pic_base64: dpBase64,
       profile_pic_mime: dpMime,
       media_count: d.media_count ?? d.edge_owner_to_timeline_media?.count ?? null,
       follower_count: d.follower_count ?? d.edge_followed_by?.count ?? null,
@@ -336,92 +333,6 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Internal server error' });
   }
 }
-let dpBase64=null,dpMime='image/jpeg',dpDirectUrl='',currentUsername='';
-function fmt(n){if(n==null||isNaN(Number(n)))return'—';n=Number(n);if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return n.toLocaleString()}
-function showErr(m){const b=document.getElementById('errBox');document.getElementById('errMsg').textContent=m;b.style.display='flex'}
-function hideErr(){document.getElementById('errBox').style.display='none'}
-function toast(msg,ms=2600){const t=document.getElementById('toast');document.getElementById('toastTxt').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),ms)}
-function setLoader(on){document.getElementById('loader').style.display=on?'block':'none'}
-function setResult(on){document.getElementById('result').style.display=on?'block':'none'}
-
-async function lookup(){
-  const raw=document.getElementById('urlInput').value.trim();
-  hideErr();setResult(false);setLoader(false);
-  if(!raw){showErr('Paste an Instagram profile URL or username first.');return}
-  setLoader(true);
-  try{
-    const res=await fetch('/api/instagram?url='+encodeURIComponent(raw));
-    const data=await res.json();
-    if(!res.ok||!data.success)throw new Error(data.error||'Profile not found or account is private.');
-    dpBase64=data.profile_pic_base64||null;
-    dpMime=data.profile_pic_mime||'image/jpeg';
-    dpDirectUrl=data.profile_pic_url||'';
-    currentUsername=data.username||'instagram_dp';
-    const imgSrc=dpBase64?`data:${dpMime};base64,${dpBase64}`:dpDirectUrl;
-    const avImg=document.getElementById('avImg');
-    avImg.src=imgSrc;
-    avImg.onerror=()=>{avImg.src=dpDirectUrl};
-    const nameEl=document.getElementById('pName');
-    nameEl.textContent=data.full_name||data.username;
-    if(data.is_verified){
-      const sv=document.createElementNS('http://www.w3.org/2000/svg','svg');
-      sv.setAttribute('viewBox','0 0 24 24');sv.setAttribute('width','15');sv.setAttribute('height','15');sv.setAttribute('fill','#3897f0');
-      sv.innerHTML='<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5l-4-4 1.41-1.41L10 13.67l6.59-6.59L18 8.5l-8 8z"/>';
-      nameEl.appendChild(sv);
-    }
-    document.getElementById('pHandle').textContent='@'+data.username;
-    document.getElementById('sPosts').textContent=fmt(data.media_count);
-    document.getElementById('sFollowers').textContent=fmt(data.follower_count);
-    document.getElementById('sFollowing').textContent=fmt(data.following_count);
-    const bio=data.biography||'';
-    const bioEl=document.getElementById('pBio');
-    bioEl.textContent=bio;bioEl.style.display=bio?'block':'none';
-    const web=data.external_url||'';
-    const webEl=document.getElementById('pWebsite');
-    if(web){webEl.href=web.startsWith('http')?web:'https://'+web;document.getElementById('pWebTxt').textContent=web.replace(/^https?:\/\//,'');webEl.style.display='flex'}
-    else webEl.style.display='none';
-    document.getElementById('openBtn').href=dpDirectUrl;
-    setResult(true);
-    document.getElementById('result').scrollIntoView({behavior:'smooth',block:'nearest'});
-  }catch(err){
-    showErr(err.message||'Something went wrong. Check the URL and try again.');
-  }finally{setLoader(false)}
-}
-
-async function downloadDP(){
-  if(dpBase64){
-    try{
-      const b=atob(dpBase64),arr=new Uint8Array(b.length);
-      for(let i=0;i<b.length;i++)arr[i]=b.charCodeAt(i);
-      const blob=new Blob([arr],{type:dpMime});
-      const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=currentUsername+'_dp.jpg';
-      document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(a.href);
-      toast('Saved to downloads!');return;
-    }catch{}
-  }
-  if(dpDirectUrl){
-    try{
-      toast('Downloading…');
-      const r=await fetch('https://corsproxy.io/?'+encodeURIComponent(dpDirectUrl));
-      if(!r.ok)throw new Error();
-      const blob=await r.blob();
-      const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=currentUsername+'_dp.jpg';
-      document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(a.href);
-      toast('Saved to downloads!');
-    }catch{
-      window.open(dpDirectUrl,'_blank');
-      toast('Opened in new tab — right-click to save');
-    }
-  }
-}
-
-async function copyImgLink(){
-  if(!dpDirectUrl)return;
-  try{await navigator.clipboard.writeText(dpDirectUrl);toast('Image link copied!')}
-  catch{toast('Could not copy — try right-clicking the image.')}
-}
-
-document.getElementById('urlInput').addEventListener('keydown',e=>{if(e.key==='Enter')lookup()});
 </script>
 </body>
 </html>
