@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Instagram DP Viewer — Download HD Profile Pictures Free</title>
 <meta name="description" content="Paste any Instagram profile URL and download the profile picture in full HD. Free, instant, no login required.">
+<script src="/assets/global-ads.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
@@ -193,23 +194,16 @@ footer a:hover{color:var(--pink)}
 
 <script>
 /*
-  100% client-side — no backend, no serverless function, no API key.
-
-  How it gets the picture:
-  Browsers can't read cross-origin HTML directly (CORS blocks it), and
-  instagram.com doesn't allow that from arbitrary websites. So we route
-  the page fetch through api.allorigins.win, a free public CORS proxy
-  built specifically for use with browser fetch() — it adds the
-  Access-Control-Allow-Origin header browsers require. We then pull the
-  "og:image" meta tag out of the returned HTML — that tag is the profile
-  picture Instagram already shows to anyone, logged out or not.
-
-  Trade-off: relying on a free public proxy means occasional slowness or
-  downtime is possible if that proxy is having issues — there's no paid
-  fallback here since the whole point is zero cost / zero signup.
+  Uses your own tiny serverless function at /api/instagram (see api/instagram.js
+  in your repo root). No third-party API key, no account, no card — Vercel's
+  free tier runs this for free. Server-to-server requests aren't subject to
+  browser CORS rules, so this avoids the reliability problems of public
+  client-side CORS proxies.
 */
 
 let dpDirectUrl = '';
+let dpBase64 = null;
+let dpMime = 'image/jpeg';
 let currentUsername = '';
 
 function showErr(m){const b=document.getElementById('errBox');document.getElementById('errMsg').textContent=m;b.style.display='flex'}
@@ -218,56 +212,28 @@ function toast(msg,ms=2600){const t=document.getElementById('toast');document.ge
 function setLoader(on){document.getElementById('loader').style.display=on?'block':'none';document.getElementById('goBtn').disabled=on}
 function setResult(on){document.getElementById('result').style.display=on?'block':'none'}
 
-function extractUsername(raw){
-  raw = raw.trim();
-  let username = '';
-  if (raw.includes('instagram.com')) {
-    if (!raw.startsWith('http')) raw = 'https://' + raw;
-    try {
-      const parsed = new URL(raw);
-      const parts = parsed.pathname.split('/').filter(Boolean);
-      username = parts[0] || '';
-    } catch { username = ''; }
-  } else {
-    username = raw.replace(/^@/, '');
-  }
-  return username.toLowerCase().replace(/[^a-z0-9._]/g, '');
-}
-
 async function lookup(){
   const raw = document.getElementById('urlInput').value.trim();
   hideErr(); setResult(false); setLoader(false);
   if (!raw) { showErr('Paste an Instagram profile URL or username first.'); return; }
 
-  const username = extractUsername(raw);
-  if (!username) { showErr('Could not read a username from that — check the link and try again.'); return; }
-
   setLoader(true);
   try {
-    const igUrl = `https://www.instagram.com/${encodeURIComponent(username)}/`;
-    // api.allorigins.win fetches a page server-side and returns it with
-    // an Access-Control-Allow-Origin header, so browser fetch() can read it.
-    const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(igUrl);
+    const res = await fetch('/api/instagram?url=' + encodeURIComponent(raw));
+    const data = await res.json();
+    if (!res.ok || !data.success) throw new Error(data.error || 'Profile not found or account is private.');
 
-    const res = await fetch(proxyUrl);
-    if (!res.ok) throw new Error('Could not reach that profile. It may be private or the username is wrong.');
-    const text = await res.text();
-
-    // Look for the og:image URL inside the fetched HTML
-    const metaMatch = text.match(/<meta property="og:image" content="([^"]+)"/);
-    const cdnMatch = text.match(/https:\/\/[^\s")]+?(?:cdninstagram|fbcdn)[^\s")]+?\.(?:jpg|jpeg|png)[^\s")]*/i);
-    const found = metaMatch ? metaMatch[1] : (cdnMatch ? cdnMatch[0] : null);
-    if (!found) throw new Error('Profile not found, private, or the picture could not be located.');
-
-    dpDirectUrl = found.replace(/&amp;/g, '&');
-    currentUsername = username;
+    dpBase64 = data.profile_pic_base64 || null;
+    dpMime = data.profile_pic_mime || 'image/jpeg';
+    dpDirectUrl = data.profile_pic_url || '';
+    currentUsername = data.username || 'instagram_dp';
 
     const avImg = document.getElementById('avImg');
-    avImg.src = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(dpDirectUrl);
+    avImg.src = dpBase64 ? `data:${dpMime};base64,${dpBase64}` : dpDirectUrl;
     avImg.onerror = () => { avImg.src = dpDirectUrl; };
 
-    document.getElementById('pName').textContent = username;
-    document.getElementById('pHandle').textContent = '@' + username;
+    document.getElementById('pName').textContent = data.full_name || data.username;
+    document.getElementById('pHandle').textContent = '@' + data.username;
     document.getElementById('openBtn').href = dpDirectUrl;
 
     setResult(true);
@@ -280,21 +246,21 @@ async function lookup(){
 }
 
 async function downloadDP(){
-  if (!dpDirectUrl) return;
-  try {
-    toast('Downloading…');
-    // Images load fine cross-origin in <img>, but saving as a file needs the
-    // actual bytes, which needs a CORS-friendly fetch — same proxy as above.
-    const r = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(dpDirectUrl));
-    if (!r.ok) throw new Error();
-    const blob = await r.blob();
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = currentUsername + '_dp.jpg';
-    document.body.appendChild(a); a.click(); a.remove();
-    URL.revokeObjectURL(a.href);
-    toast('Saved to downloads!');
-  } catch {
+  if (dpBase64) {
+    try {
+      const b = atob(dpBase64), arr = new Uint8Array(b.length);
+      for (let i = 0; i < b.length; i++) arr[i] = b.charCodeAt(i);
+      const blob = new Blob([arr], { type: dpMime });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = currentUsername + '_dp.jpg';
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(a.href);
+      toast('Saved to downloads!');
+      return;
+    } catch {}
+  }
+  if (dpDirectUrl) {
     window.open(dpDirectUrl, '_blank');
     toast('Opened in new tab — right-click to save');
   }
