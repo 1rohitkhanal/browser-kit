@@ -8,6 +8,29 @@
 <title>Instagram DP Viewer — Download HD Profile Pictures Free</title>
 <meta name="description" content="Paste any Instagram profile URL and download the profile picture in full HD. Free, instant, no login required.">
 <script src="/assets/global-ads.js"></script>
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Instagram DP Viewer HD">
+<meta property="og:description" content="Download Instagram Profile Pictures in HD for free.">
+<meta property="og:image" content="/images/preview.png">
+
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="canonical" href="https://browser-kit.vercel.app/instagram-dp-viewer">
+
+<meta name="robots" content="index,follow,max-image-preview:large">
+
+<script type="application/ld+json">
+{
+ "@context":"https://schema.org",
+ "@type":"WebApplication",
+ "name":"Instagram DP Viewer",
+ "applicationCategory":"Utility",
+ "url":"https://browser-kit.vercel.app/instagram-dp-viewer",
+ "operatingSystem":"Any"
+}
+</script>
+  
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
@@ -102,6 +125,16 @@ footer a:hover{color:var(--pink)}
   .steps{grid-template-columns:1fr}
 }
 @media(prefers-reduced-motion:reduce){.ring{animation:none;border-top-color:var(--pink)}*{transition:none!important}}
+
+  .ad-container{
+    margin:35px 0;
+    padding:15px;
+    background:#111;
+    border:1px solid #222;
+    border-radius:14px;
+    text-align:center;
+    overflow:hidden;
+}
 </style>
 </head>
 <body>
@@ -116,6 +149,15 @@ footer a:hover{color:var(--pink)}
     <h1>View & download any<br><em>Instagram DP</em> in HD</h1>
     <p class="subtitle">Paste a profile URL — get the full-size photo instantly. No login, no signup, always free.</p>
   </header>
+
+  <div class="ad-container">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4267064071274874"
+         data-ad-slot="YOUR_SLOT_ID"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+</div>
 
   <div class="main-card">
     <div class="url-row">
@@ -275,6 +317,7 @@ async function copyImgLink(){
 }
 
 document.getElementById('urlInput').addEventListener('keydown', e => { if (e.key === 'Enter') lookup(); });
+  (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 </body>
 </html>
