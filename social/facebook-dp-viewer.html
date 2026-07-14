@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="google-adsense-account" content="ca-pub-4267064071274874">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image URL Viewer & Downloader — Preview and Save Any Image Link</title>
+<meta name="description" content="Paste any direct image URL to preview it full-size and download it instantly. Works with JPG, PNG, WEBP, GIF, SVG. Free, no login, runs entirely in your browser.">
+<script src="/assets/global-ads.js"></script>
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Image URL Viewer & Downloader">
+<meta property="og:description" content="Paste any direct image link, preview it full-size, and download it — free, instant, no login.">
+<meta property="og:image" content="/images/preview-image-viewer.png">
+
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="canonical" href="https://browser-kit.vercel.app/image-url-viewer">
+
+<meta name="robots" content="index,follow,max-image-preview:large">
+
+<script type="application/ld+json">
+{
+ "@context":"https://schema.org",
+ "@type":"WebApplication",
+ "name":"Image URL Viewer & Downloader",
+ "applicationCategory":"Utility",
+ "url":"https://browser-kit.vercel.app/image-url-viewer",
+ "operatingSystem":"Any",
+ "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#080808;--s1:#111;--s2:#171717;--s3:#1e1e1e;
+  --b1:#252525;--b2:#2e2e2e;--b3:#3a3a3a;
+  --text:#f0f0f0;--muted:#666;--muted2:#444;
+  --a:#4fd1c5;--b:#38b2ac;--accent:#4fd1c5;
+  --r8:8px;--r12:12px;--r16:16px;--r20:20px;--r999:999px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 55% 35% at 15% 0%,rgba(79,209,197,.07) 0%,transparent 70%),
+    radial-gradient(ellipse 40% 30% at 85% 90%,rgba(56,178,172,.06) 0%,transparent 70%);
+}
+.page{position:relative;z-index:1;max-width:660px;margin:0 auto;padding:3.5rem 1.25rem 6rem}
+header{text-align:center;margin-bottom:3rem}
+.logo{display:inline-flex;align-items:center;gap:9px;text-decoration:none;margin-bottom:2.2rem}
+.logo-icon{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,var(--a),var(--b));display:flex;align-items:center;justify-content:center}
+.logo-icon svg{width:18px;height:18px;fill:#08201e}
+.logo-name{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;color:var(--text);letter-spacing:-.02em}
+h1{font-family:'Syne',sans-serif;font-size:clamp(2rem,5.5vw,2.9rem);font-weight:800;line-height:1.08;letter-spacing:-.035em;margin-bottom:.85rem}
+h1 em{font-style:normal;background:linear-gradient(100deg,var(--a),var(--b));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.subtitle{font-size:.9rem;color:var(--muted);line-height:1.65;max-width:400px;margin:0 auto}
+.main-card{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r20);padding:1.5rem;margin-bottom:1.25rem}
+.url-row{display:flex;gap:10px;align-items:stretch}
+.url-field{flex:1;display:flex;align-items:center;gap:10px;background:var(--s2);border:1px solid var(--b2);border-radius:var(--r12);padding:0 14px;transition:border-color .18s,box-shadow .18s}
+.url-field:focus-within{border-color:rgba(79,209,197,.5);box-shadow:0 0 0 3px rgba(79,209,197,.1)}
+.link-icon{flex-shrink:0;opacity:.4}
+.link-icon svg{display:block;width:16px;height:16px;stroke:var(--text)}
+.url-input{flex:1;background:transparent;border:none;outline:none;color:var(--text);font-size:14px;font-family:'Inter',sans-serif;padding:14px 0}
+.url-input::placeholder{color:var(--muted2)}
+.go-btn{padding:0 22px;height:50px;background:linear-gradient(135deg,var(--a),var(--b));border:none;border-radius:var(--r12);color:#08201e;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;display:flex;align-items:center;gap:7px;transition:opacity .15s,transform .1s}
+.go-btn:hover{opacity:.85}
+.go-btn:active{transform:scale(.97)}
+.go-btn svg{width:15px;height:15px;stroke:#08201e}
+.go-btn:disabled{opacity:.5;cursor:not-allowed}
+.hint{margin-top:10px;font-size:11.5px;color:var(--muted2);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.hint-dot{width:4px;height:4px;border-radius:50%;background:var(--b3);flex-shrink:0}
+.hint code{font-size:11px;color:var(--muted);background:var(--s3);border:1px solid var(--b1);border-radius:4px;padding:1px 6px;font-family:monospace}
+.error-box{display:none;margin-top:12px;background:rgba(220,80,60,.08);border:1px solid rgba(220,80,60,.2);border-radius:var(--r8);padding:10px 14px;font-size:13px;color:#ff8a70;align-items:center;gap:8px}
+.error-box svg{width:15px;height:15px;flex-shrink:0;opacity:.8}
+.loader{display:none;text-align:center;padding:3rem 1rem}
+.ring{width:44px;height:44px;border-radius:50%;border:2.5px solid var(--b2);border-top-color:var(--accent);animation:spin .65s linear infinite;margin:0 auto 14px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loader-txt{font-size:13px;color:var(--muted)}
+.result{display:none}
+.preview-card{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r20);overflow:hidden;margin-bottom:12px}
+.preview-frame{background:
+    linear-gradient(45deg,#151515 25%,transparent 25%),
+    linear-gradient(-45deg,#151515 25%,transparent 25%),
+    linear-gradient(45deg,transparent 75%,#151515 75%),
+    linear-gradient(-45deg,transparent 75%,#151515 75%);
+  background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0;
+  background-color:#0d0d0d;
+  display:flex;align-items:center;justify-content:center;
+  min-height:200px;max-height:420px;overflow:hidden;
+}
+.preview-frame img{max-width:100%;max-height:420px;display:block;object-fit:contain}
+.pbody{padding:1.1rem 1.25rem 1.25rem}
+.ptop{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:1rem;flex-wrap:wrap}
+.pname{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;letter-spacing:-.02em;line-height:1.3;word-break:break-all}
+.pmeta{font-size:12px;color:var(--muted);margin-top:4px;display:flex;gap:10px;flex-wrap:wrap}
+.pmeta span{display:inline-flex;align-items:center;gap:4px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:1rem}
+.btn-dl{flex:1;min-width:140px;padding:13px 18px;background:linear-gradient(135deg,var(--a),var(--b));border:none;border-radius:var(--r12);color:#08201e;font-size:13.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .15s,transform .1s}
+.btn-dl:hover{opacity:.85}
+.btn-dl:active{transform:scale(.97)}
+.btn-dl svg{width:16px;height:16px;stroke:#08201e}
+.btn-ghost{flex:1;min-width:100px;padding:13px 18px;background:transparent;border:1px solid var(--b2);border-radius:var(--r12);color:var(--text);font-size:13.5px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;transition:background .15s,border-color .15s,transform .1s}
+.btn-ghost:hover{background:var(--s2);border-color:var(--b3)}
+.btn-ghost:active{transform:scale(.97)}
+.btn-ghost svg{width:16px;height:16px;opacity:.65}
+.fallback-note{display:none;margin-top:10px;font-size:11.5px;color:var(--muted);background:var(--s2);border:1px solid var(--b1);border-radius:var(--r8);padding:9px 12px;line-height:1.5}
+.how{margin-top:2rem}
+.eyebrow{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);margin-bottom:1rem}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.step{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r12);padding:.9rem 1rem 1rem}
+.step-n{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;background:linear-gradient(135deg,var(--a),var(--b));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:6px}
+.step-t{font-size:12.5px;font-weight:600;color:var(--text);margin-bottom:3px}
+.step-d{font-size:11.5px;color:var(--muted);line-height:1.5}
+.faq{margin-top:2.5rem}
+.faq-item{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r12);padding:1rem 1.1rem;margin-bottom:8px}
+.faq-q{font-size:13px;font-weight:600;margin-bottom:5px}
+.faq-a{font-size:12.5px;color:var(--muted);line-height:1.6}
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(10px);background:var(--s2);border:1px solid var(--b2);border-radius:var(--r999);padding:9px 18px;font-size:12.5px;color:var(--text);box-shadow:0 8px 32px rgba(0,0,0,.5);white-space:nowrap;z-index:9999;display:flex;align-items:center;gap:8px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0}
+footer{margin-top:2.5rem;text-align:center;font-size:11.5px;color:var(--muted2)}
+footer a{color:var(--muted);text-decoration:none}
+footer a:hover{color:var(--accent)}
+@media(max-width:520px){
+  .page{padding:2rem 1rem 4rem}
+  h1{font-size:1.85rem}
+  .url-row{flex-direction:column}
+  .go-btn{width:100%;height:46px;justify-content:center}
+  .actions{flex-direction:column}
+  .btn-dl,.btn-ghost{min-width:unset;width:100%}
+  .steps{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){.ring{animation:none;border-top-color:var(--accent)}*{transition:none!important}}
+
+.ad-container{
+    margin:35px 0;
+    padding:15px;
+    background:#111;
+    border:1px solid #222;
+    border-radius:14px;
+    text-align:center;
+    overflow:hidden;
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <a class="logo" href="https://browser-kit.vercel.app">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1 2v10h14V7H5zm2 8l3.5-4.5 2.5 3 2.5-3L19 15H7z"/></svg>
+      </div>
+      <span class="logo-name">browser-kit</span>
+    </a>
+    <h1>View & download any<br><em>image URL</em> instantly</h1>
+    <p class="subtitle">Paste a direct image link — preview it full-size and save it to your device. No login, no upload, everything happens right in your browser.</p>
+  </header>
+
+  <div class="ad-container">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4267064071274874"
+         data-ad-slot="YOUR_SLOT_ID"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  </div>
+
+  <div class="main-card">
+    <div class="url-row">
+      <div class="url-field">
+        <span class="link-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </span>
+        <input class="url-input" id="urlInput" type="url" placeholder="https://example.com/photo.jpg" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" />
+      </div>
+      <button class="go-btn" id="goBtn" onclick="loadImage()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        View
+      </button>
+    </div>
+    <div class="hint">
+      <span class="hint-dot"></span>
+      Works with any direct link ending in <code>.jpg</code>, <code>.png</code>, <code>.webp</code>, <code>.gif</code>, or <code>.svg</code>
+    </div>
+    <div class="error-box" id="errBox">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span id="errMsg"></span>
+    </div>
+  </div>
+
+  <div class="loader" id="loader">
+    <div class="ring"></div>
+    <div class="loader-txt">Loading image…</div>
+  </div>
+
+  <div class="result" id="result">
+    <div class="preview-card">
+      <div class="preview-frame">
+        <img id="previewImg" src="" alt="Previewed image" />
+      </div>
+      <div class="pbody">
+        <div class="ptop">
+          <div>
+            <div class="pname" id="pName"></div>
+            <div class="pmeta">
+              <span id="pDims"></span>
+              <span id="pType"></span>
+            </div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn-dl" onclick="downloadImg()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download
+          </button>
+          <a class="btn-ghost" id="openBtn" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Open full size
+          </a>
+          <button class="btn-ghost" onclick="copyImgLink()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copy link
+          </button>
+        </div>
+        <div class="fallback-note" id="fallbackNote">
+          This image's host doesn't allow direct downloads from other sites (CORS). Click "Open full size" and right-click → Save Image instead.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="how">
+    <div class="eyebrow">How it works</div>
+    <div class="steps">
+      <div class="step"><div class="step-n">01</div><div class="step-t">Copy image URL</div><div class="step-d">Right-click any image online and choose "Copy image address" or "Copy image link".</div></div>
+      <div class="step"><div class="step-n">02</div><div class="step-t">Paste & view</div><div class="step-d">Paste the link above and hit "View" — the image loads instantly, right in this page.</div></div>
+      <div class="step"><div class="step-n">03</div><div class="step-t">Download</div><div class="step-d">Hit the download button to save it to your device in its original quality.</div></div>
+    </div>
+  </div>
+
+  <div class="faq">
+    <div class="eyebrow">Good to know</div>
+    <div class="faq-item">
+      <div class="faq-q">Does this upload my image anywhere?</div>
+      <div class="faq-a">No. Everything runs locally in your browser — the image is fetched directly from its source URL and never touches a server of ours.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Why does download sometimes fail?</div>
+      <div class="faq-a">Some sites block cross-origin downloads (CORS) for hotlinked images. When that happens, use "Open full size" and save the image directly from the new tab.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What image formats are supported?</div>
+      <div class="faq-a">JPG, PNG, WEBP, GIF, SVG, and most other formats your browser can render natively.</div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Part of <a href="https://browser-kit.vercel.app" target="_blank">browser-kit</a> &nbsp;·&nbsp; 70+ free browser tools</p>
+  </footer>
+</div>
+
+<div class="toast" id="toast"><div class="toast-dot"></div><span id="toastTxt"></span></div>
+
+<script>
+/*
+  100% client-side. No backend, no API key, no CORS proxy.
+  The <img> tag can display any public image URL regardless of CORS —
+  browsers only enforce CORS when JS code tries to *read* the pixel data
+  (e.g. to draw it on a <canvas> for a forced-filename download). So:
+    - Preview always works if the URL is a valid, reachable image.
+    - Download tries a fetch()+blob first (clean filename, works if the
+      host sends permissive/no CORS headers). If that's blocked, we fall
+      back to opening the image in a new tab so the user can save it
+      manually — this can't be avoided by any client-side trick, since
+      it's a security boundary enforced by the browser itself.
+*/
+
+let currentUrl = '';
+
+function showErr(m){const b=document.getElementById('errBox');document.getElementById('errMsg').textContent=m;b.style.display='flex'}
+function hideErr(){document.getElementById('errBox').style.display='none'}
+function toast(msg,ms=2600){const t=document.getElementById('toast');document.getElementById('toastTxt').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),ms)}
+function setLoader(on){document.getElementById('loader').style.display=on?'block':'none';document.getElementById('goBtn').disabled=on}
+function setResult(on){document.getElementById('result').style.display=on?'block':'none'}
+
+function isLikelyUrl(str){
+  try { const u = new URL(str); return u.protocol === 'http:' || u.protocol === 'https:'; }
+  catch { return false; }
+}
+
+function guessFilename(url){
+  try {
+    const u = new URL(url);
+    const last = u.pathname.split('/').filter(Boolean).pop();
+    return last || 'image';
+  } catch { return 'image'; }
+}
+
+function guessExt(url, mime){
+  if (mime) {
+    const m = mime.split('/')[1];
+    if (m) return m.replace('jpeg','jpg').split('+')[0];
+  }
+  const name = guessFilename(url);
+  const dot = name.lastIndexOf('.');
+  return dot > -1 ? name.slice(dot+1).toLowerCase() : 'jpg';
+}
+
+function loadImage(){
+  const raw = document.getElementById('urlInput').value.trim();
+  hideErr(); setResult(false); setLoader(false);
+  document.getElementById('fallbackNote').style.display = 'none';
+
+  if (!raw) { showErr('Paste an image URL first.'); return; }
+  if (!isLikelyUrl(raw)) { showErr('That doesn\'t look like a valid URL. Include https://'); return; }
+
+  setLoader(true);
+  currentUrl = raw;
+
+  const testImg = new Image();
+  testImg.onload = () => {
+    setLoader(false);
+    const previewImg = document.getElementById('previewImg');
+    previewImg.src = raw;
+    document.getElementById('pName').textContent = guessFilename(raw);
+    document.getElementById('pDims').textContent = testImg.naturalWidth && testImg.naturalHeight
+      ? `${testImg.naturalWidth} × ${testImg.naturalHeight}px` : '';
+    document.getElementById('pType').textContent = guessExt(raw).toUpperCase();
+    document.getElementById('openBtn').href = raw;
+    setResult(true);
+    document.getElementById('result').scrollIntoView({behavior:'smooth', block:'nearest'});
+  };
+  testImg.onerror = () => {
+    setLoader(false);
+    showErr('Could not load an image from that URL. Make sure it\'s a direct link to an image file and is publicly accessible.');
+  };
+  testImg.src = raw;
+}
+
+async function downloadImg(){
+  if (!currentUrl) return;
+  try {
+    const res = await fetch(currentUrl, { mode: 'cors' });
+    if (!res.ok) throw new Error('fetch failed');
+    const blob = await res.blob();
+    const ext = guessExt(currentUrl, blob.type);
+    const base = guessFilename(currentUrl).replace(/\.[^.]+$/, '');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `${base || 'image'}.${ext}`;
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(a.href);
+    toast('Saved to downloads!');
+  } catch {
+    document.getElementById('fallbackNote').style.display = 'block';
+    window.open(currentUrl, '_blank');
+    toast('Opened in new tab — right-click to save');
+  }
+}
+
+async function copyImgLink(){
+  if (!currentUrl) return;
+  try { await navigator.clipboard.writeText(currentUrl); toast('Image link copied!'); }
+  catch { toast('Could not copy — try selecting the URL manually.'); }
+}
+
+document.getElementById('urlInput').addEventListener('keydown', e => { if (e.key === 'Enter') loadImage(); });
+window.addEventListener('load', () => { if (window.adsbygoogle) (adsbygoogle = window.adsbygoogle || []).push({}); });
+</script>
+</body>
+</html>
