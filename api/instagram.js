@@ -40,22 +40,27 @@ export default async function handler(req, res) {
 
   // ── Fetch the public profile page directly (server-side, no CORS) ──────
   try {
-    const pageRes = await fetch(`https://www.instagram.com/${encodeURIComponent(username)}/`, {
-      headers: {
-        'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36',
-        'Accept-Language': 'en-US,en;q=0.9',
-      },
-    });
+   const pageRes = await fetch(`https://www.instagram.com/${username}/?__a=1&__d=dis`,
+{
+   headers:{
+"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+"Accept":"text/html,application/xhtml+xml",
+"Accept-Language":"en-US,en;q=0.9",
+"Referer":"https://www.instagram.com/",
+"Cache-Control":"no-cache"
+}
+    }
+}
+););
 
     if (!pageRes.ok) {
       return res.status(404).json({ error: 'Profile not found or account is private' });
     }
 
     const html = await pageRes.text();
-
-    const imageMatch = html.match(/<meta property="og:image" content="([^"]+)"/);
-    const titleMatch = html.match(/<meta property="og:title" content="([^"]+)"/);
+    console.log(html.substring(0,1000));
+    const imageMatch = html.match(/<meta[^>]*property="og:image"[^>]*content="([^"]+)"/i);
+    const titleMatch = html.match(/<meta[^>]*property="og:title"[^>]*content="([^"]+)"/i);
 
     if (!imageMatch) {
       return res.status(404).json({ error: 'Profile not found, private, or Instagram blocked this request' });
