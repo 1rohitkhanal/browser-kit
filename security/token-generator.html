@@ -4,10 +4,43 @@
 <meta name="google-adsense-account" content="ca-pub-4267064071274874">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Random Token Generator — API Keys, Secrets & UUIDs | ToolSite</title>
-<meta name="description" content="Generate random tokens, API keys, secrets, and UUIDs online. Cryptographically secure random token generator — free tool, no data stored.">
+
+<title>Random Token Generator — Secure API Keys, Secrets & UUIDs Online | browser-kit</title>
+<meta name="description" content="Generate cryptographically secure random tokens, API keys, UUIDs, JWT secrets, and PIN codes online for free. Runs entirely in your browser using crypto.getRandomValues() — no data sent to any server.">
+<meta name="keywords" content="random token generator, API key generator, secure token generator, UUID generator, UUID v4 generator, JWT secret generator, random string generator, hex token generator, base64 token generator, OTP PIN generator, cryptographically secure random generator, free online token generator">
+<link rel="canonical" href="https://browser-kit.vercel.app/security/token-generator.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://browser-kit.vercel.app/security/token-generator.html">
+<meta property="og:title" content="Random Token Generator — Secure API Keys, Secrets & UUIDs | browser-kit">
+<meta property="og:description" content="Generate cryptographically secure tokens, API keys, UUIDs, and secrets instantly. Free, private, runs entirely in your browser.">
+<meta property="og:image" content="https://browser-kit.vercel.app/assets/og-token-generator.png">
+<meta property="og:site_name" content="browser-kit">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Random Token Generator | browser-kit">
+<meta name="twitter:description" content="Generate secure API keys, UUIDs, and secrets instantly. Free, no login, browser-based.">
+<meta name="twitter:image" content="https://browser-kit.vercel.app/assets/og-token-generator.png">
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Random Token Generator — browser-kit",
+  "url": "https://browser-kit.vercel.app/security/token-generator.html",
+  "description": "Free online tool to generate cryptographically secure random tokens, API keys, UUIDs, JWT secrets, and PIN codes entirely in the browser.",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "publisher": { "@type": "Organization", "name": "browser-kit", "url": "https://browser-kit.vercel.app/" }
+}
+</script>
+
+<script src="/assets/global-ads.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-  <script src="/assets/global-ads.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{--bg:#0a0a0f;--surface:#13131a;--surface2:#1c1c28;--border:#2a2a3d;--accent:#7c3aed;--accent2:#06b6d4;--text:#e2e8f0;--muted:#64748b;--success:#10b981}
@@ -16,17 +49,16 @@
   nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:1px solid var(--border);background:var(--surface)}
   .logo{font-size:1.4rem;font-weight:800;color:var(--accent);text-decoration:none}.logo span{color:var(--accent2)}
   nav a{color:var(--muted);text-decoration:none;font-size:0.85rem}nav a:hover{color:var(--text)}
-  .ad-banner{background:var(--surface);border:1px dashed var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.75rem;margin:1rem auto}
-  .ad-top{width:100%;max-width:728px;height:90px}.ad-bottom{width:100%;max-width:728px;height:90px}.ad-side{width:300px;height:250px;flex-shrink:0}
+  .ad-banner{background:var(--surface);border:1px dashed var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.75rem;margin:1rem auto;overflow:hidden}
+  .ad-top{width:100%;max-width:728px;min-height:90px}.ad-bottom{width:100%;max-width:728px;min-height:90px}.ad-side{width:300px;min-height:250px;flex-shrink:0}
   .container{max-width:900px;margin:0 auto;padding:2rem}
   .tool-header{text-align:center;margin-bottom:2.5rem}
-  .tool-header h1{font-size:2.2rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-browser-kit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem}
+  .tool-header h1{font-size:2.2rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem}
   .tool-header p{color:var(--muted);font-size:1rem}
   .main-layout{display:flex;gap:2rem}.tool-area{flex:1}
   .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem}
   .section-label{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:0.75rem;display:block}
 
-  /* TYPE CARDS */
   .type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-bottom:1.5rem}
   .type-card{padding:1rem;background:var(--surface2);border:2px solid var(--border);border-radius:12px;cursor:pointer;text-align:center;transition:all 0.2s}
   .type-card:hover{border-color:var(--muted)}
@@ -35,7 +67,6 @@
   .type-card .type-name{font-size:0.8rem;font-weight:700}
   .type-card .type-desc{font-size:0.7rem;color:var(--muted);margin-top:2px}
 
-  /* OPTIONS */
   .opt-row{display:flex;justify-content:space-between;align-items:center;padding:0.7rem 0;border-bottom:1px solid var(--border)}
   .opt-row:last-child{border-bottom:none}
   .opt-label{font-size:0.88rem}
@@ -43,7 +74,6 @@
   select{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:5px 10px;border-radius:8px;font-family:'Syne',sans-serif;font-size:0.85rem;outline:none}
   input[type=number]{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:5px 10px;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:0.85rem;width:70px;outline:none;text-align:center}
 
-  /* TOKEN OUTPUT */
   .token-box{background:var(--surface2);border:2px solid var(--accent);border-radius:12px;padding:1.2rem;font-family:'JetBrains Mono',monospace;font-size:0.9rem;word-break:break-all;min-height:64px;position:relative;margin-bottom:1rem;line-height:1.6}
   .generate-btn{width:100%;padding:1rem;font-size:1rem;font-weight:700;font-family:'Syne',sans-serif;background:linear-gradient(135deg,var(--accent),#4f46e5);color:white;border:none;border-radius:12px;cursor:pointer;transition:all 0.25s}
   .generate-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(124,58,237,0.4)}
@@ -51,7 +81,6 @@
   .copy-btn{flex:1;padding:0.75rem;font-size:0.9rem;font-weight:700;font-family:'Syne',sans-serif;background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all 0.2s}
   .copy-btn:hover{border-color:var(--accent);color:var(--accent)}
 
-  /* BATCH */
   .batch-list{display:flex;flex-direction:column;gap:0.4rem;max-height:280px;overflow-y:auto}
   .batch-item{font-family:'JetBrains Mono',monospace;font-size:0.78rem;background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:0.5rem 0.75rem;display:flex;justify-content:space-between;align-items:center;gap:0.5rem}
   .batch-val{flex:1;word-break:break-all;min-width:0}
@@ -62,16 +91,28 @@
   .related-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.75rem}
   .related-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1rem;text-decoration:none;color:var(--text);transition:all 0.2s;display:flex;align-items:center;gap:0.6rem;font-size:0.88rem}
   .related-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+
+  .seo-content{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border)}
+  .seo-content h2{font-size:1.15rem;margin-bottom:0.75rem}
+  .seo-content p{font-size:0.85rem;line-height:1.7;color:var(--muted);margin-bottom:1rem}
+  .faq-item{margin-bottom:1rem}
+  .faq-item h3{font-size:0.92rem;margin-bottom:0.3rem;color:var(--text)}
+  .faq-item p{font-size:0.85rem;color:var(--muted);line-height:1.6;margin-bottom:0}
+
   footer{border-top:1px solid var(--border);background:var(--surface);padding:1.5rem 2rem;margin-top:3rem;text-align:center;color:var(--muted);font-size:0.8rem}
   footer a{color:var(--muted);text-decoration:none;margin:0 0.5rem}footer a:hover{color:var(--text)}
-  @media(max-width:700px){.main-layout{flex-direction:column}.ad-side{width:100%;height:100px}.type-grid{grid-template-columns:repeat(2,1fr)}.related-grid{grid-template-columns:1fr}}
+  @media(max-width:700px){.main-layout{flex-direction:column}.ad-side{width:100%;min-height:100px}.type-grid{grid-template-columns:repeat(2,1fr)}.related-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<nav><a class="logo" href="../index.html">Tool<span>Site</span></a><a href="../index.html">← All Tools</a></nav>
+<nav><a class="logo" href="../index.html">browser<span>-kit</span></a><a href="../index.html">← All Tools</a></nav>
 
 <div class="container">
-  <div style="display:flex;justify-content:center"><div class="ad-banner ad-top">Advertisement (728×90)</div></div>
+  <div style="display:flex;justify-content:center">
+    <div class="ad-banner ad-top">
+      <ins class="adsbygoogle" style="display:block;width:100%;height:90px" data-ad-client="ca-pub-4267064071274874" data-ad-slot="0000000001" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+    </div>
+  </div>
 
   <div class="tool-header">
     <h1>🎲 Random Token Generator</h1>
@@ -130,10 +171,16 @@
       </div>
     </div>
 
-    <div class="ad-banner ad-side">Ad (300×250)</div>
+    <div class="ad-banner ad-side">
+      <ins class="adsbygoogle" style="display:block;width:300px;height:250px" data-ad-client="ca-pub-4267064071274874" data-ad-slot="0000000002" data-ad-format="rectangle"></ins>
+    </div>
   </div>
 
-  <div style="display:flex;justify-content:center"><div class="ad-banner ad-bottom">Advertisement (728×90)</div></div>
+  <div style="display:flex;justify-content:center">
+    <div class="ad-banner ad-bottom">
+      <ins class="adsbygoogle" style="display:block;width:100%;height:90px" data-ad-client="ca-pub-4267064071274874" data-ad-slot="0000000003" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+    </div>
+  </div>
 
   <div class="related">
     <h2>Related Security Tools</h2>
@@ -144,11 +191,30 @@
       <a class="related-card" href="password-checker.html">🔍 Password Strength Checker</a>
     </div>
   </div>
+
+  <div class="seo-content">
+    <h2>About the Random Token Generator</h2>
+    <p>This free random token generator creates cryptographically secure API keys, secrets, UUIDs, JWT signing secrets, and numeric PIN codes directly in your browser using the Web Crypto API's <code>crypto.getRandomValues()</code> — the same secure randomness source used by password managers. No token you generate is ever transmitted to a server, logged, or stored.</p>
+    <p>Developers use this tool to generate API keys for backend services, unique UUID v4 identifiers for databases, base64 URL-safe tokens for session IDs, and one-time PIN codes for two-factor authentication testing. Batch generation lets you create up to 50 tokens at once for seeding test data.</p>
+
+    <div class="faq-item">
+      <h3>Is this token generator cryptographically secure?</h3>
+      <p>Yes. It uses the browser's native <code>crypto.getRandomValues()</code> API, which is designed for cryptographic use, unlike <code>Math.random()</code>.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Are my generated tokens stored anywhere?</h3>
+      <p>No. All generation happens client-side in your browser. Nothing is sent to or stored on any server.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Can I use this to generate a UUID v4 or JWT secret?</h3>
+      <p>Yes — select the UUID v4 or JWT Secret token type from the options above to generate one instantly.</p>
+    </div>
+  </div>
 </div>
 
 <footer>
   <div style="margin-bottom:0.5rem"><a href="../index.html">Home</a> | <a href="../index.html">All Tools</a> | <a href="#">About</a> | <a href="#">Privacy Policy</a></div>
-  © 2025 ToolSite — No login required. No data stored on servers.
+  © 2026 browser-kit — No login required. No data stored on servers.
 </footer>
 
 <script>
