@@ -1,15 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="google-adsense-account" content="ca-pub-4267064071274874">
-<meta name="google-adsense-account" content="ca-pub-4267064071274874">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hash Generator — MD5, SHA-1, SHA-256, SHA-512 Online | ToolSite</title>
-<meta name="description" content="Generate MD5, SHA-1, SHA-256, and SHA-512 hashes online for free. Instant hash generation — no data sent to servers.">
+<meta name="google-adsense-account" content="ca-pub-4267064071274874">
+
+<title>Hash Generator — Free Online MD5, SHA-1, SHA-256 & SHA-512 Tool | ToolSite</title>
+<meta name="description" content="Generate MD5, SHA-1, SHA-224, SHA-256, SHA-384, and SHA-512 hashes online for free. Runs entirely in your browser — no data is ever sent to a server.">
+<meta name="keywords" content="hash generator, md5 generator, sha256 online, sha1 hash, sha512 checksum, online hashing tool, text to hash">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://www.yourtoolsite.com/tools/hash-generator.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hash Generator — Free Online MD5, SHA-1, SHA-256 & SHA-512 Tool">
+<meta property="og:description" content="Generate MD5, SHA-1, SHA-224, SHA-256, SHA-384, and SHA-512 hashes instantly in your browser. No data ever leaves your device.">
+<meta property="og:url" content="https://www.yourtoolsite.com/tools/hash-generator.html">
+<meta property="og:site_name" content="ToolSite">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hash Generator — Free Online MD5, SHA-1, SHA-256 & SHA-512 Tool">
+<meta name="twitter:description" content="Generate MD5, SHA-1, SHA-224, SHA-256, SHA-384, and SHA-512 hashes instantly in your browser.">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-  <script src="/assets/global-ads.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<!-- AdSense loader -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4267064071274874" crossorigin="anonymous"></script>
+<script src="/assets/global-ads.js"></script>
+
+<!-- Structured data: tool + FAQ, helps eligibility for rich results -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Hash Generator",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Any (runs in browser)",
+  "url": "https://www.yourtoolsite.com/tools/hash-generator.html",
+  "description": "Free online tool to generate MD5, SHA-1, SHA-224, SHA-256, SHA-384, and SHA-512 hashes from text, entirely client-side.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a hash generator used for?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A hash generator converts text into a fixed-length string of characters, called a hash or digest. It's used to verify file integrity, store password fingerprints, detect duplicate content, and confirm data hasn't been tampered with."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is MD5 still safe to use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "MD5 is fast but cryptographically broken for security purposes such as password storage or digital signatures, since collisions can be deliberately created. It's still fine for non-security uses like checksums or detecting accidental file corruption. For anything security-sensitive, use SHA-256 or SHA-512."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does this tool send my text to a server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All hashing happens locally in your browser using the Web Crypto API and CryptoJS. Your input text is never transmitted anywhere."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the difference between SHA-256 and SHA-512?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Both are part of the SHA-2 family. SHA-256 produces a 256-bit digest and SHA-512 produces a 512-bit digest. SHA-512 is generally faster on 64-bit systems and offers a larger output space, but SHA-256 remains the most widely used standard for general-purpose integrity checks."
+      }
+    }
+  ]
+}
+</script>
+
 <style>
   :root{--bg:#0a0a0f;--surface:#13131a;--surface2:#1c1c28;--border:#2a2a3d;--accent:#7c3aed;--accent2:#06b6d4;--text:#e2e8f0;--muted:#64748b;--success:#10b981}
   *{box-sizing:border-box;margin:0;padding:0}
@@ -17,13 +91,13 @@
   nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:1px solid var(--border);background:var(--surface)}
   .logo{font-size:1.4rem;font-weight:800;color:var(--accent);text-decoration:none}.logo span{color:var(--accent2)}
   nav a{color:var(--muted);text-decoration:none;font-size:0.85rem}nav a:hover{color:var(--text)}
-  .ad-banner{background:var(--surface);border:1px dashed var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.75rem;margin:1rem auto}
-  .ad-top{width:100%;max-width:728px;height:90px}.ad-bottom{width:100%;max-width:728px;height:90px}.ad-side{width:300px;height:250px;flex-shrink:0}
+  .ad-banner{background:var(--surface);border:1px dashed var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden;margin:1rem auto}
+  .ad-top{width:100%;max-width:728px;min-height:90px}.ad-bottom{width:100%;max-width:728px;min-height:90px}.ad-side{width:300px;min-height:250px;flex-shrink:0}
   .container{max-width:900px;margin:0 auto;padding:2rem}
   .tool-header{text-align:center;margin-bottom:2.5rem}
-  .tool-header h1{font-size:2.2rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-browser-kit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem}
-  .tool-header p{color:var(--muted);font-size:1rem}
-  .main-layout{display:flex;gap:2rem}.tool-area{flex:1}
+  .tool-header h1{font-size:2.2rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem}
+  .tool-header p{color:var(--muted);font-size:1rem;max-width:640px;margin:0 auto}
+  .main-layout{display:flex;gap:2rem}.tool-area{flex:1;min-width:0}
   .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem}
   textarea{width:100%;background:var(--surface2);border:2px solid var(--border);border-radius:12px;padding:1rem;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:0.95rem;resize:vertical;outline:none;transition:border-color 0.2s;min-height:120px}
   textarea:focus{border-color:var(--accent)}
@@ -47,20 +121,33 @@
   .related-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.75rem}
   .related-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1rem;text-decoration:none;color:var(--text);transition:all 0.2s;display:flex;align-items:center;gap:0.6rem;font-size:0.88rem}
   .related-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+
+  .content-section{margin-top:2.5rem}
+  .content-section h2{font-size:1.3rem;font-weight:700;margin-bottom:0.75rem}
+  .content-section p{color:var(--muted);line-height:1.65;margin-bottom:0.9rem;font-size:0.92rem}
+  .content-section ul{color:var(--muted);line-height:1.65;font-size:0.92rem;margin:0.5rem 0 1rem 1.2rem}
+  .faq-item{border-bottom:1px solid var(--border);padding:0.9rem 0}
+  .faq-item h3{font-size:0.98rem;font-weight:700;margin-bottom:0.4rem;color:var(--text)}
+  .faq-item p{color:var(--muted);font-size:0.9rem;line-height:1.6}
+
   footer{border-top:1px solid var(--border);background:var(--surface);padding:1.5rem 2rem;margin-top:3rem;text-align:center;color:var(--muted);font-size:0.8rem}
   footer a{color:var(--muted);text-decoration:none;margin:0 0.5rem}footer a:hover{color:var(--text)}
-  @media(max-width:700px){.main-layout{flex-direction:column}.ad-side{width:100%;height:100px}.related-grid{grid-template-columns:1fr}.hash-row{flex-direction:column;align-items:stretch}}
+  @media(max-width:700px){.main-layout{flex-direction:column}.ad-side{width:100%;min-height:100px}.related-grid{grid-template-columns:1fr}.hash-row{flex-direction:column;align-items:stretch}}
 </style>
 </head>
 <body>
 <nav><a class="logo" href="../index.html">Tool<span>Site</span></a><a href="../index.html">← All Tools</a></nav>
 
 <div class="container">
-  <div style="display:flex;justify-content:center"><div class="ad-banner ad-top">Advertisement (728×90)</div></div>
+  <div style="display:flex;justify-content:center">
+    <div class="ad-banner ad-top">
+      <ins class="adsbygoogle" style="display:block;width:100%;height:90px" data-ad-client="ca-pub-4267064071274874" data-ad-slot="REPLACE_WITH_TOP_SLOT_ID" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+    </div>
+  </div>
 
   <div class="tool-header">
-    <h1># Hash Generator</h1>
-    <p>Generate MD5, SHA-1, SHA-256, SHA-512 hashes from any text. All processing is done locally in your browser.</p>
+    <h1>Hash Generator</h1>
+    <p>Generate MD5, SHA-1, SHA-256, and SHA-512 hashes from any text. All processing happens locally in your browser — nothing is uploaded.</p>
   </div>
 
   <div class="main-layout">
@@ -95,12 +182,44 @@
         <div id="hashResults"></div>
         <div style="font-size:0.75rem;color:var(--muted);margin-top:0.5rem">💡 Click any hash value to copy it directly</div>
       </div>
+
+      <div class="content-section">
+        <h2>What does this tool do?</h2>
+        <p>A hash function takes any input — a word, a password, a whole file's contents — and turns it into a fixed-length string of letters and numbers called a digest. The same input always produces the same digest, but even a one-character change produces a completely different one. This makes hashes useful for verifying that a file wasn't corrupted or tampered with, for storing password fingerprints instead of raw passwords, and for quickly comparing two pieces of data without comparing them byte by byte.</p>
+
+        <h2>Which algorithm should I use?</h2>
+        <ul>
+          <li><strong>MD5 / SHA-1</strong> — fast, but cryptographically broken. Fine for checksums and duplicate detection; avoid for passwords or security signatures.</li>
+          <li><strong>SHA-256</strong> — the current standard for most integrity and security use cases, including Bitcoin and TLS certificates.</li>
+          <li><strong>SHA-384 / SHA-512</strong> — larger digests from the SHA-2 family, often faster than SHA-256 on 64-bit hardware.</li>
+        </ul>
+
+        <h2>Frequently asked questions</h2>
+        <div class="faq-item">
+          <h3>Is my text uploaded anywhere?</h3>
+          <p>No. Hashing runs entirely client-side using the browser's Web Crypto API and the CryptoJS library. Nothing you type is sent to a server.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can I hash a file instead of text?</h3>
+          <p>This tool currently accepts pasted text. To hash a file, open it in a text editor and paste the contents, or use a dedicated file-checksum utility for binary files.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Why do MD5 and SHA-1 look "broken" in security contexts?</h3>
+          <p>Researchers have demonstrated practical collision attacks against both, meaning two different inputs can be crafted to produce the same hash. That's disqualifying for passwords or digital signatures, though both remain useful for simple integrity checks.</p>
+        </div>
+      </div>
     </div>
 
-    <div class="ad-banner ad-side">Ad (300×250)</div>
+    <div class="ad-banner ad-side">
+      <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-4267064071274874" data-ad-slot="REPLACE_WITH_SIDE_SLOT_ID"></ins>
+    </div>
   </div>
 
-  <div style="display:flex;justify-content:center"><div class="ad-banner ad-bottom">Advertisement (728×90)</div></div>
+  <div style="display:flex;justify-content:center">
+    <div class="ad-banner ad-bottom">
+      <ins class="adsbygoogle" style="display:block;width:100%;height:90px" data-ad-client="ca-pub-4267064071274874" data-ad-slot="REPLACE_WITH_BOTTOM_SLOT_ID" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+    </div>
+  </div>
 
   <div class="related">
     <h2>Related Security Tools</h2>
@@ -140,10 +259,10 @@ function md5Hash(text) {
 
 async function generateHashes() {
   const text = document.getElementById('inputText').value;
-  if (!text.trim()) { alert('Please enter some text to hash.'); return; }
+  if (!text.trim()) { return; }
   const upper = document.getElementById('optUppercase').checked;
   const algos = getActiveAlgos();
-  if (algos.length === 0) { alert('Select at least one algorithm.'); return; }
+  if (algos.length === 0) { return; }
 
   const results = document.getElementById('hashResults');
   results.innerHTML = '<div style="color:var(--muted);font-size:0.85rem">Computing hashes…</div>';
@@ -192,6 +311,13 @@ function copyAll() {
 document.getElementById('inputText').addEventListener('input', () => {
   if (document.getElementById('optLive').checked) generateHashes();
 });
+
+// Load AdSense units once the page is ready
+(function loadAds() {
+  document.querySelectorAll('ins.adsbygoogle').forEach(() => {
+    try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+  });
+})();
 </script>
 </body>
 </html>
